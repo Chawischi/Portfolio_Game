@@ -16,7 +16,7 @@
 
 ### 🧠 Elevator Pitch
 
-Um jogo de plataforma 2D emocional onde o jogador controla um idoso que escala uma montanha para cumprir a promessa de levar as cinzas de sua esposa ao topo. Ao longo da jornada, o jogador enfrenta desafios de movimentação e revive memórias do casal através de flashbacks desbloqueados por itens coletáveis. A experiência combina narrativa sensível com mecânicas desafiadoras inspiradas em jogos como *Celeste*.
+Um jogo de plataforma 2D narrativo onde o jogador assume o papel de um idoso determinado a escalar uma montanha para cumprir a última promessa feita à sua esposa falecida. Ao longo da jornada, desafios de movimentação se entrelaçam com memórias do casal, reveladas por meio de flashbacks desbloqueados durante a exploração. A experiência combina mecânicas precisas e progressivas com uma narrativa emociona.
 
 ---
 
