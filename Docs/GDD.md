@@ -1,4 +1,4 @@
-# 📋 Game Design Document (GDD)
+# 📋 Game Design Document
 ## One Last Climb
 
 | | |
@@ -6,7 +6,7 @@
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
 | **Status** | Pesquisa / Prototipagem |
-| **Versão** | v0.4 |
+| **Versão** | v0.5 |
 | **Última atualização** | 12/04/2026 |
 
 ---
@@ -15,7 +15,7 @@
 
 ### 🧠 Elevator Pitch
 
-Um jogo de plataforma 2D narrativo onde o jogador assume o papel de Eugene, um idoso determinado a escalar uma montanha para cumprir a última promessa feita à sua esposa falecida. Ao longo da jornada, desafios de movimentação se entrelaçam com memórias do casal, reveladas por meio de flashbacks desbloqueados pela coleta de lírios espalhados pela montanha. Cada flor traz uma citação que Liliana — apaixonada por história e literatura — compartilhou com Eugene ao longo da vida, e cada memória concede uma nova habilidade ao jogador. Ao chegar ao topo, todas as flores formam um buquê: o cumprimento da promessa.
+One Last Climb é um jogo de plataforma 2D com movimentação ágil e progressiva, onde o jogador controla Eugene, um velhinho teimoso e determinado que decide escalar uma montanha inteira para cumprir a última promessa que fez à sua esposa. O jogo é divertido primeiro: saltar, correr, dar dash e escalar paredes com precisão é o coração da experiência. A narrativa emocional entra pelas beiradas — nas flores que Eugene coleta pelo caminho, nos flashbacks que elas disparam e nas memórias que lhe dão literalmente novas forças para continuar subindo. O jogador começa achando que está jogando uma aventura leve de um velhinho cabeçudo. Só lá na frente percebe que estava sendo partido aos poucos.
 
 ### 🎮 Gênero
 
@@ -87,15 +87,15 @@ Plataforma 2D com mecânicas precisas de dash e pulo. O jogo equilibra dificulda
 | Jogadores se conectam emocionalmente com personagens idosos | Playtest com público diverso, coleta de feedback qualitativo |
 | Flashbacks desbloqueados por coleta de flores incentivam exploração | Observação em playtest: jogadores exploram ou ignoram as flores? |
 | Mecânicas progressivas enriquecem sem frustrar | Protótipo isolado de cada mecânica com medidor de tentativas |
-| Ritmo contemplativo sustenta o engajamento até o fim | Medição de abandono em diferentes fases do jogo |
+| O tom leve e divertido potencializa o impacto emocional dos momentos narrativos | Medir reação emocional em playtest: o contraste leve/pesado funciona? |
 | A associação frase → habilidade é percebida pelo jogador | Perguntar após o playtest se o jogador percebeu a ligação temática |
 
 ### Pilares do Jogo
 
-1. **Emoções acima de tudo** — cada mecânica e decisão serve à narrativa emocional
-2. **Progressão orgânica** — o personagem cresce junto com o jogador
-3. **Contemplação e descoberta** — o ambiente recompensa quem explora
-4. **Acessibilidade emocional** — qualquer pessoa deve conseguir sentir a história
+1. **Gameplay divertido primeiro** — o jogo precisa ser prazeroso de jogar antes de qualquer mensagem emocional. Movimento ágil, responsivo e satisfatório é a base de tudo.
+2. **Leveza como veículo da emoção** — o jogo trata de assuntos sérios (luto, perda, promessa) através de uma superfície leve e bem-humorada. O impacto emocional é maior justamente porque o jogador foi pego de surpresa. Referência direta à "tática Disney": vender emoção pesada com embrulho colorido e musical.
+3. **Progressão orgânica** — o personagem cresce junto com o jogador, e cada nova habilidade tem razão narrativa para existir.
+4. **Contemplação e descoberta** — o ambiente recompensa quem explora, sem forçar o ritmo.
 
 ---
 
@@ -103,29 +103,31 @@ Plataforma 2D com mecânicas precisas de dash e pulo. O jogo equilibra dificulda
 
 ### Core Loop
 
+O núcleo do jogo é o movimento: pular, correr, dar dash e explorar plataformas é o que o jogador faz a maior parte do tempo, e precisa ser divertido por si só. A narrativa entra como recompensa — cada lírio coletado interrompe brevemente a ação com um flashback e devolve o jogador ao movimento com uma nova habilidade desbloqueada.
+
 ```
 Explorar a fase → superar obstáculos de plataforma → encontrar lírio
-→ flashback desbloqueado → frase de Liliana exibida → nova habilidade desbloqueada
+→ flashback desbloqueado → frase de Eugene exibida → nova habilidade desbloqueada
 → avançar para a próxima seção da montanha → repetir
 ```
 
 ### Loops Secundários
 
-- Coletar todos os fragmentos de memória da fase (lírios) para completar o álbum
-- Dominar novas habilidades de movimentação desbloqueadas progressivamente
+- Coletar todos os lírios da fase para completar o álbum de memórias
+- Dominar e encadear novas habilidades de movimentação desbloqueadas progressivamente
 
 ### Mecânicas Principais
 
 | Mecânica | Descrição |
 |----------|-----------|
-| Pulo simples | Disponível desde o início. O personagem salta para alcançar plataformas. |
-| Corrida | Pressionar o direcional por mais tempo aumenta a velocidade de deslocamento. |
-| Dash | Movimento rápido horizontal para superar buracos ou evitar perigo. Desbloqueado na Fase 2. |
-| Pulo duplo | No ar, o jogador pode realizar um segundo pulo para alcançar alturas maiores. Desbloqueado na Fase 3. |
-| Wall jump | Ao encostar em paredes, o jogador pode saltar para o lado oposto. Desbloqueado no final da Fase 3. |
-| Planear | Ao cair de alturas, o personagem desacelera a queda planeando brevemente. Desbloqueado na Fase 4. |
+| Pulo simples | Disponível desde o início. Responsivo e preciso — base de toda a movimentação. |
+| Corrida | Segurar o direcional aumenta a velocidade. Dá ritmo e fluidez ao deslocamento. |
+| Dash | Impulso horizontal rápido para superar buracos ou escapar de inimigos. Satisfatório de usar. Desbloqueado na Fase 2. |
+| Pulo duplo | Segundo pulo no ar para alcançar plataformas mais altas. Abre novas possibilidades de rota. Desbloqueado na Fase 3. |
+| Wall jump | Saltar entre paredes em sequência rápida. Mecânica que exige timing e recompensa o domínio. Desbloqueado no final da Fase 3. |
+| Planear | Segurar o pulo durante a queda desacelera Eugene. Controle extra sobre o movimento aéreo. Desbloqueado na Fase 4. |
 
-> **Nota de design:** Eugene começa com habilidades limitadas (pulo simples + corrida) porque isso reforça narrativamente que ele é um idoso se lançando a uma tarefa difícil. Cada habilidade nova é um presente de Liliana — uma memória que lhe dá força.
+> **Nota de design:** Eugene começa limitado porque é um idoso se lançando a uma tarefa impossível — e isso é engraçado e tocante ao mesmo tempo. Cada habilidade nova é uma memória de Liliana que lhe devolve um pedaço de energia. O jogador sente isso no controle, não só na narrativa.
 
 ### Câmera
 
@@ -146,38 +148,38 @@ A cada fase concluída, um lírio é coletado e uma nova habilidade de movimenta
 
 ## 🌸 7. Sistema de Flores e Flashbacks
 
-Esta é a mecânica central que conecta gameplay e narrativa.
+Esta é a mecânica que conecta gameplay e narrativa. O movimento é interrompido brevemente por uma memória — e retomado com mais força.
 
 ### Como funciona
 
 1. Eugene encontra um lírio em algum ponto da fase
 2. Ao coletar a flor, um flashback é disparado
 3. O flashback exibe uma cena estática (arte + texto) mostrando uma memória do casal
-4. Ao final do flashback, uma frase histórica citada por Liliana aparece na tela
+4. Ao final do flashback, Eugene diz algo em voz alta — uma frase curta, no tom dele, lembrando das palavras de Liliana à sua maneira
 5. Eugene desbloqueia uma nova habilidade de movimentação
 6. A flor é adicionada ao buquê em formação (visível no álbum de memórias)
 
 ### Associação: Flor → Frase → Habilidade
 
-| # | Fase | Frase | Tradução | Origem | Habilidade |
-|---|------|-------|----------|--------|-----------|
-| 1 | Fase 2 | *"Amor vincit omnia"* | O amor conquista tudo | Virgílio — Éclogas (37 a.C.) | **Dash** — o amor impulsiona, avança |
-| 2 | Fase 3 | *"Dum spiro, spero"* | Enquanto respiro, tenho esperança | Cícero (séc. I a.C.) | **Pulo duplo** — esperança é alcançar mais alto |
-| 3 | Fase 3 | *"Fata viam invenient"* | O destino encontrará um caminho | Virgílio — Eneida (19 a.C.) | **Wall jump** — encontrar caminho nas paredes |
-| 4 | Fase 4 | *"Cattle die... the memory of the dead"* | A memória dos mortos nunca morre | Hávamál — poema nórdico (séc. XIII) | **Planear** — a memória sustenta, não deixa cair |
-| 5 | Fase 5 | *"Ad astra per aspera"* | Às estrelas através das dificuldades | Latim anônimo | **Corrida aprimorada** — o esforço final rumo ao topo |
+> As frases não são citações acadêmicas — são Eugene lembrando, do jeito dele, de algo que Liliana dizia. Tom leve, afetivo, às vezes com um humor involuntário de velho teimoso.
+
+| # | Fase | Frase (Eugene lembrando) | Origem da ideia | Habilidade |
+|---|------|--------------------------|-----------------|-----------|
+| 1 | Fase 2 | *"Ela sempre dizia: o amor empurra a gente pra frente. Acho que era latim. Amor... algo. Funcionava de qualquer jeito."* | Amor vincit omnia — Virgílio | **Dash** |
+| 2 | Fase 3 | *"Enquanto eu respirar, eu tenho esperança. Foi ela que me ensinou isso. Ainda funciona."* | Dum spiro, spero — Cícero | **Pulo duplo** |
+| 3 | Fase 3 | *"O destino sempre acha um jeito, ela dizia. Eu acho que o destino sou eu escalando essa montanha ridícula."* | Fata viam invenient — Virgílio | **Wall jump** |
+| 4 | Fase 4 | *"Os velhos vikings diziam que a memória dos mortos nunca morre. Ela adorava isso. Eu entendo agora."* | Hávamál nórdico | **Planear** |
+| 5 | Fase 5 | *"Às estrelas pelas dificuldades. Era o jeito favorito dela de dizer: vai lá, Eugene."* | Ad astra per aspera | **Corrida aprimorada** |
 
 ### Frases reservadas para momentos narrativos (sem habilidade)
 
-Estas frases aparecem nos flashbacks ou em momentos-chave da história, sem estar associadas a uma mecânica — o que reforça que nem toda memória precisa de recompensa mecânica:
+- *"Tudo por você."* — Eugene ao iniciar a escalada (simples, direto, sem floreio)
+- *"Aquele que o amor não toca caminha nas trevas. Ela falava isso quando eu reclamava demais. Tinha razão."* — momento narrativo interno
 
-- *"Omnia pro te"* — Tudo por você (Latim clássico)
-- *"He whom love touches not walks in darkness"* — Aquele que o amor não toca, caminha nas trevas (Platão — O Banquete, 385 a.C.)
+### Frases ditas por Eugene (momentos-chave)
 
-### Frases ditas por Eugene (momentos-chave da narrativa)
-
-- *"Reunidos em breve"* — ao chegar ao topo
-- *"A última escalada prometida"* — ao iniciar a jornada
+- *"Reunidos em breve."* — ao chegar ao topo
+- *"A última escalada prometida."* — ao iniciar a jornada
 - *"Por você minha querida, qualquer coisa."* — durante a escalada
 
 ---
@@ -188,13 +190,13 @@ O jogo possui **5 fases**, representando trechos progressivos da escalada de Eug
 
 | Fase | Ambiente | Tom narrativo | Novidade de gameplay | Inimigos presentes |
 |------|----------|--------------|---------------------|--------------------|
-| 1 | Base da montanha — floresta e trilha inicial | Introdução. Leve melancolia. Eugene começa sua jornada. | Pulo simples + corrida (habilidades iniciais) | Morcego |
-| 2 | Entrada da caverna — ambiente meio morto, pedras e raízes | Transição. O caminho começa a pesar. | Dash desbloqueado (flor 1) | Estalagmite instável |
-| 3 | Caverna profunda | Escuridão e peso emocional. Clímax narrativo da primeira metade. | Pulo duplo + Wall jump desbloqueados (flores 2 e 3) | Partículas de estalagmite, vento |
-| 4 | Caverna densa e escura — ponto mais difícil do jogo | Momento mais sombrio. Eugene enfrenta a escuridão total. | Planear desbloqueado (flor 4) | Combinação dos anteriores |
-| 5 | Caverna clareando → saída para o cume | Alívio e resolução. A luz retorna. O topo revela a vista prometida. | Corrida aprimorada (flor 5). Sem novos inimigos. | Nenhum — apenas o caminho |
+| 1 | Base da montanha — floresta e trilha inicial | Introdução leve. Eugene começa reclamando da subida. | Pulo simples + corrida (habilidades iniciais) | Morcego |
+| 2 | Entrada da caverna — ambiente meio morto, pedras e raízes | Transição. O caminho começa a pesar, mas Eugene ainda faz piada. | Dash desbloqueado (flor 1) | Estalagmite instável |
+| 3 | Caverna profunda | O humor diminui. As memórias ficam mais pesadas. | Pulo duplo + Wall jump desbloqueados (flores 2 e 3) | Partículas de estalagmite, vento |
+| 4 | Caverna densa e escura — ponto mais difícil do jogo | Momento mais sombrio. Eugene para de falar. Só continua. | Planear desbloqueado (flor 4) | Combinação dos anteriores |
+| 5 | Caverna clareando → saída para o cume | Alívio. A luz volta. Eugene chora — mas chega. | Corrida aprimorada (flor 5). Sem novos inimigos. | Nenhum — apenas o caminho |
 
-> **Nota de design:** A progressão escuridão → luz é uma metáfora intencional sobre o luto. Eugene entra nas profundezas (da montanha e da dor) e emerge para a luz (resolução e cumprimento da promessa). A fase 5 não apresenta inimigos deliberadamente — o caminho final deve ser de contemplação.
+> **Nota de design:** A progressão escuridão → luz é uma metáfora intencional sobre o luto. O tom do Eugene acompanha: começa bem-humorado, vai silenciando conforme a emoção pesa, e termina em resolução. A fase 5 não apresenta inimigos deliberadamente — o caminho final deve ser de contemplação.
 
 ---
 
@@ -308,9 +310,8 @@ Pixel art de resolução média (personagens ~32×32 px, tilesets 16×16 px).
 ### Referências Visuais
 
 - **Celeste** — pixel art expressivo, fundos de montanha com paralaxe, uso emocional de cor
-- A preencher com mood board, paletas concretas e exemplos de assets
 
-> 📌 *Adicionar mood board e imagens de referência aqui*
+> 📌 *Adicionar mood board, paletas concretas e exemplos de assets*
 
 ---
 
@@ -421,7 +422,7 @@ O projeto será estruturado em Godot 4 com GDScript, seguindo separação de res
 - Multiplayer não será implementado
 - Sistema de save em nuvem fora do escopo (save local)
 - Vento e partículas de estalagmite condicionais ao tempo disponível
-- Localização apenas em português (frases latinas e nórdicas mantidas no idioma original)
+- Localização apenas em português (frases latinas e nórdicas mantidas no idioma original, ditas por Eugene no tom dele)
 - Arte criada pelo aluno: qualidade sujeita a evolução durante o projeto
 
 ---
@@ -436,9 +437,10 @@ O projeto será estruturado em Godot 4 com GDScript, seguindo separação de res
 | Abril/2026 | Pixel art como estilo visual | Domínio da ferramenta (Aseprite); coerente com as referências |
 | Abril/2026 | Godot 4 como engine | Open source, leve, excelente exportação WebGL, GDScript acessível |
 | Abril/2026 | 5 fases como escopo | Equilíbrio entre conteúdo satisfatório e viabilidade para TCC solo |
-| Abril/2026 | Cada flor = 1 frase + 1 habilidade | Une narrativa e mecânica de forma orgânica; a frase justifica a habilidade temáticamente |
+| Abril/2026 | Cada flor = 1 frase + 1 habilidade | Une narrativa e mecânica de forma orgânica; a frase justifica a habilidade tematicamente |
 | Abril/2026 | Fase 5 sem inimigos | Metáfora intencional: o caminho final é de contemplação, não de conflito |
-| Abril/2026 | Frases latinas/nórdicas mantidas no idioma original | Reforçam a personalidade de Liliana e adicionam peso cultural ao texto |
+| Abril/2026 | Frases ditas por Eugene no tom dele, não como citações formais | Torna a narrativa mais humana e acessível; evita o tom acadêmico e mantém o humor involuntário do personagem |
+| Abril/2026 | Tom leve na superfície, emoção pesada por baixo (tática Disney) | O impacto emocional é maior quando o jogador é pego de surpresa. Tratar assuntos sérios com leveza é uma escolha narrativa intencional, não uma concessão. |
 
 ---
 
