@@ -1,13 +1,13 @@
 # 📋 Game Design Document (GDD)
-## [Nome do Jogo a Definir]
+## [One Last Climb]
 
 | | |
 |---|---|
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
 | **Status** | Pesquisa / Prototipagem |
-| **Versão** | v0.2 |
-| **Última atualização** | 09/04/2026 |
+| **Versão** | v0.3 |
+| **Última atualização** | 12/04/2026 |
 
 ---
 
@@ -15,7 +15,7 @@
 
 ### 🧠 Elevator Pitch
 
-Um jogo de plataforma 2D narrativo onde o jogador assume o papel de um idoso determinado a escalar uma montanha para cumprir a última promessa feita à sua esposa falecida. Ao longo da jornada, desafios de movimentação se entrelaçam com memórias do casal, reveladas por meio de flashbacks desbloqueados durante a exploração. A experiência combina mecânicas precisas e progressivas com uma narrativa emocional profunda.
+Um jogo de plataforma 2D narrativo onde o jogador assume o papel de Eugene, um idoso determinado a escalar uma montanha para cumprir a última promessa feita à sua esposa falecida. Ao longo da jornada, desafios de movimentação se entrelaçam com memórias do casal, reveladas por meio de flashbacks desbloqueados durante a escalada. A experiência combina mecânicas precisas e progressivas com uma narrativa emocional profunda.
 
 ### 🎮 Gênero
 
