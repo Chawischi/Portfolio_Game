@@ -80,7 +80,7 @@ Jogo de exploração casual onde o jogador sobe uma montanha no próprio ritmo.
 
 ### Mood Board
 
-> 📌 Ver imagem: `docs/moodboard.png`
+![Mood Board](./Docs/moodboard.png)
 
 ### Análise das Referências
 
@@ -313,8 +313,7 @@ O jogo possui 5 fases, representando trechos progressivos da escalada de Eugene.
 
 ### Flow de Telas
 
-> 📌 Ver imagem: `docs/menu_flow.png`
-
+![Menu Flow](./Docs/menu_flow.png)
 ```
 Menu Principal → Jogar → Fase ativa ←→ [Pausa] → Retomar ou Menu Principal
                                      → [Sonho/Checkpoint] → retorna à fase
@@ -323,7 +322,7 @@ Menu Principal → Jogar → Fase ativa ←→ [Pausa] → Retomar ou Menu Princ
 
 ### Wireframes
 
-> 📌 Ver imagem: `docs/wireframe.png`
+![WireFrame](./Docs/wireframe.png)
 
 ### Controles — Teclado
 
@@ -346,7 +345,7 @@ Pixel art com resolução base 320×180, ampliada em múltiplos inteiros (upscal
 
 ### Paleta de Cores — Jornada do Jogador
 
-> 📌 Ver imagem: `docs/palette.png`
+![Pallete](./Docs/palette.png)
 
 #### Floresta Inicial — calma e natural
 *Sensação: natureza, tranquilidade, começo da aventura.*
