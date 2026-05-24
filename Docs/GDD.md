@@ -1,12 +1,12 @@
 # ONE LAST CLIMB
-## Game Design Document — v0.7 | Maio/2026
+## Game Design Document — v0.8 | Maio/2026
 
 | Campo | Info |
 |---|---|
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
 | **Status** | Prototipagem |
-| **Versão** | v0.7 |
+| **Versão** | v0.8 |
 | **Última atualização** | Maio/2026 |
 
 ---
@@ -15,7 +15,7 @@
 
 ### Elevator Pitch
 
-One Last Climb é um jogo de plataforma 2D com movimentação ágil e progressiva, onde o jogador controla Eugene, um velhinho teimoso e determinado. Após a morte de sua esposa Liliana, Eugene precisa cumprir sua última vontade: ter as cinzas espalhadas no alto de uma montanha próxima à casa deles. Como o caminho oficial para visitantes está bloqueado, ele decide seguir a trilha alternativa — que passa por dentro da montanha, por uma mina escura e claustrofóbica. O jogo é divertido primeiro: saltar, dar dash e escalar paredes com precisão é o coração da experiência. A narrativa emocional entra pelas beiradas — nas flores que Eugene coleta pelo caminho e nos sonhos que ele tem nos checkpoints, onde ouve a voz de Liliana. O jogador começa achando que está jogando uma aventura leve de um velhinho cabeçudo. Só lá na frente percebe que estava sendo partido aos poucos.
+One Last Climb é um jogo de plataforma 2D com movimentação ágil e progressiva, onde o jogador controla Eugene, um velhinho teimoso e determinado. O jogo é divertido primeiro: saltar, dar dash e escalar paredes com precisão é o coração da experiência. A narrativa emocional entra pelas beiradas — nas flores que Eugene coleta pelo caminho e nos sonhos que ele tem nos checkpoints, onde ouve a voz de Liliana. O jogador começa achando que está jogando uma aventura leve de um velhinho cabeçudo. Só lá na frente percebe que estava sendo partido aos poucos.
 
 ### Gênero
 
@@ -48,9 +48,7 @@ Jogadores casuais e intermediários, principalmente entre adolescentes e adultos
 
 ### Eugene — O Protagonista
 
-Idoso determinado a cumprir a última vontade da esposa: levar as cinzas de Liliana ao topo de uma montanha. Como o caminho oficial está bloqueado, Eugene enfrenta a trilha interna — uma mina escura e cheia de obstáculos — sozinho e sem pedir ajuda para ninguém, porque é exatamente esse tipo de velho. Sua jornada é tanto física (escalar a montanha) quanto emocional (superar a perda e honrar a memória de Liliana).
-
-No gameplay, Eugene começa com todas as habilidades disponíveis desde o início. O jogador vai dominando o conjunto de mecânicas progressivamente conforme as fases exigem e ensinam seu uso.
+Idoso teimoso e determinado a cumprir a última vontade da esposa: levar as cinzas de Liliana ao topo de uma montanha. Como o caminho oficial está bloqueado, Eugene enfrenta a trilha interna — sozinho e sem pedir ajuda para ninguém, porque é exatamente esse tipo de velho. Sua jornada é tanto física (escalar a montanha) quanto emocional (superar a perda e honrar a memória de Liliana).
 
 ### Liliana — A Esposa
 
@@ -80,7 +78,7 @@ Jogo de exploração casual onde o jogador sobe uma montanha no próprio ritmo.
 
 ### Mood Board
 
-![Mood Board](./Docs/moodboard.png)
+> 📌 Ver imagem: `docs/moodboard.png`
 
 ### Análise das Referências
 
@@ -132,9 +130,9 @@ Todas as habilidades estão disponíveis desde o início. O level design de cada
 |---|---|
 | Pulo simples | Responsivo e preciso — base de toda a movimentação. |
 | Pulo duplo | Segundo pulo no ar para alcançar plataformas mais altas. Abre novas possibilidades de rota. |
-| Dash | Impulso horizontal rápido para superar buracos ou escapar de inimigos. Satisfatório de usar. |
+| Dash | Impulso horizontal rápido e satisfatório. **Não possui i-frames** — qualquer contato com inimigo durante o dash causa dano normalmente. |
 | Wall jump | Saltar entre paredes em sequência rápida. Mecânica que exige timing e recompensa o domínio. |
-| Escalada | Agarrar e subir superfícies verticais em trechos específicos da fase. |
+| Escalada | Agarrar e subir superfícies verticais. Possui limite de resistência: quando esgotado, Eugene começa a tremer e escorrega até cair. O feedback é visual no próprio sprite (tremor e leve mudança de cor) — sem barra explícita no HUD, referência direta ao estilo de Celeste. |
 
 ### Câmera
 
@@ -144,9 +142,9 @@ Câmera lateral 2D com scroll automático suave seguindo o personagem. Pequenos 
 
 **Vitória:** Eugene chega ao topo da montanha e realiza o ritual de homenagem a Liliana, espalhando as cinzas no cume — desencadeando a cena final.
 
-**Derrota:** Contato com inimigos ou quedas em abismos. Ao zerar, o personagem é reposicionado no último checkpoint ativado.
+**Derrota:** Contato com inimigos ou quedas em abismos. Eugene é reposicionado imediatamente no último checkpoint ativado, sem nenhuma interrupção narrativa — o respawn é silencioso para preservar o ritmo da gameplay.
 
-**Progressão:** A cada checkpoint ativado, Eugene dorme e ouve a voz de Liliana. Os lírios coletados ficam registrados no álbum de memórias acessível no menu de pausa.
+**Progressão:** A cada checkpoint ativado **pela primeira vez**, Eugene dorme e o sonho de Liliana é exibido. Nas mortes subsequentes, o respawn é direto — o sonho não se repete. Os lírios coletados ficam registrados no álbum de memórias.
 
 ---
 
@@ -157,10 +155,11 @@ Esta é a mecânica que conecta gameplay e narrativa. O movimento é interrompid
 ### Como funciona
 
 1. Eugene ativa um checkpoint (fogueira ou sinal de descanso)
-2. A tela escurece suavemente — Eugene dorme
-3. Tela preta: a voz de Liliana fala uma frase — uma citação, um conselho, um momento do passado deles
-4. Eugene resmuga algo ao acordar — uma frase curta no tom dele, entre o soturno e o bem-humorado
-5. O jogo retoma normalmente do ponto do checkpoint
+2. **Na primeira ativação:** a tela escurece suavemente, Eugene dorme, a voz de Liliana fala uma frase, Eugene resmuga ao acordar
+3. **Nas ativações seguintes (respawn após morte):** o reposicionamento é imediato e silencioso — o sonho não se repete
+4. O jogo retoma normalmente do ponto do checkpoint
+
+> 📌 Esta regra é essencial para preservar o ritmo ágil da gameplay. Morrer repetidas vezes em uma mesma fase não força o jogador a rever o mesmo diálogo.
 
 ### Falas por Checkpoint
 
@@ -245,10 +244,17 @@ O jogo possui 5 fases, representando trechos progressivos da escalada de Eugene.
 
 ### Inimigos
 
-| Inimigo | Fase(s) | Comportamento | Dano |
+| Inimigo | Fase(s) | Comportamento | Regras de colisão |
 |---|---|---|---|
-| Morcego | 1, 2, 3, 5 | Patrulha lateral no ar; ao detectar o jogador, avança em linha reta | Dano por contato |
-| Estalagmite instável | 3, 4, 5 | Estática no teto; vibra ao jogador se aproximar, cai após alguns segundos | Dano ao cair sobre Eugene |
+| Morcego (sozinho) | 1, 2, 3, 5 | Patrulha lateral no ar; ao detectar o jogador, avança em linha reta | Pular em cima **elimina** o morcego sem causar dano (stomp). Contato lateral ou pelo dash causa dano. |
+| Enxame de morcegos | 2, 3, 5 (Parte 3) | Grupo em formação; comportamento coletivo agressivo | Nenhuma forma de stomp válida — **qualquer contato causa dano.** |
+| Estalagmite instável | 3, 4, 5 | Estática no teto; vibra ao se aproximar, cai após alguns segundos | Dano ao cair sobre Eugene. Inofensiva enquanto presa no teto. |
+
+### Regras Gerais de Colisão
+
+- O **dash não possui i-frames** — qualquer contato com inimigo durante o dash causa dano normalmente.
+- **Stomp** (pular em cima) funciona apenas em morcegos isolados, nunca no enxame.
+- A estalagmite só causa dano durante a queda — não é possível encostar nela enquanto está presa no teto.
 
 ### Obstáculos Ambientais
 
@@ -300,7 +306,7 @@ O jogo possui 5 fases, representando trechos progressivos da escalada de Eugene.
 
 ### HUD
 
-- Barra de resistência discreta (canto superior esquerdo) — ativa apenas em trechos de escalada de parede
+- **Indicador de resistência na escalada** — sem barra explícita. O feedback é dado pelo próprio sprite de Eugene: ele começa a tremer e sofre leve mudança de cor conforme se aproxima do limite. Ao esgotar, escorrega e cai.
 - Indicador discreto de flores coletadas na fase atual (canto superior direito)
 - HUD completamente oculto durante os sonhos nos checkpoints
 
@@ -313,7 +319,8 @@ O jogo possui 5 fases, representando trechos progressivos da escalada de Eugene.
 
 ### Flow de Telas
 
-![Menu Flow](./Docs/menu_flow.png)
+> 📌 Ver imagem: `docs/menu_flow.png`
+
 ```
 Menu Principal → Jogar → Fase ativa ←→ [Pausa] → Retomar ou Menu Principal
                                      → [Sonho/Checkpoint] → retorna à fase
@@ -322,7 +329,7 @@ Menu Principal → Jogar → Fase ativa ←→ [Pausa] → Retomar ou Menu Princ
 
 ### Wireframes
 
-![WireFrame](./Docs/wireframe.png)
+> 📌 Ver imagem: `docs/wireframe.png`
 
 ### Controles — Teclado
 
@@ -345,7 +352,7 @@ Pixel art com resolução base 320×180, ampliada em múltiplos inteiros (upscal
 
 ### Paleta de Cores — Jornada do Jogador
 
-![Pallete](./Docs/palette.png)
+> 📌 Ver imagem: `docs/palette.png`
 
 #### Floresta Inicial — calma e natural
 *Sensação: natureza, tranquilidade, começo da aventura.*
@@ -519,10 +526,14 @@ O projeto será estruturado em Godot 4 com GDScript, seguindo separação de res
 | Abril/2026 | Fase 5 sem inimigos até a saída | Metáfora intencional: o caminho final é de contemplação; o enxame final é um susto narrativo |
 | Abril/2026 | Tom leve na superfície, emoção pesada por baixo (tática Disney) | O impacto emocional é maior quando o jogador é pego de surpresa |
 | Maio/2026 | Flashbacks substituídos por sonhos nos checkpoints | Mais imersivo; elimina cenas estáticas desenhadas (escopo menor); tela preta é mais direta emocionalmente |
-| Maio/2026 | Lírios como colecionáveis puros (sem gatilho de habilidade) | Separa recompensa narrativa (checkpoints) da recompensa de exploração (álbum) |
+| Maio/2026 | Lírios como colecionáveis puros (sem recompensa definida) | Separa recompensa narrativa (checkpoints) da exploração (álbum). Recompensa por 100% em aberto: caso o tempo permita, será implementado um segundo final para quem completar o buquê. |
 | Maio/2026 | Todas as habilidades disponíveis desde o início | O level design ensina as mecânicas organicamente; o jogador não é bloqueado artificialmente |
 | Maio/2026 | Estrutura de 3 partes por fase (estilo Nintendo) | Apresenta, mistura e desafia de forma clara; facilita o level design e o ensino das mecânicas |
 | Maio/2026 | Suporte apenas a teclado | Foco no escopo; simplifica controles e testes |
+| Maio/2026 | Sonho exibido apenas na primeira ativação do checkpoint | Respawn silencioso preserva o ritmo ágil; morrer repetidamente não força rever o mesmo diálogo |
+| Maio/2026 | Dash sem i-frames | Mantém coerência do sistema de colisão; o dash não funciona como escape garantido de inimigos |
+| Maio/2026 | Stomp válido apenas em morcego isolado | Recompensa precisão e leitura de cenário; enxame é ameaça distinta que exige outra abordagem |
+| Maio/2026 | Feedback de resistência da escalada via sprite (sem barra) | HUD limpo; feedback integrado ao personagem é mais imersivo, coerente com o estilo de Celeste |
 
 ---
 
