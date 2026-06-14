@@ -114,6 +114,7 @@ Pixel art com resolução base **320×180**, ampliada em múltiplos inteiros. A 
 O Game Design Document completo está disponível em [`Docs/`](./Docs/).
 
 A documentação detalhada do projeto (design, mecânicas, arquitetura e setup) está na [Wiki](https://github.com/Chawischi/Portfolio_Game/wiki).
+
 ---
 
 ## 👤 Autor
