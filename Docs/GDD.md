@@ -6,7 +6,7 @@
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
 | **Status** | Prototipagem |
-| **Versão** | v0.9 |
+| **Versão** | v1.0 |
 | **Última atualização** | Junho/2026 |
 
 ---
@@ -80,9 +80,7 @@ Exploração casual com subida de montanha em ritmo próprio.
 
 ### Mood Board
 
-> 📌 Ver imagem: `Docs/moodboard.png`
-
-![Mood Board](./Docs/moodboard.png)
+![Mood Board](https://github.com/user-attachments/assets/f0852070-2789-4655-a53d-e289e971b551)
 
 ### Análise das Referências
 
@@ -140,12 +138,17 @@ Todas as habilidades estão disponíveis desde o início. O level design apresen
 
 ### Mockups das Mecânicas
 
-![Mockup — Mecânica de andar](./Docs/mockup_andar.png)
-![Mockup — Mecânica de pulo](./Docs/mockup_pulo.png)
-![Mockup — Mecânica de pulo duplo](./Docs/mockup_pulo_duplo.png)
-![Mockup — Mecânica de dash](./Docs/mockup_dash.png)
-![Mockup — Mecânica de escalar](./Docs/mockup_escalar.png)
-![Mockup — Mecânica de wall jump](./Docs/mockup_walljump.png)
+![Mockup — Mecânica de andar](https://github.com/user-attachments/assets/6ea9627d-c101-4f3a-b059-066fa60b57be)
+
+![Mockup — Mecânica de pulo](https://github.com/user-attachments/assets/eba0fdc3-3983-4de7-ae82-c294b752d013)
+
+![Mockup — Mecânica de pulo duplo](https://github.com/user-attachments/assets/026e3c85-4339-4ea3-96d2-3867a73ee955)
+
+![Mockup — Mecânica de dash](https://github.com/user-attachments/assets/d8fffd32-e05a-472c-9430-762663d4359f)
+
+![Mockup — Mecânica de escalar](https://github.com/user-attachments/assets/6dd31a5c-7f5b-4193-8075-3d343bfa5471)
+
+![Mockup — Mecânica de wall jump](https://github.com/user-attachments/assets/171caa12-c121-438d-b966-d0c64e30e4c3)
 
 ### Câmera
 
@@ -210,11 +213,11 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 ### Wireframe de Level Design
 
-![Wireframe de Level Design](./Docs/wireframe_level.png)
+![Wireframe de Level Design](https://github.com/user-attachments/assets/ba65cb95-a63e-47c9-bdfa-bc1521ceacb5)
 
 ### Layout — Zona 1 (Fase 1)
 
-![Layout Zona 1](./Docs/layout_zona1.png)
+![Layout Zona 1](https://github.com/user-attachments/assets/caf47c73-be4d-46f4-b21c-40a685f94c47)
 
 ### Fase 1 — Base da montanha (floresta e trilha inicial)
 *Tom: introdução leve. Eugene começa reclamando da subida.*
@@ -345,11 +348,11 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 ### Flow de Telas
 
-![Flow de Telas](./Docs/menu_flow.png)
+![Flow de Telas](https://github.com/user-attachments/assets/260b08ea-f710-410a-8623-0306814205b1)
 
 ### Wireframes de Menus e HUD
 
-![Wireframes](./Docs/wireframe.png)
+![Wireframes](https://github.com/user-attachments/assets/0f26a289-6896-4fc0-b050-fc4cba5ee644)
 
 ### Controles — Teclado
 
@@ -372,7 +375,7 @@ Pixel art com resolução base 320×180, ampliada em múltiplos inteiros. Person
 
 ### Paleta de Cores — Jornada do Jogador
 
-![Paleta de Cores](./Docs/palette.png)
+![Paleta de Cores](https://github.com/user-attachments/assets/41f64bd2-6782-4bb7-9161-434cbc9a9e7e)
 
 #### Floresta Inicial
 
@@ -627,7 +630,7 @@ Fiquei surpreso com o quão difícil é produzir um bom GDD. Mesmo sendo um trab
 
 > 📌 Linha sólida = chamada direta. Linha tracejada = signal (Observer do Godot).
 
-![Diagrama de Arquitetura](./Docs/arch_diagram.png)
+![Diagrama de Arquitetura](https://github.com/user-attachments/assets/bc3e8a24-9bef-405b-b66f-2c35371de0ac)
 
 ---
 
