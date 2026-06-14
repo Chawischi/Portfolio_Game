@@ -6,8 +6,8 @@
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
 | **Status** | Pesquisa / Prototipagem |
-| **Versão** | v0.5 |
-| **Última atualização** | 12/04/2026 |
+| **Versão** | v0.9 |
+| **Última atualização** | 14/06/2026 |
 
 ---
 
@@ -113,6 +113,7 @@ Pixel art com resolução base **320×180**, ampliada em múltiplos inteiros. A 
 
 O Game Design Document completo está disponível em [`Docs/`](./Docs/).
 
+A documentação detalhada do projeto (design, mecânicas, arquitetura e setup) está na [Wiki](https://github.com/Chawischi/Portfolio_Game/wiki).
 ---
 
 ## 👤 Autor
