@@ -634,4 +634,36 @@ Fiquei surpreso com o quão difícil é produzir um bom GDD. Mesmo sendo um trab
 
 ---
 
+## 24. Parecer do Comitê de Avaliação
+
+### Avaliador 1
+
+**Professor: Paulo Rogerio Pires Manseira**
+
+**Status:** ✅ Aprovado
+
+![Parecer — Prof. Manseira](https://github.com/user-attachments/assets/9b5747bf-15cb-4d4f-ace9-a778a45a0085)
+
+---
+
+### Avaliador 2
+
+**Professor: Claudinei Dias**
+
+**Status:** ✅ Aprovado
+
+![Parecer — Prof. Claudinei](https://github.com/user-attachments/assets/d877f616-5f07-4b48-8801-54c14ce72304)
+
+---
+
+### Avaliador 3
+
+**Professor: Diego Sauter Possamai**
+
+**Status:** ✅ Aprovado
+
+![Parecer — Prof. Diego](https://github.com/user-attachments/assets/1091abc9-3340-42bc-9746-a9b490831d16)
+
+---
+
 *ONE LAST CLIMB — GDD v1.0 | Felipe da Silva Chawischi | felipe.chawischi@catolica.edu*
