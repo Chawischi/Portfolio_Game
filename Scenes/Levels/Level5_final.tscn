@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d2cqp74hfvb3p"]
+
+[ext_resource type="Script" uid="uid://btql8xcvoaujr" path="res://Scripts/Trechos/trecho_orquestrador.gd" id="1_xwlei"]
+[ext_resource type="PackedScene" uid="uid://dtnok1xw8rxx0" path="res://Scenes/Trechos/Level5_final/Trecho1_leve5_final.tscn" id="2_3c2uk"]
+[ext_resource type="PackedScene" uid="uid://nlc2pyiebiv" path="res://Scenes/Trechos/Level5_final/Trecho2_leve5_final.tscn" id="3_d5qk5"]
+[ext_resource type="PackedScene" uid="uid://cfb32b32iuufg" path="res://Scenes/Trechos/Level5_final/Trecho3_leve5_final.tscn" id="4_keuep"]
+[ext_resource type="PackedScene" uid="uid://1crawx7hu8hc" path="res://Scenes/Trechos/Level5_final/Trecho4_leve5_final.tscn" id="5_ux5je"]
+[ext_resource type="PackedScene" uid="uid://b1stucncigh8t" path="res://Scenes/Trechos/Level5_final/Trecho5_leve5_final.tscn" id="6_may5j"]
+[ext_resource type="PackedScene" uid="uid://crw84o4wxcksi" path="res://Scenes/Player/CameraController.tscn" id="8_d7ipn"]
+[ext_resource type="PackedScene" uid="uid://1h8r72i7c2qv" path="res://Scenes/Player/Player_Eugene.tscn" id="9_yawv8"]
+
+[node name="Level5Final" type="Node2D" unique_id=1284398703]
+script = ExtResource("1_xwlei")
+trecho_scenes = Array[PackedScene]([ExtResource("2_3c2uk"), ExtResource("3_d5qk5"), ExtResource("4_keuep"), ExtResource("5_ux5je"), ExtResource("6_may5j")])
+
+[node name="Camera2D" parent="." unique_id=200463703 instance=ExtResource("8_d7ipn")]
+position = Vector2(104, 88)
+
+[node name="Player_Eugene" parent="." unique_id=1699571630 instance=ExtResource("9_yawv8")]
+position = Vector2(16, 104)
