@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bqmsxxtsvo8v5"]
+
+[ext_resource type="Script" uid="uid://b11kc62qprqna" path="res://Scripts/UI/hud.gd" id="1_adibq"]
+
+[node name="HUD" type="CanvasLayer" unique_id=728739656]
+script = ExtResource("1_adibq")
+
+[node name="FlowerCounter" type="HBoxContainer" parent="." unique_id=1411703645]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FlowerIcon" type="TextureRect" parent="FlowerCounter" unique_id=2016254482]
+layout_mode = 2
+
+[node name="CountLabel" type="Label" parent="FlowerCounter" unique_id=1078978735]
+layout_mode = 2
