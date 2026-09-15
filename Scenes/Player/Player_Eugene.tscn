@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://brbsjvgxs5il6" path="res://Sprites/player/Eugene_Sprite_run.png" id="8_lhdhw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_flf07"]
-size = Vector2(11, 15)
+size = Vector2(10, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kayhp"]
 atlas = ExtResource("3_0ynmn")
@@ -238,19 +238,25 @@ position = Vector2(0, 32)
 script = ExtResource("2_kayhp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player_Eugene" unique_id=654658899]
-position = Vector2(-1, 0)
+position = Vector2(-1, 0.5)
 shape = SubResource("RectangleShape2D_flf07")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player_Eugene" unique_id=1735654037]
 sprite_frames = SubResource("SpriteFrames_fshgd")
-animation = &"jump_fall"
+animation = &"idle"
 
-[node name="Camera2D" type="Camera2D" parent="Player_Eugene" unique_id=570953555]
-position = Vector2(0, -32)
-position_smoothing_speed = 10.082
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.15
-drag_top_margin = 0.15
-drag_right_margin = 0.15
-drag_bottom_margin = 0.15
+[node name="RayRight" type="RayCast2D" parent="Player_Eugene" unique_id=904558287]
+target_position = Vector2(8, 0)
+collide_with_areas = true
+
+[node name="RayLeft" type="RayCast2D" parent="Player_Eugene" unique_id=783311595]
+target_position = Vector2(-8, 0)
+collide_with_areas = true
+
+[node name="RayUp" type="RayCast2D" parent="Player_Eugene" unique_id=314805854]
+target_position = Vector2(0, -8)
+collide_with_areas = true
+
+[node name="RayDown" type="RayCast2D" parent="Player_Eugene" unique_id=1031438921]
+target_position = Vector2(0, 8)
+collide_with_areas = true
