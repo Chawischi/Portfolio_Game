@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://b0jdpq36x6ll0"]
+
+[ext_resource type="Script" uid="uid://2sskpw4k2ffp" path="res://Scripts/Managers/pause_menu.gd" id="1_3un8k"]
+[ext_resource type="Theme" uid="uid://ddv533kmqk6i4" path="res://UI/button_Theme.tres" id="1_n2yb7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3un8k"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1683923025]
+script = ExtResource("1_3un8k")
+
+[node name="Control" type="Control" parent="." unique_id=1693183196]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=662216903]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.23529412, 0.23529412, 0.23529412, 0.6392157)
+
+[node name="CenterContainer" type="CenterContainer" parent="Control" unique_id=2096853794]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer" unique_id=1281667616]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=419812077]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../OptionsButton")
+theme = ExtResource("1_n2yb7")
+text = "Retomar"
+
+[node name="HSeparator" type="HSeparator" parent="Control/CenterContainer/VBoxContainer" unique_id=1023186724]
+layout_mode = 2
+theme_override_constants/separation = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_3un8k")
+
+[node name="OptionsButton" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=422157077]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ResumeButton")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
+theme = ExtResource("1_n2yb7")
+text = "Options"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CenterContainer/VBoxContainer" unique_id=428503849]
+layout_mode = 2
+theme_override_constants/separation = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_3un8k")
+
+[node name="MainMenuButton" type="Button" parent="Control/CenterContainer/VBoxContainer" unique_id=142326145]
+layout_mode = 2
+focus_neighbor_top = NodePath("../OptionsButton")
+theme = ExtResource("1_n2yb7")
+text = "Menu Principal"
+
+[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]

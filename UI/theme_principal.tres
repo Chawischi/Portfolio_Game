@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://bwi2pserrder2"]
+
+[ext_resource type="FontFile" uid="uid://dk44w47yfe16x" path="res://Fonts/PublicPixel.ttf" id="1_3uypm"]
+
+[resource]
+default_font = ExtResource("1_3uypm")
+default_font_size = 8

@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://nfqo31xxi3xf"]
+
+[ext_resource type="Script" uid="uid://5dgo4owv0as" path="res://Scripts/Managers/main_menu.gd" id="1_bsjfe"]
+[ext_resource type="Texture2D" uid="uid://bowv0qmitxgya" path="res://Sprites/tileset_florestas/Tela_menu.png" id="1_s7j54"]
+[ext_resource type="Theme" uid="uid://ddv533kmqk6i4" path="res://UI/button_Theme.tres" id="2_bsjfe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1tfvi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_am3qo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dmbmt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2bskk"]
+
+[node name="MainMenu" type="Control" unique_id=1874071502]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_bsjfe")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1447809890]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_s7j54")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=1281902719]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -55.0
+offset_right = 112.0
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "One Last CLimb"
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=890469167]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -20.0
+offset_right = 37.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1909655663]
+layout_mode = 2
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer" unique_id=1089474904]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_1tfvi")
+
+[node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=353739284]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../ContinueButton")
+theme = ExtResource("2_bsjfe")
+text = "Jogar"
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/VBoxContainer" unique_id=1865519134]
+layout_mode = 2
+theme_override_constants/separation = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_am3qo")
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=428284448]
+layout_mode = 2
+focus_neighbor_top = NodePath("../PlayButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+theme = ExtResource("2_bsjfe")
+text = "Continuar"
+
+[node name="HSeparator3" type="HSeparator" parent="CenterContainer/VBoxContainer" unique_id=1168130606]
+layout_mode = 2
+theme_override_constants/separation = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_dmbmt")
+
+[node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1998149457]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ContinueButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+theme = ExtResource("2_bsjfe")
+text = "Options
+"
+
+[node name="HSeparator4" type="HSeparator" parent="CenterContainer/VBoxContainer" unique_id=841432044]
+layout_mode = 2
+theme_override_constants/separation = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2bskk")
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1719040480]
+layout_mode = 2
+focus_neighbor_top = NodePath("../OptionsButton")
+theme = ExtResource("2_bsjfe")
+text = "Sair"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
