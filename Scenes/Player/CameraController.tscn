@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://crw84o4wxcksi"]
+
+[ext_resource type="Script" uid="uid://c1e5cbk86pp2q" path="res://Scripts/Player/camera_controller.gd" id="1_qsppd"]
+
+[node name="Camera2D" type="Camera2D" unique_id=200463703]
+process_callback = 0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_horizontal_offset = 0.15
+drag_vertical_offset = 0.15
+script = ExtResource("1_qsppd")
