@@ -21,6 +21,9 @@ size = Vector2(16, 200)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ivym"]
 size = Vector2(344, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6pdj"]
+size = Vector2(144, 56)
+
 [node name="Trecho1Level2" type="Node2D" unique_id=1445679971]
 script = ExtResource("1_ep2be")
 camera_limit_right = 320
@@ -79,6 +82,18 @@ debug_color = Color(0, 0.63041776, 0.47598165, 0.41960785)
 
 [node name="Flower" parent="." unique_id=1601396762 instance=ExtResource("5_wv0jd")]
 flower_id = "flower_level_2"
+
+[node name="BatArea" type="Area2D" parent="." unique_id=1087285398]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BatArea" unique_id=1308679150]
+position = Vector2(576, 48)
+shape = SubResource("RectangleShape2D_h6pdj")
+
+[node name="Ponto_A" type="Marker2D" parent="." unique_id=633691612]
+position = Vector2(624, 64)
+
+[node name="Ponto_B" type="Marker2D" parent="." unique_id=120188994]
+position = Vector2(688, 56)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]

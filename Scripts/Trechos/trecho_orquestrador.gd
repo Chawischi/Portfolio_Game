@@ -73,7 +73,6 @@ func respawn_player() -> void:
 		player.velocity = Vector2.ZERO
 	)
 	
-	#await get_tree().create_timer(0.2).timeout
 	player.unlock_movement()
 	is_transitioning = false
 	

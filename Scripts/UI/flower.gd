@@ -1,5 +1,7 @@
 extends Area2D
 
+const EUGENE_DIALOG_BOX: PackedScene = preload("res://Scenes/UIs/Dialog_box_Eugene.tscn")
+
 @export var flower_id: String = ""
 @export var firts_flower_lines: Array[String] = [
 	"Ahhh...",
@@ -33,7 +35,7 @@ func _on_proximity_entered(body: Node2D) -> void:
 	proximity_trigger.set_deferred("monitoring", false)
 	
 	body.lock_movement(true, true)
-	DialogManager.start_message(global_position, firts_flower_lines, self)
+	DialogManager.start_message(global_position, firts_flower_lines, self, "Centro", EUGENE_DIALOG_BOX)
 	await DialogManager.conversation_finished
 	body.unlock_movement()
 		

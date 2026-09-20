@@ -5,6 +5,7 @@ func start_new_game() -> void:
 	current_level_index = 0
 	flowers_collected.clear()
 	get_tree().call_deferred("change_scene_to_file", level_scenes[current_level_index])
+	HUD.visible = true
 
 # ---------- Mudança de Level ----------
 @export var level_scenes: Array[String] = [
@@ -26,6 +27,7 @@ func go_to_next_level() -> void:
 				current_level_index += 1
 				get_tree().call_deferred("change_scene_to_file", level_scenes[current_level_index])
 			)
+			HUD.visible = true
 		
 # ---------- Checkpoints ----------
 var activated_checkpoint: Array[String] = []

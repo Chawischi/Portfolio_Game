@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://1h8r72i7c2qv"]
 
+[ext_resource type="Texture2D" uid="uid://skt31pff7gc7" path="res://Sprites/player/Eugene_Sprite_checkpoint_idle.png" id="2_3pf24"]
+[ext_resource type="Texture2D" uid="uid://c0rnjkncalhtf" path="res://Sprites/player/Eugene_Sprite_checkpoint_alert.png" id="2_jpn6l"]
 [ext_resource type="Script" uid="uid://do1vt1wmdp6nd" path="res://Scripts/Player/player.gd" id="2_kayhp"]
 [ext_resource type="Texture2D" uid="uid://c83teqib3j0ci" path="res://Sprites/player/Eugene_Sprite_climb_idle.png" id="3_0ynmn"]
+[ext_resource type="Texture2D" uid="uid://cgfcs7pc0nv0r" path="res://Sprites/player/Eugene_Sprite_checkpoint_sleep.png" id="3_jpn6l"]
 [ext_resource type="Texture2D" uid="uid://dgna5sn6dxsyp" path="res://Sprites/player/Eugene_Sprite_climb_jump_up.png" id="3_kayhp"]
 [ext_resource type="Texture2D" uid="uid://rlv45qa1pk7r" path="res://Sprites/player/Eugene_Sprite_dash.png" id="4_3pf24"]
-[ext_resource type="Texture2D" uid="uid://cx18wswd4r64a" path="res://Sprites/player/Eugene_Sprite_climb_move.png" id="4_qliu0"]
+[ext_resource type="Texture2D" uid="uid://caa7v11knfhjd" path="res://Sprites/player/Eugene_Sprite_checkpoint_wake.png" id="4_nbbqx"]
+[ext_resource type="Texture2D" uid="uid://cnod4rnqpbme3" path="res://Sprites/player/Eugene_Sprite_climb_move.png" id="4_qliu0"]
 [ext_resource type="Texture2D" uid="uid://bo5xcm8db4l3v" path="res://Sprites/player/Eugene_Sprite_idle.png" id="5_jpn6l"]
 [ext_resource type="Texture2D" uid="uid://b6h1bexdnt1xm" path="res://Sprites/player/Eugene_Sprite_jump_fall.png" id="6_nbbqx"]
 [ext_resource type="Texture2D" uid="uid://7y3li7flh0cr" path="res://Sprites/player/Eugene_Sprite_jump_up.png" id="7_6c8nt"]
@@ -12,6 +16,54 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_flf07"]
 size = Vector2(10, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jadaj"]
+atlas = ExtResource("2_jpn6l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybejm"]
+atlas = ExtResource("2_3pf24")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqtph"]
+atlas = ExtResource("2_3pf24")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fxhm"]
+atlas = ExtResource("2_3pf24")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8co0k"]
+atlas = ExtResource("3_jpn6l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybrp2"]
+atlas = ExtResource("3_jpn6l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axork"]
+atlas = ExtResource("3_jpn6l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnrpg"]
+atlas = ExtResource("3_jpn6l")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olxpv"]
+atlas = ExtResource("3_jpn6l")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvist"]
+atlas = ExtResource("4_nbbqx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddtlt"]
+atlas = ExtResource("4_nbbqx")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt0ec"]
+atlas = ExtResource("4_nbbqx")
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kayhp"]
 atlas = ExtResource("3_0ynmn")
@@ -33,25 +85,52 @@ region = Rect2(64, 0, 32, 32)
 atlas = ExtResource("3_kayhp")
 region = Rect2(96, 0, 32, 32)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_emj70"]
+load_path = "res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_lhdhw"]
-atlas = ExtResource("4_qliu0")
+atlas = SubResource("CompressedTexture2D_emj70")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nambx"]
-atlas = ExtResource("4_qliu0")
+atlas = SubResource("CompressedTexture2D_emj70")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7vmp"]
-atlas = ExtResource("4_qliu0")
+atlas = SubResource("CompressedTexture2D_emj70")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nrg7a"]
-atlas = ExtResource("4_qliu0")
+atlas = SubResource("CompressedTexture2D_emj70")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i2i17"]
+atlas = SubResource("CompressedTexture2D_emj70")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmbpu"]
+atlas = ExtResource("4_qliu0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_228h0"]
+atlas = ExtResource("4_qliu0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84pot"]
+atlas = ExtResource("4_qliu0")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjkr2"]
+atlas = ExtResource("4_qliu0")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u11kg"]
 atlas = ExtResource("4_qliu0")
 region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7s1w"]
+atlas = ExtResource("4_qliu0")
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e8dv2"]
 atlas = ExtResource("4_3pf24")
@@ -117,6 +196,62 @@ region = Rect2(64, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jadaj")
+}],
+"loop": false,
+"name": &"checkpoint_alert",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybejm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqtph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fxhm")
+}],
+"loop": true,
+"name": &"checkpoint_idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8co0k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybrp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axork")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnrpg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olxpv")
+}],
+"loop": false,
+"name": &"checkpoint_sleep",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvist")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddtlt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt0ec")
+}],
+"loop": false,
+"name": &"checkpoint_wake",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_kayhp")
 }],
 "loop": false,
@@ -155,6 +290,24 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i2i17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmbpu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_228h0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84pot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjkr2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u11kg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7s1w")
 }],
 "loop": false,
 "name": &"climb_move",
@@ -242,8 +395,9 @@ position = Vector2(-1, 0.5)
 shape = SubResource("RectangleShape2D_flf07")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player_Eugene" unique_id=1735654037]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_fshgd")
-animation = &"idle"
+animation = &"checkpoint_idle"
 
 [node name="RayRight" type="RayCast2D" parent="Player_Eugene" unique_id=904558287]
 target_position = Vector2(8, 0)

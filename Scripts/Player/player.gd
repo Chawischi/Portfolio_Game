@@ -52,7 +52,7 @@ var afterimage_timer: float = 0.0
 
 # ---------- Climb ----------
 @export var climb_speed: float = 30.0
-@export var climb_stamina_max: float = 5.0				# Segundos de escalada até esgotar
+@export var climb_stamina_max: float = 10.0				# Segundos de escalada até esgotar
 @export var climb_stamina_drain_rate: float = 1.0		# Unidades  de estamina gastas por segundo
 @export var climb_stamina_regen_rate: float = 2.5		# Para regenerar só no chão
 @export var climb_jump_boost_velocity: float = -150	# Menos que o pulo nomal (-180)
@@ -301,6 +301,9 @@ func _handle_climb_movement() -> void:
 	velocity.y = climb_vertical_input * climb_speed
 	velocity.x = 0.0
 	sprite.flip_h = wall_direction < 0.0
+	
+	if global_position.y < 140.0 and global_position.y > 116.0:
+		print("Y: ", global_position.y, " | is_on_wall: ", is_on_wall(), " | velocity: ", velocity, " | wall_direction: ", wall_direction)
 	
 func _handle_wall_input(_delta : float) -> bool:
 	#var touching_wall: bool = is_on_wall() and not is_on_floor()
