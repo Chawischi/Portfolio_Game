@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bcs18qayh7lml"]
+
+[ext_resource type="Script" uid="uid://b1xxm0c2jso0d" path="res://Scripts/Enemies/hazard_area.gd" id="1_onke6"]
+[ext_resource type="Texture2D" uid="uid://yedfh2k6fjmv" path="res://Sprites/Enemies/spikes_fase_2.png" id="2_j7hma"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tmma"]
+size = Vector2(8, 4)
+
+[node name="Spikes" type="Area2D" unique_id=2095472339]
+script = ExtResource("1_onke6")
+
+[node name="SpikeSprite" type="Sprite2D" parent="." unique_id=1061114946]
+texture_repeat = 2
+texture = ExtResource("2_j7hma")
+region_enabled = true
+region_rect = Rect2(0, 4, 8, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=27710454]
+shape = SubResource("RectangleShape2D_2tmma")
