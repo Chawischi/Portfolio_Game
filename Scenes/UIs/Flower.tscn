@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://cja62y8nqsxnu"]
 
 [ext_resource type="Script" uid="uid://hphvkw0b4vup" path="res://Scripts/UI/flower.gd" id="1_3ivni"]
+[ext_resource type="Texture2D" uid="uid://b6widiuyfj4k8" path="res://Sprites/Flores/lirio_flor.png" id="2_qqgv8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qqgv8"]
+size = Vector2(8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ivni"]
 size = Vector2(13, 34)
@@ -19,3 +21,6 @@ debug_color = Color(0.9020316, 0.24375501, 0.4918024, 0.41960785)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityTrigger" unique_id=1911227380]
 shape = SubResource("RectangleShape2D_3ivni")
 debug_color = Color(0.8947229, 0.830829, 0, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1436370610]
+texture = ExtResource("2_qqgv8")
