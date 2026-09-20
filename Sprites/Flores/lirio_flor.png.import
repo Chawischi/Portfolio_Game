@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnod4rnqpbme3"
-path="res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"
+uid="uid://b6widiuyfj4k8"
+path="res://.godot/imported/lirio_flor.png-f528f264a384a991a1efac5259b6e6dc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/player/Eugene_Sprite_climb_move.png"
-dest_files=["res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"]
+source_file="res://Sprites/Flores/lirio_flor.png"
+dest_files=["res://.godot/imported/lirio_flor.png-f528f264a384a991a1efac5259b6e6dc.ctex"]
 
 [params]
 

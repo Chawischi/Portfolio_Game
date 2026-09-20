@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnod4rnqpbme3"
-path="res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"
+uid="uid://caa7v11knfhjd"
+path="res://.godot/imported/Eugene_Sprite_checkpoint_wake.png-cd3e8297906260e31e6ad61441bbdaa0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/player/Eugene_Sprite_climb_move.png"
-dest_files=["res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"]
+source_file="res://Sprites/player/Eugene_Sprite_checkpoint_wake.png"
+dest_files=["res://.godot/imported/Eugene_Sprite_checkpoint_wake.png-cd3e8297906260e31e6ad61441bbdaa0.ctex"]
 
 [params]
 

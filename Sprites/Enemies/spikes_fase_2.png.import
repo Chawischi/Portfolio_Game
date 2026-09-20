@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnod4rnqpbme3"
-path="res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"
+uid="uid://yedfh2k6fjmv"
+path="res://.godot/imported/spikes_fase_2.png-4f077391be48806a9519c8b6eb43e30b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/player/Eugene_Sprite_climb_move.png"
-dest_files=["res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"]
+source_file="res://Sprites/Enemies/spikes_fase_2.png"
+dest_files=["res://.godot/imported/spikes_fase_2.png-4f077391be48806a9519c8b6eb43e30b.ctex"]
 
 [params]
 

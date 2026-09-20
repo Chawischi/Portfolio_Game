@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnod4rnqpbme3"
-path="res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"
+uid="uid://cfuypeypw37vn"
+path="res://.godot/imported/buque_inicial.png-f2f4b6fd8869e9d4847657ab97dd2e39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/player/Eugene_Sprite_climb_move.png"
-dest_files=["res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"]
+source_file="res://Sprites/Flores/buque_inicial.png"
+dest_files=["res://.godot/imported/buque_inicial.png-f2f4b6fd8869e9d4847657ab97dd2e39.ctex"]
 
 [params]
 

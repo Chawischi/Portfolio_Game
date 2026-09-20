@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnod4rnqpbme3"
-path="res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"
+uid="uid://cqj1wmiijoj0v"
+path="res://.godot/imported/danger_box.png-7feb678fb5ccf31d8dc1e52f86cbc3e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/player/Eugene_Sprite_climb_move.png"
-dest_files=["res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"]
+source_file="res://Sprites/Objects/danger_box.png"
+dest_files=["res://.godot/imported/danger_box.png-7feb678fb5ccf31d8dc1e52f86cbc3e5.ctex"]
 
 [params]
 

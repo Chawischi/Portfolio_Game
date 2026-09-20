@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnod4rnqpbme3"
-path="res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"
+uid="uid://jp5njv0p0lnl"
+path="res://.godot/imported/cerca_1.png-7ee2df6d89dc9130b8c5619f20e7e660.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/player/Eugene_Sprite_climb_move.png"
-dest_files=["res://.godot/imported/Eugene_Sprite_climb_move.png-f0e40d2b3da123109afe9695a7a7520a.ctex"]
+source_file="res://Sprites/Objects/cerca_1.png"
+dest_files=["res://.godot/imported/cerca_1.png-7ee2df6d89dc9130b8c5619f20e7e660.ctex"]
 
 [params]
 
