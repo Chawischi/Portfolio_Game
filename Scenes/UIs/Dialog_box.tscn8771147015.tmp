@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://56xndqpvil1j"]
+
+[ext_resource type="Texture2D" uid="uid://d1ivjc62fxtr4" path="res://Sprites/Objects/dialog_box.png" id="1_iesb3"]
+[ext_resource type="Script" uid="uid://bb3jstsk5vh48" path="res://Scripts/UI/dialog_box.gd" id="1_yxud7"]
+
+[node name="DialogBox" type="MarginContainer" unique_id=984137221]
+offset_right = 16.0
+offset_bottom = 16.0
+script = ExtResource("1_yxud7")
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=375529117]
+layout_mode = 2
+texture = ExtResource("1_iesb3")
+region_rect = Rect2(1, 1, 14, 15)
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 4
+
+[node name="TextMargin" type="MarginContainer" parent="Background" unique_id=939456476]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextLabel" type="Label" parent="Background/TextMargin" unique_id=1407970227]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+vertical_alignment = 1
+
+[node name="LetterTimer" type="Timer" parent="." unique_id=26420321]
+one_shot = true

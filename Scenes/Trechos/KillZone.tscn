@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c03ix70jm8h6i"]
+
+[ext_resource type="Script" uid="uid://b0wrmnq47606w" path="res://Scripts/Trechos/kill_zone.gd" id="1_pmak4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r2mtg"]
+size = Vector2(128, 16)
+
+[node name="Kill_Zone" type="Area2D" unique_id=1927230773]
+script = ExtResource("1_pmak4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1561407017]
+shape = SubResource("RectangleShape2D_r2mtg")
+debug_color = Color(0.8324396, 0.36758164, 0.3663536, 0.41960785)

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bdhfcj4xcftiw"]
+
+[ext_resource type="Shader" uid="uid://dhyfqfy4alb87" path="res://Shaders/pit_gradient.gdshader" id="1_acugm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ah87w"]
+shader = ExtResource("1_acugm")
+shader_parameter/gradient_color = Color(0, 0, 0, 1)
+shader_parameter/fade_start = 0.0
+
+[node name="ColorRect" type="ColorRect" unique_id=51628477]
+material = SubResource("ShaderMaterial_ah87w")
+offset_right = 40.0
+offset_bottom = 40.0

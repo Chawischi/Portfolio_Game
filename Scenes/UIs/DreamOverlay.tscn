@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://iv7r8faocflq"]
+
+[ext_resource type="Script" uid="uid://qn3fcr07eqgj" path="res://Scripts/UI/dream_overlay.gd" id="1_hj1w0"]
+
+[node name="DreamOverlay" type="CanvasLayer" unique_id=989953740]
+script = ExtResource("1_hj1w0")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1204780963]
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 1)
+
+[node name="TextLabel" type="Label" parent="." unique_id=192029220]
+custom_minimum_size = Vector2(160, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -4.0
+offset_right = 90.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+autowrap_mode = 2
+
+[node name="LetterTimer" type="Timer" parent="." unique_id=1224202241]

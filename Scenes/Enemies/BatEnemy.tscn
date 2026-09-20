@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://bkygdoq73ci1d"]
+
+[ext_resource type="Script" uid="uid://xdy51u1bbf3j" path="res://Scripts/Enemies/bat_enemy.gd" id="1_h02iw"]
+[ext_resource type="Texture2D" uid="uid://pbiolxobuy1x" path="res://Sprites/Enemies/Morcego_ataque.png" id="2_h64mf"]
+[ext_resource type="Texture2D" uid="uid://brn6r4clme1ni" path="res://Sprites/Enemies/Morcego_idle_patrol.png" id="3_wrv1i"]
+[ext_resource type="Texture2D" uid="uid://d4lftrsponsve" path="res://Sprites/Enemies/Morcego_alerta.png" id="4_wrv1i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xgbqx"]
+size = Vector2(6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrv1i"]
+atlas = ExtResource("4_wrv1i")
+region = Rect2(0, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avp3d"]
+atlas = ExtResource("4_wrv1i")
+region = Rect2(15, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdk5n"]
+atlas = ExtResource("4_wrv1i")
+region = Rect2(30, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3lup"]
+atlas = ExtResource("2_h64mf")
+region = Rect2(15, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esypq"]
+atlas = ExtResource("3_wrv1i")
+region = Rect2(0, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd2tt"]
+atlas = ExtResource("3_wrv1i")
+region = Rect2(15, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d45wu"]
+atlas = ExtResource("3_wrv1i")
+region = Rect2(30, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3gln"]
+atlas = ExtResource("3_wrv1i")
+region = Rect2(45, 0, 15, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jdk5n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrv1i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avp3d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdk5n")
+}],
+"loop": false,
+"name": &"alerta",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3lup")
+}],
+"loop": false,
+"name": &"ataque",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_esypq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd2tt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d45wu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3gln")
+}],
+"loop": true,
+"name": &"idle_patrol",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t7d33"]
+size = Vector2(7, 9)
+
+[node name="BatEnemy" type="CharacterBody2D" unique_id=13633420]
+collision_layer = 2
+script = ExtResource("1_h02iw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=654588719]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_xgbqx")
+debug_color = Color(0.7434557, 0.46418983, 0.04046478, 0.41960785)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=880360334]
+sprite_frames = SubResource("SpriteFrames_jdk5n")
+animation = &"idle_patrol"
+
+[node name="StompZone" type="Area2D" parent="." unique_id=1000483111]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StompZone" unique_id=676878064]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_t7d33")
+debug_color = Color(0.9264066, 0, 0.2113494, 0.41960785)
+
+[node name="BatEnemy" type="Node2D" parent="." unique_id=1074782607]
+
+[connection signal="body_entered" from="StompZone" to="." method="_on_stomp_zone_body_entered"]

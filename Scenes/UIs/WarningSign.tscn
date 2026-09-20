@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://2drr0rov42fp"]
+
+[ext_resource type="Script" uid="uid://dogrbbom1fbup" path="res://Scripts/UI/warning_sign.gd" id="1_0q3eo"]
+[ext_resource type="Texture2D" uid="uid://cklntvuc8ahh" path="res://Sprites/Objects/placa_info.png" id="1_6u6d0"]
+[ext_resource type="Texture2D" uid="uid://coe4ryo7btab1" path="res://Sprites/Objects/warning_box.png" id="2_0q3eo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jxf38"]
+size = Vector2(32, 24)
+
+[node name="WarningSign" type="Node2D" unique_id=1874089775]
+script = ExtResource("1_0q3eo")
+
+[node name="Sign" type="Sprite2D" parent="." unique_id=2008740035]
+z_index = -1
+texture = ExtResource("1_6u6d0")
+
+[node name="AlertIcon" type="Sprite2D" parent="." unique_id=1195857569]
+z_index = -1
+position = Vector2(0, -20)
+texture = ExtResource("2_0q3eo")
+
+[node name="InteractZone" type="Area2D" parent="." unique_id=641944923]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractZone" unique_id=1567680359]
+shape = SubResource("RectangleShape2D_jxf38")

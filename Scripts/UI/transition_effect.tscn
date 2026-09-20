@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bybxqquft1wlm"]
+
+[ext_resource type="Script" uid="uid://b6fas0nxbto50" path="res://Scenes/UIs/TransitionEffect.gd" id="1_bu71k"]
+[ext_resource type="Shader" uid="uid://ttbko53wyywu" path="res://Shaders/iris_transition.gdshader" id="2_5nh0y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ukqrw"]
+shader = ExtResource("2_5nh0y")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 1.5
+shader_parameter/aspect = 1.2228
+shader_parameter/edge_softness = 0.03
+
+[node name="TransitionEffect" type="CanvasLayer" unique_id=1325204768]
+script = ExtResource("1_bu71k")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=940257182]
+material = SubResource("ShaderMaterial_ukqrw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
