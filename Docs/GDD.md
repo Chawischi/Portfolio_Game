@@ -1,13 +1,13 @@
 # ONE LAST CLIMB
-## Game Design Document — v1.0 | Junho/2026
+## Game Design Document — v1.1 | Setembro/2026
 
 | Campo | Info |
 |---|---|
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
-| **Status** | Prototipagem |
-| **Versão** | v1.0 |
-| **Última atualização** | Junho/2026 |
+| **Status** | Prototipagem avançada |
+| **Versão** | v1.1 |
+| **Última atualização** | Setembro/2026 |
 
 ---
 
@@ -40,7 +40,7 @@ Jogadores casuais e intermediários, principalmente entre adolescentes e adultos
 | Build jogável | itch.io — a preencher |
 | Repositório | https://github.com/Chawischi/Portfolio_Game |
 | Vídeo gameplay (opcional) | YouTube — a preencher |
-| Instruções de execução | Godot 4.x \| Windows 10+ \| Teclado |
+| Instruções de execução | Godot 4.x \| Windows 10+ \| Teclado e Controle |
 
 ---
 
@@ -97,10 +97,12 @@ Exploração casual com subida de montanha em ritmo próprio.
 | Hipótese | Método de Teste | Critério de Confirmação |
 |---|---|---|
 | Jogadores se conectam emocionalmente com personagens idosos | Playtest com mínimo de 5 participantes; perguntas pós-sessão sobre empatia | 70% relatam conexão ou empatia com Eugene |
-| Lírios incentivam exploração | Observação direta: registrar se jogadores buscam ou ignoram as flores | 60% coletam ao menos metade dos lírios sem instrução explícita |
+| Lírios recompensam atenção ao cenário, mesmo em um percurso linear | Observação direta: registrar se jogadores buscam ou ignoram as flores | 60% notam e coletam o lírio disponível em cada fase sem instrução explícita |
 | Estrutura mostrar→misturar→desafiar ensina sem tutorial explícito | Medir tentativas até completar cada parte da fase | 90% completam a Parte 1 da Fase 1 em até 3 tentativas |
 | Sonhos nos checkpoints não interrompem o ritmo | Perguntar pós-sessão se os sonhos foram intrusivos ou emocionantes | Menos de 20% relatam os sonhos como intrusivos |
 | Tom leve potencializa impacto emocional | Registrar reações verbais e expressões durante a cena final | 50% demonstram reação emocional notável na cena do cume |
+
+> 📌 As hipóteses ainda não foram validadas formalmente com playtesters — a validação está prevista para o período de playtest de outubro/2026.
 
 ### Pilares do Jogo
 
@@ -117,7 +119,7 @@ Exploração casual com subida de montanha em ritmo próprio.
 
 O núcleo do jogo é o movimento. A narrativa entra como recompensa — nos checkpoints (sonhos de Liliana) e nos lírios coletados (álbum de memórias).
 
-> Explorar a fase → superar obstáculos → ativar checkpoint → Eugene dorme → ouve Liliana → resmuga ao acordar → avançar → repetir
+> Avançar pela fase superando obstáculos → ativar checkpoint → Eugene dorme → ouve Liliana → resmuga ao acordar → continuar avançando → repetir
 
 ### Loops Secundários
 
@@ -132,9 +134,9 @@ Todas as habilidades estão disponíveis desde o início. O level design apresen
 |---|---|
 | Pulo simples | Responsivo e preciso — base de toda a movimentação. |
 | Pulo duplo | Segundo pulo no ar para alcançar plataformas mais altas. |
-| Dash | Impulso horizontal rápido e satisfatório. **Não possui i-frames** — qualquer contato com inimigo durante o dash causa dano normalmente. |
-| Wall jump | Saltar entre paredes em sequência rápida. Exige timing e recompensa o domínio. |
-| Escalada | Agarrar e subir superfícies verticais. Possui limite de resistência: quando esgotado, Eugene começa a tremer e escorrega até cair. O feedback é visual no sprite (tremor e leve mudança de cor), sem barra explícita no HUD. |
+| Dash | Impulso **omnidirecional** (8 direções), com curva de aceleração e desaceleração calculada matematicamente a partir de distância e duração desejadas, preservação parcial de momentum ao final e efeito visual de rastro. **Não possui i-frames** — qualquer contato com inimigo durante o dash causa dano normalmente. |
+| Wall jump | Saltar entre paredes em sequência rápida. O impulso é sempre numa diagonal fixa, para longe da parede — não lê direção do jogador, mantendo o desafio focado no timing. Exige timing e recompensa o domínio. |
+| Escalada | Agarrar e subir superfícies verticais através de um **botão dedicado** (não é automática por proximidade). Possui limite de resistência: quando esgotado, Eugene começa a tremer e escorrega até cair. O feedback é visual no sprite (tremor e leve mudança de cor), sem barra explícita no HUD. |
 
 ### Mockups das Mecânicas
 
@@ -152,7 +154,7 @@ Todas as habilidades estão disponíveis desde o início. O level design apresen
 
 ### Câmera
 
-Lateral 2D com scroll suave. Offsets verticais antecipam plataformas acima. Escurece suavemente nos checkpoints.
+Lateral 2D com scroll suave, seguindo o player via câmera desacoplada. Offsets verticais antecipam plataformas acima.
 
 ### Sistemas
 
@@ -167,9 +169,9 @@ O desfecho do jogo é determinado pela coleta dos lírios ao longo das fases:
 
 > 📌 A existência de dois finais dá peso real à coleta dos lírios: não é opcional, é a diferença entre Eugene cumprir ou não a sua última promessa.
 
-**Derrota:** Contato com inimigos ou queda em abismo. Eugene é reposicionado imediatamente no último checkpoint ativado — o respawn é silencioso para preservar o ritmo da gameplay.
+**Derrota:** Contato com inimigos ou queda em abismo reposiciona o jogador no ponto de respawn mais próximo dentro do trecho atual, de forma silenciosa e sem interrupção narrativa — não necessariamente no último checkpoint ativado. *(Ver Seção 7 para a distinção entre pontos de respawn e checkpoints narrativos.)*
 
-**Progressão:** A cada checkpoint ativado **pela primeira vez**, Eugene dorme e o sonho de Liliana é exibido. Nas mortes subsequentes, o respawn é direto — o sonho não se repete.
+**Progressão:** A cada checkpoint ativado **pela primeira vez**, Eugene dorme e o sonho de Liliana é exibido. Nas ativações seguintes, apenas a marcação de progresso é atualizada — o sonho não se repete.
 
 ---
 
@@ -179,12 +181,14 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 ### Como funciona
 
-1. Eugene ativa um checkpoint (fogueira ou sinal de descanso)
-2. **Na primeira ativação:** a tela escurece suavemente, Eugene dorme, a voz de Liliana fala uma frase, Eugene resmuga ao acordar
-3. **Nas ativações seguintes (respawn após morte):** o reposicionamento é imediato e silencioso — o sonho não se repete
-4. O jogo retoma normalmente do ponto do checkpoint
+1. Ao se aproximar de um checkpoint (acampamento), surge um indicativo de interação.
+2. Pressionando o botão de interagir, Eugene se senta, e o controle do jogador é temporariamente bloqueado.
+3. **Na primeira ativação daquele checkpoint específico:** a tela escurece suavemente, e o texto do sonho aparece progressivamente (efeito de digitação), com a fala da Liliana seguida do resmungo de Eugene ao acordar; a tela então clareia novamente e o controle é devolvido ao jogador.
+4. **Nas ativações seguintes do mesmo checkpoint:** a sequência de sentar/levantar se repete, mas o sonho não é mostrado novamente — apenas a marcação de progresso é atualizada.
 
 > 📌 Esta regra preserva o ritmo ágil da gameplay. Morrer repetidas vezes não força o jogador a rever o mesmo diálogo.
+
+> **Nota de esclarecimento:** morte por queda ou contato com hazard/inimigo reposiciona o jogador no ponto de respawn mais próximo dentro do trecho atual (silencioso, sem qualquer narrativa) — não necessariamente no último checkpoint/acampamento ativado. Os checkpoints narrativos descritos nesta seção representam pontos de descanso mais espaçados, associados à progressão da história e, futuramente, ao sistema de salvamento.
 
 ### Falas por Checkpoint
 
@@ -209,7 +213,7 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 ## 8. Estrutura das Fases
 
-5 fases representando trechos progressivos da escalada. Cada fase segue a estrutura mostrar→misturar→desafiar. Plataformas estão presentes em todas as fases.
+5 fases representando trechos progressivos da escalada. Plataformas flutuantes (sem cordas ou suportes visíveis) estão presentes nas fases 2, 3, 4 e 5.
 
 ### Wireframe de Level Design
 
@@ -225,8 +229,9 @@ Esta é a mecânica que conecta gameplay e narrativa.
 | Parte | Descrição |
 |---|---|
 | Parte 1 | Tutorial integrado ao gameplay no estilo Celeste: o level design ensina os controles sem texto excessivo. |
-| Parte 2 | Eugene se depara com uma placa bloqueando o caminho oficial. Decide seguir pela entrada da mina. |
-| Parte 3 | Entrada na caverna. Ambiente escurece. Desafio de plataforma sem inimigos — apresenta o tom do que virá. |
+| Parte 2 | Eugene se depara com uma placa bloqueando o caminho oficial. Decide seguir pela entrada da mina, dando início à sua jornada de verdade. |
+
+> 📌 Diferente das demais fases (estruturadas em 3 partes), a Fase 1 é composta por apenas 2 partes, já que seu papel é estritamente introdutório (tutorial + gancho narrativo), sem necessidade de uma terceira parte de consolidação de desafio.
 
 ### Fase 2 — Entrada da caverna
 *Tom: transição. O caminho começa a pesar, mas Eugene ainda faz piada.*
@@ -235,16 +240,16 @@ Esta é a mecânica que conecta gameplay e narrativa.
 |---|---|
 | Parte 1 | Plataformas e morcegos simples. Apresenta o inimigo e seu padrão de patrulha. |
 | Parte 2 | Plataformas e mais morcegos. Volume aumenta e posicionamentos ficam desafiadores. |
-| Parte 3 | Plataformas e enxame de morcegos. Desafio consolidado do inimigo principal da fase. |
+| Parte 3 | Plataformas e morcegos em maior densidade, consolidando o desafio do inimigo principal da fase. |
 
 ### Fase 3 — Caverna profunda
-*Tom: o humor diminui. As memórias ficam mais pesadas.*
+*Tom: o humor diminui. As memórias ficam mais pesadas. Estrutura diferenciada: a fase é majoritariamente composta por uma sequência de fuga (run), na qual o jogador precisa avançar continuamente sob pressão de tempo, fugindo de um enxame que preenche a tela atrás dele.*
 
 | Parte | Descrição |
 |---|---|
-| Parte 1 | Plataformas e estalagmites. Apresenta o obstáculo e seu comportamento. |
-| Parte 2 | Plataformas e mais estalagmites em combinações mais complexas. |
-| Parte 3 | Tudo junto: morcegos, estalagmites e grande subida vertical em túnel estilo poço de elevador com plataformas em cordas. Conecta visualmente com a Fase 4. |
+| Parte 1 | Introdução às estalagmites, em ritmo calmo, ensinando a mecânica antes da pressão da fuga começar. |
+| Parte 2 | Uma armadilha narrativa desencadeia o início da perseguição: o enxame surge, forçando o início do run. |
+| Parte 3 | Sequência de fuga contínua, combinando obstáculos de plataforma e estalagmites com a pressão constante do enxame avançando. |
 
 ### Fase 4 — Caverna densa (ponto mais difícil)
 *Tom: momento mais sombrio. Eugene para de falar. Só continua.*
@@ -273,20 +278,20 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 | Inimigo | Fase(s) | Comportamento | Regras de colisão |
 |---|---|---|---|
-| Morcego (sozinho) | 1, 2, 3, 5 | Patrulha lateral no ar; ao detectar o jogador, avança em linha reta | Pular em cima **elimina** o morcego sem causar dano (stomp). Contato lateral ou pelo dash causa dano. |
-| Enxame de morcegos | 2, 3, 5 (Parte 3) | Grupo em formação; comportamento coletivo agressivo | Nenhuma forma de stomp válida — **qualquer contato causa dano.** |
-| Estalagmite instável | 3, 4, 5 | Estática no teto; vibra ao se aproximar, cai após alguns segundos | Dano ao cair sobre Eugene. Inofensiva enquanto presa no teto. |
+| Morcego (sozinho) | 2, 4 | Patrulha lateral no ar dentro de uma área delimitada; ao detectar o jogador, exibe um breve indicativo visual de alerta antes de avançar em linha reta na direção detectada | Pular em cima **elimina** o morcego sem causar dano (stomp). Contato lateral causa dano. |
+| Enxame de morcegos | 3, 5 | Sequência de fuga: uma "parede" representando o enxame avança continuamente, forçando o jogador a se manter à frente dela | Nenhuma forma de stomp válida — **qualquer contato causa dano/reinício da sequência.** |
+| Estalagmite instável | 3, 4, 5 | Estática no teto; vibra ao se aproximar, cai após alguns segundos | Causa dano em **qualquer contato**, tanto presa no teto quanto durante a queda. |
 
 ### Regras Gerais de Colisão
 
 - O **dash não possui i-frames** — qualquer contato com inimigo durante o dash causa dano normalmente.
 - **Stomp** (pular em cima) funciona apenas em morcegos isolados, nunca no enxame.
-- A estalagmite só causa dano durante a queda — não é possível encostar nela enquanto está presa no teto.
+- A estalagmite causa dano em qualquer contato, esteja ela presa no teto ou caindo — não há momento seguro para tocá-la.
 
 ### Obstáculos Ambientais
 
 - Abismos entre plataformas
-- Plataformas móveis e penduradas em cordas (fases 3, 4 e 5)
+- Plataformas flutuantes (sem cordas ou suportes visíveis), presentes nas fases 2, 3, 4 e 5
 - Trechos de parede para wall jump obrigatório
 
 ---
@@ -295,13 +300,14 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 ### O jogo inclui
 
-- 5 fases com 3 partes cada (+ cena final na Fase 5)
+- 5 fases (a Fase 1 estruturada em 2 partes; as demais em 3 partes cada, + cena final na Fase 5)
 - 4 mecânicas de movimentação + escalada, todas disponíveis desde o início
 - 5 sonhos narrativos nos checkpoints (tela preta + fala de Liliana + resmungo de Eugene)
 - Sistema de lírios colecionáveis que determina o final obtido
 - **Dois finais:** Final Verdadeiro (coleta completa) e Final Trágico (coleta incompleta)
-- 2 tipos de inimigo: morcego e estalagmite instável
-- Menu principal, pausa e tela de game over
+- 2 tipos de inimigo (morcego e estalagmite instável) + sequência de fuga do enxame de morcegos (fases 3 e 5)
+- Menu principal, pausa e opções (incluindo remapeamento de controles)
+- Efeito de transição visual em momentos de morte/respawn, ao invés de uma tela tradicional de game over
 - Trilha sonora e efeitos sonoros
 - Sistema de save local
 
@@ -319,15 +325,17 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 | Protótipo | Objetivo | Resultado |
 |---|---|---|
-| Movimentação básica | Validar pulo e movimentação lateral | A preencher |
-| Pulo duplo | Testar sensibilidade e feel | A preencher |
-| Dash | Testar sensibilidade e feel | A preencher |
-| Wall jump | Testar sensibilidade e feel | A preencher |
-| Escalada | Validar agarrar e subir superfícies | A preencher |
-| Sonho (checkpoint) | Validar tela preta + fala + resmungo | A preencher |
-| Inimigo morcego | Testar patrulha e dano por contato | A preencher |
-| Estalagmite instável | Testar gatilho de queda e dano | A preencher |
-| Sistema de dois finais | Validar verificação de lírios e disparo do final correto | A preencher |
+| Movimentação básica | Validar pulo e movimentação lateral | ✅ Testado e validado |
+| Pulo duplo | Testar sensibilidade e feel | ✅ Testado e validado |
+| Dash | Testar sensibilidade e feel | ✅ Testado e validado (reformulado, omnidirecional) |
+| Wall jump | Testar sensibilidade e feel | ✅ Testado e validado |
+| Escalada | Validar agarrar e subir superfícies | ✅ Testado e validado (botão dedicado) |
+| Interação com checkpoint (sentar/levantar) | Validar timing e clareza da interação | 🔶 Em processo (lógica pronta, aguardando arte final) |
+| Sonho (checkpoint) | Validar tela preta + fala + resmungo | ✅ Testado e validado |
+| Inimigo morcego | Testar patrulha e dano por contato | ✅ Testado e validado |
+| Estalagmite instável | Testar gatilho de queda e dano | ⏳ Não iniciado |
+| Enxame de morcegos (sequência de fuga) | Testar pressão de tempo e clareza do desafio | 🔶 Em processo |
+| Sistema de dois finais | Validar verificação de lírios e disparo do final correto | ⏳ Parcialmente pronto (contagem de flores implementada; ramificação de final ainda não) |
 
 ---
 
@@ -336,15 +344,15 @@ Esta é a mecânica que conecta gameplay e narrativa.
 ### HUD
 
 - **Indicador de resistência na escalada** — sem barra explícita. O feedback é dado pelo sprite de Eugene: ele começa a tremer e sofre leve mudança de cor. Ao esgotar, escorrega e cai.
-- Indicador discreto de flores coletadas na fase (canto superior direito)
+- Indicador de flores coletadas na fase (canto superior direito), exibindo a contagem atual sobre o total daquela fase
 - HUD oculto durante os sonhos nos checkpoints
 
 ### Menus
 
-- **Menu principal:** Jogar, Continuar, Opções, Sair
-- **Menu de pausa:** Retomar, Álbum de Memórias, Opções, Menu Principal. É também por aqui que o jogador pode sair do jogo.
-- **Game over:** tela preta simples, possivelmente com um símbolo visual. O jogo retoma automaticamente do último checkpoint após alguns segundos, sem botões ou interação.
-- **Opções:** Controles (remapeável), Áudio (Geral/Música/SFX), Vídeo (Fullscreen/V-Sync/UI)
+- **Menu principal:** Jogar, Continuar (habilitado somente após implementação do sistema de save), Opções, Sair
+- **Menu de pausa:** Retomar, Opções, Menu Principal
+- **Morte/Respawn:** sem tela dedicada de game over. Ao morrer, um efeito visual de transição (íris fechando e reabrindo) marca o momento do respawn, mantendo o ritmo do jogo sem interromper com uma tela separada.
+- **Opções:** Controles (remapeável, teclado e controle), Áudio (Geral/Música/SFX), Vídeo (Fullscreen/V-Sync). Escala de UI planejada, ainda não implementada.
 
 ### Flow de Telas
 
@@ -354,16 +362,19 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 ![Wireframes](https://github.com/user-attachments/assets/0f26a289-6896-4fc0-b050-fc4cba5ee644)
 
-### Controles — Teclado
+### Controles — Teclado e Controle
 
-| Ação | Tecla |
-|---|---|
-| Mover | A / D ou setas |
-| Pular / Pulo duplo | Espaço / W / seta cima |
-| Dash | E ou Shift + direcional |
-| Wall jump | Pulo ao encostar na parede |
-| Escalada | Aproximar da superfície + direcional |
-| Pausar | Esc |
+| Ação | Teclado | Controle |
+|---|---|---|
+| Mover | A / D ou setas | Analógico esquerdo / D-Pad |
+| Pular / Pulo duplo | Espaço / W / seta cima | Botão A / Cross |
+| Dash | E ou Shift + direcional | Gatilho (LT ou RT, configurável) |
+| Escalada | Aproximar da superfície + direcional (botão dedicado) | Gatilho (LT ou RT, configurável) |
+| Wall jump | Pulo, pressionado ao encostar na parede | Botão A / Cross, pressionado ao encostar na parede |
+| Interagir (checkpoint, placas) | E | Botão Triângulo / Y |
+| Pausar | Esc | Botão Start / Options |
+
+> **Nota:** o mapeamento exato de teclas e botões de controle (incluindo dash, escalada e demais ações) ainda está sujeito a ajustes finais antes da entrega, tanto no teclado quanto no controle. O sistema de remapeamento já permite qualquer configuração personalizada em ambos os dispositivos.
 
 ---
 
@@ -452,40 +463,52 @@ Pixel art com resolução base 320×180, ampliada em múltiplos inteiros. Person
 | Pulo | Eugene | Não | Subida e descida com frames distintos |
 | Pulo duplo | Eugene | Não | Segundo pulo com efeito visual distinto |
 | Dash | Eugene | Não | Frames rápidos com trilha de partículas |
-| Wall slide | Eugene | Sim | Corpo raspando a parede |
 | Escalada | Eugene | Sim | Movimento de subida em superfície vertical |
 | Tremor (resistência baixa) | Eugene | Sim | Tremor e leve mudança de cor ao se aproximar do limite |
 | Dano | Eugene | Não | Flash e recuo rápido |
-| Dormir (checkpoint) | Eugene | Sim | Fecha os olhos e a tela escurece |
+| Sentar (checkpoint) | Eugene | Não | Eugene se senta ao interagir com o checkpoint — *placeholder atual: reaproveita `idle`* |
+| Levantar (checkpoint) | Eugene | Não | Eugene se levanta ao final da sequência — *placeholder atual: reaproveita `idle`* |
 | Queda (Final Trágico) | Eugene | Não | Eugene cai no cume antes de completar o ritual |
 | Idle patrulha | Morcego | Sim | Movimento lateral de patrulha |
+| Alerta | Morcego | Não | Indicativo visual antes do ataque — **implementado** |
 | Ataque | Morcego | Não | Avanço em linha reta |
 | Vibração | Estalagmite | Sim | Tremor crescente antes de cair |
 | Queda | Estalagmite | Não | Queda vertical |
+| Enxame (representação visual) | Enxame | Sim | Representa a "parede" da sequência de fuga — *pendente* |
 | Flutuação | Lírio (item) | Sim | Balanço suave com brilho pulsante |
+
+> 📌 O estado de Wall Slide reaproveita a animação `climb_idle`, por decisão de design — não recebe arte dedicada.
 
 ---
 
 ## 16. Arquitetura de Software
 
-O projeto será estruturado em Godot 4 com GDScript, seguindo separação de responsabilidades por scripts e Autoloads para sistemas globais.
+O projeto é estruturado em Godot 4 com GDScript, seguindo separação de responsabilidades por scripts e Autoloads para sistemas globais.
 
 | Sistema | Tipo | Responsabilidades |
 |---|---|---|
-| GameManager | Autoload | Estado global, transições de cena, progresso e contagem de lírios coletados |
-| PlayerController | Script (FSM) | Input, física e animações de Eugene. Implementado como **Máquina de Estados Finitos (FSM)** para controle rigoroso das transições (Idle, Walk, Jump, DoubleJump, Dash, WallSlide, Climb, Hurt, Dead) |
-| EnemyBase | Script (base) | Classe base para inimigos. Morcego e estalagmite herdam desta classe |
-| CheckpointSystem | Script | Ativação de checkpoints, disparo dos sonhos na primeira visita e respawn silencioso |
-| FlowerSystem | Script | Coleta de lírios, álbum de memórias e verificação da condição para o Final Verdadeiro |
-| EndingManager | Script | Verificação do buquê completo ao atingir o cume e disparo do final correto |
-| UIManager | Script | HUD, menus, álbum e transições de tela |
-| AudioManager | Autoload | Reprodução e mistura de músicas e efeitos sonoros |
+| GameManager | Autoload | Estado global, transições de fase, progresso do jogador, contagem de flores coletadas, checkpoints ativados |
+| PlayerController | Script (FSM) | Input, física e animações de Eugene. Implementado como **Máquina de Estados Finitos (FSM)**: Idle, Run, Jump Up, Jump Fall, Dash, Climb, Wall Slide |
+| Sistema de Trechos | Scripts (Orquestrador + Trigger) | Divide cada fase em sub-segmentos (trechos), instanciados e destruídos dinamicamente conforme o jogador avança/retrocede |
+| CameraController | Script | Câmera 2D desacoplada do player, com limites e offset configuráveis por trecho |
+| EnemyBase | Script (base) | Classe base para inimigos. Morcego herda desta classe |
+| Sistema de Enxame | Script | Controla a sequência de fuga forçada (Fases 3 e 5), avançando continuamente e detectando contato com o jogador |
+| Sistema de Checkpoint | Script (por instância) | Detecção de proximidade, interação, ativação de sonho na primeira vez, bloqueio/desbloqueio de controle |
+| DreamOverlay | Autoload | Sequência visual e textual do sonho no checkpoint (fade de tela, texto com efeito de digitação) |
+| DialogManager | Autoload | Sistema de diálogo genérico com efeito de digitação, reutilizado em placas informativas e em eventos narrativos pontuais |
+| Sistema de Hazards | Script (genérico, via grupos) | Detecção padronizada de dano por contato, reutilizável em qualquer objeto do cenário |
+| FlowerSystem | Script + GameManager | Coleta de lírios (um por fase), contagem centralizada, exibição no HUD |
+| EndingManager | *(pendente)* | Verificação do buquê completo ao atingir o cume e disparo do final correto |
+| TransitionEffect | Autoload | Efeito visual de transição (íris via shader), usado em respawn, troca de trecho, troca de fase e abertura do jogo |
+| UIManager | Scripts distintos (MainMenu, PauseMenu, OptionsMenu, HUD) | HUD, menus, opções (incluindo remapeamento de controles), pausa |
+| AudioManager | *(pendente)* | Reprodução e mistura de músicas e efeitos sonoros |
 
 ### Padrões de Projeto Aplicados
 
-- **FSM** — `PlayerController`: garante que apenas um estado de movimentação esteja ativo por vez e que as transições (ex: Jump → WallSlide → WallJump) sejam controladas e previsíveis.
-- **Observer (Signals do Godot)** — `CheckpointSystem` emite sinal ao ser ativado; `AudioManager` e `UIManager` reagem sem acoplamento direto.
-- **Singleton (Autoload)** — `GameManager` e `AudioManager` são acessíveis globalmente sem dependência de cena.
+- **FSM** — `PlayerController` e inimigos (Morcego): garante que apenas um estado de movimentação esteja ativo por vez e que as transições sejam controladas e previsíveis.
+- **Observer (Signals do Godot)** — usado extensivamente: `DialogManager`/`DreamOverlay` emitem sinais de conclusão que outros sistemas aguardam; checkpoints e flores comunicam eventos ao `GameManager` e ao HUD sem acoplamento direto.
+- **Singleton (Autoload)** — `GameManager`, `DialogManager`, `DreamOverlay`, `TransitionEffect`, `HUD`, `PauseMenu` e `OptionsMenu` são acessíveis globalmente sem dependência de cena.
+- **Reutilização via grupos** — o sistema de Hazards utiliza grupos do Godot (`"hazard"`) para permitir que qualquer objeto do cenário cause dano de forma padronizada, sem precisar herdar de uma classe específica.
 
 ### Tecnologias Utilizadas
 
@@ -508,12 +531,12 @@ O projeto será estruturado em Godot 4 com GDScript, seguindo separação de res
 
 | Mecânica | Critério de Aceitação |
 |---|---|
-| Pulo simples | 90% executam sem instrução explícita na Parte 1 da Fase 1 |
-| Pulo duplo | 80% percebem e utilizam o pulo duplo na Parte 2 sem dica |
-| Dash | 80% conseguem usar o dash em situação de combate até a Fase 2 |
-| Wall jump | 70% conseguem wall jump consecutivo sem instrução até o fim da Fase 3 |
-| Escalada + resistência | 80% compreendem o limite de resistência pelo feedback visual (tremor) sem barra de HUD |
-| Sistema de checkpoints | 100% entendem que morrem e voltam ao checkpoint sem confusão |
+| Pulo simples | 90% executam sem instrução explícita até o final da Fase 1 |
+| Pulo duplo | 80% percebem e utilizam o pulo duplo sem dica até o final da Fase 1 |
+| Dash | 80% conseguem executar o dash com intenção clara (não por acaso) até o final da Fase 1 |
+| Wall jump | 70% conseguem wall jump consecutivo sem instrução até o final da Fase 1 |
+| Escalada + resistência | 80% compreendem o limite de resistência pelo feedback visual (tremor) sem barra de HUD, até o final da Fase 1 |
+| Sistema de checkpoints | 100% entendem que morrem e voltam ao ponto de respawn sem confusão |
 | Sonhos nos checkpoints | Menos de 20% relatam os sonhos como intrusivos |
 | Sistema de dois finais | 80% entendem, após o primeiro final obtido, que a coleta de lírios influencia o desfecho |
 
@@ -531,15 +554,14 @@ O projeto será estruturado em Godot 4 com GDScript, seguindo separação de res
 
 ## 18. Cronograma
 
-| Milestone | Período previsto | Descrição |
+| Milestone | Período | Descrição |
 |---|---|---|
-| Pesquisa e GDD | Março – Junho/2026 | Documentação, referências e reestruturações de design |
-| Protótipo de movimentação | Maio – Junho/2026 | Todas as mecânicas jogáveis |
-| Fase 1 jogável | Junho/2026 | Arte, level design (3 partes) e primeiro sonho integrados |
-| Fases 2 e 3 | Julho/2026 | Inimigos, plataformas penduradas e sistema de sonhos |
-| Fases 4 e 5 + sistema de finais | Agosto/2026 | Conclusão do conteúdo, dois finais, cena final e áudio |
-| Polimento e playtests | Setembro/2026 | Ajustes de dificuldade, bugs, UI e álbum |
-| Build final + entrega | Outubro/2026 | Versão final para avaliação |
+| Pesquisa e GDD | Março – Maio/2026 | Documentação, referências e reestruturações de design |
+| Prototipagem inicial | Maio – Julho/2026 | Player Controller básico, sistema de câmera desacoplada, sistema de trechos, primeiros protótipos de diálogo e checkpoint |
+| Sistemas centrais e inimigos | Agosto/2026 | Refinamento físico de pulo e dash (fórmulas matemáticas de altura/distância/tempo), morcego solo completo, primeiras iterações do enxame, base do sistema de hazards |
+| Menus, Save e Level 1 | Setembro – 1ª quinzena de Outubro/2026 | Menu Principal, Pausa e Opções (áudio, vídeo, remapeamento teclado/controle), sistema de flores, checkpoint completo, Level 1 (Tutorial) funcional |
+| Levels 2 e 3 | 1ª – 2ª quinzena de Outubro/2026 | Level 2 completo (morcego, flores, checkpoints, hazards); Level 3 com a sequência de fuga do enxame testada |
+| Finalização das fases restantes e polimento | Outubro – meados de Novembro/2026 | Levels 4 e 5 (estalagmite, sistema de dois finais), arte e decoração final, save/load, ajustes de dificuldade, playtests, build final |
 
 ---
 
@@ -563,7 +585,6 @@ O projeto será estruturado em Godot 4 com GDScript, seguindo separação de res
 - Sistema de save em nuvem fora do escopo (save local)
 - Localização apenas em português
 - Arte criada pelo aluno: qualidade sujeita a evolução
-- Suporte apenas a teclado (sem gamepad nesta versão)
 
 ---
 
@@ -587,6 +608,19 @@ O projeto será estruturado em Godot 4 com GDScript, seguindo separação de res
 | Junho/2026 | Dois finais determinados pela coleta de lírios | Dá peso real à coleta: define se Eugene cumpre ou não a promessa |
 | Junho/2026 | PlayerController implementado como FSM | Controle rigoroso das transições de estado; evita comportamentos indefinidos |
 | Junho/2026 | EndingManager como sistema isolado | Separa a lógica de desfecho do resto do jogo; facilita teste e manutenção |
+| Julho/2026 | Sistema de trechos (sub-segmentação de fases com câmera desacoplada) | Necessário para controlar a câmera de forma estável em fases grandes, evitando problemas técnicos de zonas de câmera fixas |
+| Agosto/2026 | Pulo e dash recalculados matematicamente (altura/distância/tempo) | Maior controle e previsibilidade sobre o feel do movimento, facilitando ajustes futuros |
+| Agosto/2026 | Dash reformulado como omnidirecional, com curva de aceleração/desaceleração e preservação de momentum | Dar mais vocabulário de movimento ao jogador, aproximando do feel de referências como Celeste |
+| Agosto/2026 | Wall jump sem leitura de direção diagonal (impulso sempre fixo) | Mantém o desafio focado no timing da execução, não na precisão de ângulo |
+| Agosto/2026 | Escalada com botão dedicado, não automática por proximidade | Evita agarrar em paredes sem intenção do jogador, especialmente com o dash omnidirecional |
+| Agosto/2026 | Separação entre "pontos de respawn" (silenciosos, por trecho) e "checkpoints" (narrativos, com sonho) | Reduz a punição por erro, mantendo o ritmo ágil, sem abrir mão da estrutura narrativa dos checkpoints |
+| Agosto/2026 | Enxame de morcegos reinterpretado como sequência de fuga forçada, em vez de IA de perseguição em grupo | IA de perseguição em grupo gerava comportamento imprevisível e difícil de calibrar como desafio justo |
+| Agosto/2026 | Estalagmite causa dano em qualquer contato, mesmo presa no teto | Reforça o cuidado necessário ao se aproximar do inimigo |
+| Agosto/2026 | Plataformas ambientais definidas como flutuantes, sem cordas ou suportes visíveis | Simplifica o escopo de arte e comportamento |
+| Agosto/2026 | 1 flor por fase (5 no total), sem Álbum de Memórias no escopo atual | Álbum de Memórias representava trabalho de UI desproporcional ao prazo disponível |
+| Setembro/2026 | Reversão da decisão de "suporte apenas a teclado": adicionado suporte completo a controle | Necessidade prática visando a apresentação em demoday |
+| Setembro/2026 | Substituição da tela de game over por efeito de transição visual (íris via shader) | Mantém o ritmo do jogo sem interromper com uma tela dedicada |
+| Setembro/2026 | Fase 1 estruturada em 2 partes (não 3, como as demais fases) | Papel estritamente introdutório, sem necessidade de uma terceira parte de consolidação |
 
 ---
 
@@ -666,4 +700,4 @@ Fiquei surpreso com o quão difícil é produzir um bom GDD. Mesmo sendo um trab
 
 ---
 
-*ONE LAST CLIMB — GDD v1.0 | Felipe da Silva Chawischi | felipe.chawischi@catolica.edu*
+*ONE LAST CLIMB — GDD v1.1 | Felipe da Silva Chawischi | felipe.chawischi@catolica.edu*
