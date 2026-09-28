@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://yj4si6iri33l"]
+
+[ext_resource type="Script" uid="uid://bb3jstsk5vh48" path="res://Scripts/UI/dialog_box.gd" id="1_d8131"]
+[ext_resource type="Texture2D" uid="uid://cqj1wmiijoj0v" path="res://Sprites/Objects/danger_box.png" id="2_d8131"]
+[ext_resource type="FontFile" uid="uid://dk44w47yfe16x" path="res://Fonts/PublicPixel.ttf" id="3_egwos"]
+
+[node name="DialogBox" type="MarginContainer" unique_id=984137221]
+offset_right = 16.0
+offset_bottom = 16.0
+script = ExtResource("1_d8131")
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=375529117]
+layout_mode = 2
+texture = ExtResource("2_d8131")
+region_rect = Rect2(1, 1, 14, 15)
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 4
+
+[node name="TextMargin" type="MarginContainer" parent="." unique_id=939456476]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="TextLabel" type="Label" parent="TextMargin" unique_id=1407970227]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86350954, 0.805205, 0.11426654, 1)
+theme_override_fonts/font = ExtResource("3_egwos")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LetterTimer" type="Timer" parent="." unique_id=26420321]
+one_shot = true

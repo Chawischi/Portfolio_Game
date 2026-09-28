@@ -4,6 +4,7 @@ extends Control
 @onready var continue_button: Button = $CenterContainer/VBoxContainer/ContinueButton
 
 func _ready() -> void:
+	HUD.visible = false
 	play_button.grab_focus()
 	continue_button.disabled = true
 

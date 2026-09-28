@@ -21,6 +21,8 @@ func _ready() -> void:
 	letter_timer.timeout.connect(_on_letter_timer_timeout)
 	
 func play_dream(lines: Array[String]) -> void:
+	background.visible = true
+	
 	var fade_tween:  Tween = create_tween()
 	fade_tween.tween_property(background, "modulate:a", 1.0, fade_duration)
 	await fade_tween.finished

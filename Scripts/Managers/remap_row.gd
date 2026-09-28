@@ -18,6 +18,7 @@ extends Control
 var listening_action: String = ""
 var listening_device: String = ""
 var just_started_listening: bool = false
+var listening_button: Button = null
 
 const ALL_ACTIONS: Array = ["move_left", "move_right", "move_up", "move_down", "jump", "dash", "climb"]
 
@@ -84,13 +85,19 @@ func _start_listening(action: String, device: String, button: Button) -> void:
 
 	listening_action = action
 	listening_device = device
+	listening_button = button
 	just_started_listening = true
 	button.text = "..."
+	button.release_focus()
 
 func cancel_listening() -> void:
 	listening_action = ""
 	listening_device = ""
 	_refresh_all_labels()
+	
+	if listening_button:
+		listening_button.grab_focus()
+	listening_button = null
 
 func _input(event: InputEvent) -> void:
 	if listening_action == "":
@@ -133,6 +140,11 @@ func _rebind(new_event: InputEvent) -> void:
 	listening_action = ""
 	listening_device = ""
 	_refresh_all_labels()
+	
+	if listening_button:
+		listening_button.grab_focus()
+		listening_button = null
+	
 	get_viewport().set_input_as_handled()
 
 func _find_conflict(new_event: InputEvent) -> String:

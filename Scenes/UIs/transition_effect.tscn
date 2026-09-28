@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://bybxqquft1wlm"]
 
-[ext_resource type="Script" uid="uid://b6fas0nxbto50" path="res://Scenes/UIs/TransitionEffect.gd" id="1_bu71k"]
-[ext_resource type="Shader" uid="uid://ttbko53wyywu" path="res://Shaders/iris_transition.gdshader" id="2_5nh0y"]
+[ext_resource type="Script" uid="uid://b6fas0nxbto50" path="res://Scripts/UI/TransitionEffect.gd" id="1_4ghf3"]
+[ext_resource type="Shader" uid="uid://ttbko53wyywu" path="res://Shaders/iris_transition.gdshader" id="2_yaap4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ukqrw"]
-shader = ExtResource("2_5nh0y")
+shader = ExtResource("2_yaap4")
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/radius = 1.5
 shader_parameter/aspect = 1.2228
 shader_parameter/edge_softness = 0.03
 
 [node name="TransitionEffect" type="CanvasLayer" unique_id=1325204768]
-script = ExtResource("1_bu71k")
+layer = 2
+script = ExtResource("1_4ghf3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=940257182]
 material = SubResource("ShaderMaterial_ukqrw")

@@ -5,18 +5,22 @@
 [ext_resource type="PackedScene" uid="uid://4k0x6urwculb" path="res://Scenes/Trechos/Level1_tutorial/Trecho_tutorial.tscn" id="2_tetax"]
 [ext_resource type="PackedScene" uid="uid://1h8r72i7c2qv" path="res://Scenes/Player/Player_Eugene.tscn" id="2_vipxu"]
 [ext_resource type="Script" uid="uid://vvcapushl6uk" path="res://Scripts/UI/intro_sequence.gd" id="5_tetax"]
+[ext_resource type="PackedScene" uid="uid://5526dlni57th" path="res://Scenes/UIs/Parallax_Floresta.tscn" id="6_6tsua"]
 
 [node name="Level1Tutorial" type="Node2D" unique_id=581019709]
 script = ExtResource("1_7cc54")
 trecho_scenes = Array[PackedScene]([ExtResource("2_tetax")])
 
+[node name="Parallax" parent="." unique_id=309623274 instance=ExtResource("6_6tsua")]
+
 [node name="Camera2D" parent="." unique_id=200463703 instance=ExtResource("1_2f4h4")]
 position = Vector2(104, 88)
 
 [node name="Player_Eugene" parent="." unique_id=1699571630 instance=ExtResource("2_vipxu")]
-position = Vector2(-16, 120)
+position = Vector2(-16, 136)
 
 [node name="IntroSequence" type="Node2D" parent="." unique_id=205292405 node_paths=PackedStringArray("player")]
+position = Vector2(0, 24)
 script = ExtResource("5_tetax")
 player = NodePath("../Player_Eugene/Player_Eugene")
 
