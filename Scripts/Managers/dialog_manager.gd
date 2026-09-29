@@ -33,6 +33,10 @@ func start_message(position: Vector2, lines: Array[String], actor: Node, side: S
 
 
 func _show_text() -> void:
+	if not is_instance_valid(current_actor):
+		force_close()
+		return
+	
 	dialog_box_instance = current_box_scene.instantiate()
 	dialog_box_instance.text_display_finished.connect(_on_text_display_finished)
 
@@ -55,6 +59,9 @@ func _on_text_display_finished() -> void:
 
 
 func advance_message() -> void:
+	if not message_active:
+		return
+	
 	if dialog_box_instance:
 		dialog_box_instance.queue_free()
 
@@ -82,4 +89,5 @@ func force_close() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and message_active and can_advance_message:
+		can_advance_message = false
 		advance_message()

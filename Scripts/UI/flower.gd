@@ -17,6 +17,9 @@ var monologue_played: bool = false
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	
+	if sprite:
+		sprite.play()
+	
 	if flower_id in GameManager.flowers_collected:
 		queue_free()
 		return
@@ -33,11 +36,14 @@ func _on_proximity_entered(body: Node2D) -> void:
 		
 	monologue_played = true
 	proximity_trigger.set_deferred("monitoring", false)
+	set_deferred("monitoring", false)
 	
 	body.lock_movement(true, true)
 	DialogManager.start_message(global_position, firts_flower_lines, self, "Centro", EUGENE_DIALOG_BOX)
 	await DialogManager.conversation_finished
 	body.unlock_movement()
+	
+	set_deferred("monitoring", true)
 		
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):

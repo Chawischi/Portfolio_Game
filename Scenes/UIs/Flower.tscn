@@ -1,13 +1,42 @@
 [gd_scene format=3 uid="uid://cja62y8nqsxnu"]
 
 [ext_resource type="Script" uid="uid://hphvkw0b4vup" path="res://Scripts/UI/flower.gd" id="1_3ivni"]
-[ext_resource type="Texture2D" uid="uid://b6widiuyfj4k8" path="res://Sprites/Flores/lirio_flor.png" id="2_qqgv8"]
+[ext_resource type="Texture2D" uid="uid://e6lld537jm54" path="res://Sprites/Flores/flor_lirio.png" id="2_qqgv8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qqgv8"]
 size = Vector2(8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ivni"]
-size = Vector2(13, 34)
+size = Vector2(8, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_baqlv"]
+atlas = ExtResource("2_qqgv8")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbfo0"]
+atlas = ExtResource("2_qqgv8")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpusu"]
+atlas = ExtResource("2_qqgv8")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rhrli"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_baqlv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jbfo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpusu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
 
 [node name="Flower" type="Area2D" unique_id=1601396762]
 script = ExtResource("1_3ivni")
@@ -19,8 +48,11 @@ debug_color = Color(0.9020316, 0.24375501, 0.4918024, 0.41960785)
 [node name="ProximityTrigger" type="Area2D" parent="." unique_id=1683368282]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityTrigger" unique_id=1911227380]
+position = Vector2(-16, -8)
 shape = SubResource("RectangleShape2D_3ivni")
 debug_color = Color(0.8947229, 0.830829, 0, 0.41960785)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1436370610]
-texture = ExtResource("2_qqgv8")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ProximityTrigger" unique_id=485018086]
+sprite_frames = SubResource("SpriteFrames_rhrli")
+autoplay = "default"
+frame_progress = 0.9665737
