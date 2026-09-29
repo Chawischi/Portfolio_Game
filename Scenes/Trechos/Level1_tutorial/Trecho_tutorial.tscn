@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b3wrkopaexdkx" path="res://Sprites/Objects/copa_galho_tutorial.png" id="11_71o04"]
 [ext_resource type="Texture2D" uid="uid://cf2cb6nxoeuoy" path="res://Sprites/Objects/copa_arvore_tutorial.png" id="12_26w4h"]
 [ext_resource type="PackedScene" uid="uid://bcs18qayh7lml" path="res://Scenes/Enemies/Spikes.tscn" id="13_26w4h"]
-[ext_resource type="Texture2D" uid="uid://b2cskbj57tl7k" path="res://Sprites/Enemies/spikes_fase_1.png" id="14_nki0k"]
+[ext_resource type="Texture2D" uid="uid://bbnlftdocb11h" path="res://Sprites/Enemies/spikes_fase_1.png" id="14_nki0k"]
 [ext_resource type="Texture2D" uid="uid://jp5njv0p0lnl" path="res://Sprites/Objects/cerca_1.png" id="15_wgbyk"]
 [ext_resource type="Texture2D" uid="uid://bn34tmkkainrh" path="res://Sprites/Objects/cerca_3.png" id="16_xsdh5"]
 [ext_resource type="Texture2D" uid="uid://dlscgpuhxplf" path="res://Sprites/Objects/cerca_2.png" id="17_e7ygs"]
@@ -35,10 +35,7 @@ size = Vector2(232, 16)
 size = Vector2(16, 185)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_71o04"]
-size = Vector2(120, 8)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xsdh5"]
-load_path = "res://.godot/imported/spikes_fase_1.png-2ed3f54ef9c62c90c6b94f94ca8e6c34.ctex"
+size = Vector2(128, 8)
 
 [node name="TrechoTutorial" type="Node2D" unique_id=1200786775]
 script = ExtResource("1_fs4gk")
@@ -88,8 +85,9 @@ shape = SubResource("RectangleShape2D_6ov3d")
 debug_color = Color(0.86874795, 0.3069911, 0.45735455, 0.41960785)
 
 [node name="Checkpoint_tutorial" parent="." unique_id=869767710 instance=ExtResource("5_26w4h")]
-position = Vector2(1136, -12)
-eugene_mutter = Array[String](["Ela e o latim dela hahaha..."])
+position = Vector2(1128, -12)
+eugene_mutter = Array[String](["Ela e os ditados dela hahaha..."])
+mutter_ballon_side = "Esquerda"
 
 [node name="LimiteMap" type="StaticBody2D" parent="." unique_id=210880277 groups=["no_climb"]]
 
@@ -138,39 +136,8 @@ z_index = 0
 texture = ExtResource("10_dhfk8")
 
 [node name="ColorRect" parent="." unique_id=51628477 instance=ExtResource("8_gpnj3")]
-offset_left = 80.0
 offset_top = 192.0
-offset_right = 104.0
-offset_bottom = 224.0
-
-[node name="ColorRect2" parent="." unique_id=758592911 instance=ExtResource("8_gpnj3")]
-offset_left = 136.0
-offset_top = 192.0
-offset_right = 184.0
-offset_bottom = 224.0
-
-[node name="ColorRect3" parent="." unique_id=1209171858 instance=ExtResource("8_gpnj3")]
-offset_left = 280.0
-offset_top = 192.0
-offset_right = 408.0
-offset_bottom = 224.0
-
-[node name="ColorRect4" parent="." unique_id=1628541569 instance=ExtResource("8_gpnj3")]
-offset_left = 440.0
-offset_top = 192.0
-offset_right = 488.0
-offset_bottom = 224.0
-
-[node name="ColorRect5" parent="." unique_id=1241724740 instance=ExtResource("8_gpnj3")]
-offset_left = 512.0
-offset_top = 192.0
-offset_right = 544.0
-offset_bottom = 224.0
-
-[node name="ColorRect6" parent="." unique_id=1877022697 instance=ExtResource("8_gpnj3")]
-offset_left = 928.0
-offset_top = 192.0
-offset_right = 1160.0
+offset_right = 1288.0
 offset_bottom = 224.0
 
 [node name="Marker_Intro_Target" type="Marker2D" parent="." unique_id=634212359]
@@ -189,8 +156,8 @@ position = Vector2(-8, 0)
 [node name="CollisionShape2D" parent="Flower/ProximityTrigger" index="0" unique_id=1911227380]
 position = Vector2(20, -16)
 
-[node name="Sprite2D" parent="Flower" index="2" unique_id=1436370610]
-position = Vector2(24, 3)
+[node name="AnimatedSprite2D" parent="Flower/ProximityTrigger" index="1" unique_id=485018086]
+position = Vector2(32, 0)
 
 [node name="CopaGalhoTutorial" type="Sprite2D" parent="." unique_id=1456549523]
 position = Vector2(672, 32)
@@ -207,7 +174,7 @@ texture = ExtResource("12_26w4h")
 [node name="OneWayPlatform" type="StaticBody2D" parent="." unique_id=1124300581]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OneWayPlatform" unique_id=940206915]
-position = Vector2(748, 76)
+position = Vector2(748, 80)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_71o04")
 one_way_collision = true
@@ -221,7 +188,7 @@ spike_count = 2
 
 [node name="Spikes2" parent="." unique_id=2068168786 instance=ExtResource("13_26w4h")]
 position = Vector2(1044, 70)
-spike_texture = SubResource("CompressedTexture2D_xsdh5")
+spike_texture = ExtResource("14_nki0k")
 spike_count = 5
 
 [node name="Cerca1" type="Sprite2D" parent="." unique_id=468625192]
@@ -232,16 +199,6 @@ texture = ExtResource("15_wgbyk")
 [node name="Cerca3" type="Sprite2D" parent="." unique_id=174355842]
 z_index = -1
 position = Vector2(1264, -16)
-texture = ExtResource("16_xsdh5")
-
-[node name="Cerca5" type="Sprite2D" parent="." unique_id=1034111884]
-z_index = -1
-position = Vector2(1168, -16)
-texture = ExtResource("16_xsdh5")
-
-[node name="Cerca6" type="Sprite2D" parent="." unique_id=1609192448]
-z_index = -1
-position = Vector2(1136, -16)
 texture = ExtResource("16_xsdh5")
 
 [node name="Cerca2" type="Sprite2D" parent="." unique_id=652370783]
