@@ -202,10 +202,11 @@ theme_override_styles/separator = SubResource("StyleBoxFlat_6260w")
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_0mpev")
-current_tab = 0
+current_tab = 2
 tabs_visible = false
 
 [node name="ControlsTab" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer" unique_id=2016452775]
+visible = false
 layout_mode = 2
 script = ExtResource("4_6260w")
 metadata/_tab_index = 0
@@ -579,7 +580,6 @@ max_value = 1.0
 step = 0.05
 
 [node name="VideoTab" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer" unique_id=1212473959]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -618,3 +618,10 @@ offset_left = 100.0
 offset_top = 64.0
 offset_right = 144.0
 offset_bottom = 88.0
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/VSyncOption" unique_id=873977249]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 48.0
+offset_bottom = 108.0
