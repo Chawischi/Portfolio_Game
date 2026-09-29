@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbnlftdocb11h"
-path="res://.godot/imported/spikes_fase_1.png-2ed3f54ef9c62c90c6b94f94ca8e6c34.ctex"
+uid="uid://c7b8ij04nqttt"
+path="res://.godot/imported/Floresta_Camada_3.png-8c74d9779aa5e353cf7004ac16c82111.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Enemies/spikes_fase_1.png"
-dest_files=["res://.godot/imported/spikes_fase_1.png-2ed3f54ef9c62c90c6b94f94ca8e6c34.ctex"]
+source_file="res://Sprites/Parallax/Floresta_Camada_3.png"
+dest_files=["res://.godot/imported/Floresta_Camada_3.png-8c74d9779aa5e353cf7004ac16c82111.ctex"]
 
 [params]
 

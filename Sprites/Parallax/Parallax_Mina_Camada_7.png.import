@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmhiy3cjp8jjw"
-path="res://.godot/imported/bolinha_volume.png-7c91e50b846c3a13e2b25a4c3d3dc9c0.ctex"
+uid="uid://blqqu76it2ruf"
+path="res://.godot/imported/Parallax_Mina_Camada_7.png-bfca3051f0b8cb1142620c5d7ff20c75.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/tileset_florestas/bolinha_volume.png"
-dest_files=["res://.godot/imported/bolinha_volume.png-7c91e50b846c3a13e2b25a4c3d3dc9c0.ctex"]
+source_file="res://Sprites/Parallax/Parallax_Mina_Camada_7.png"
+dest_files=["res://.godot/imported/Parallax_Mina_Camada_7.png-bfca3051f0b8cb1142620c5d7ff20c75.ctex"]
 
 [params]
 

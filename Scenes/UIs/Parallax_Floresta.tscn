@@ -1,61 +1,83 @@
 [gd_scene format=3 uid="uid://5526dlni57th"]
 
-[ext_resource type="Texture2D" uid="uid://b1tn1wurbsjld" path="res://Sprites/Parallax/background_parallax_floresta.png" id="1_jr7hj"]
-[ext_resource type="Texture2D" uid="uid://qat0ptir1f1a" path="res://Sprites/Parallax/camada_1_nuvem_parallax_floresta.png" id="2_p45ro"]
-[ext_resource type="Texture2D" uid="uid://bq8c81twdmpi8" path="res://Sprites/Parallax/camada_3_parallax_floresta.png" id="3_73t8j"]
-[ext_resource type="Script" uid="uid://b5g46uu2ad0hl" path="res://Scripts/UI/cloud_sprite.gd" id="3_p45ro"]
-[ext_resource type="Texture2D" uid="uid://d32r7hyfvl16f" path="res://Sprites/Parallax/camada_2_parallax_floresta.png" id="4_cdbj2"]
-[ext_resource type="Texture2D" uid="uid://wfx73pyh1f0u" path="res://Sprites/Parallax/camada_1_parallax_floresta.png" id="5_620eq"]
+[ext_resource type="Texture2D" uid="uid://cgo8mn0b2tbqh" path="res://Sprites/Parallax/Floresta_Camada_background_fundo.png" id="1_73t8j"]
+[ext_resource type="Texture2D" uid="uid://bigdjpvi4kyni" path="res://Sprites/Parallax/Floresta_Camada_background_nevoa.png" id="2_cdbj2"]
+[ext_resource type="Texture2D" uid="uid://2bk6t1aimot2" path="res://Sprites/Parallax/Floresta_Camada_5.png" id="3_620eq"]
+[ext_resource type="Texture2D" uid="uid://drg5u3gus0gl8" path="res://Sprites/Parallax/Floresta_Camada_4.png" id="4_76wgk"]
+[ext_resource type="Texture2D" uid="uid://c7b8ij04nqttt" path="res://Sprites/Parallax/Floresta_Camada_3.png" id="5_g60iu"]
+[ext_resource type="Texture2D" uid="uid://1ekr13g48bid" path="res://Sprites/Parallax/Floresta_Camada_2.png" id="6_8p0p3"]
+[ext_resource type="Texture2D" uid="uid://deblogibvanmc" path="res://Sprites/Parallax/Floresta_Camada_1.png" id="7_8ygpe"]
 
 [node name="Parallax" type="Node2D" unique_id=309623274]
 
-[node name="SkyLayer" type="Parallax2D" parent="." unique_id=880245234]
-z_index = -6
-scroll_scale = Vector2(0.05, 0.05)
-repeat_size = Vector2(400, 0)
-repeat_times = 4
-
-[node name="SkySprite" type="Sprite2D" parent="SkyLayer" unique_id=2052954498]
-position = Vector2(160, 96)
-texture = ExtResource("1_jr7hj")
-
-[node name="CloudLayer" type="Parallax2D" parent="." unique_id=955981837]
+[node name="Camada_7" type="Parallax2D" parent="." unique_id=324047009]
 z_index = -2
-scroll_scale = Vector2(0.3, 0.15)
+scroll_scale = Vector2(0, 0)
 repeat_size = Vector2(400, 0)
 repeat_times = 4
 
-[node name="CloudSprite" type="Sprite2D" parent="CloudLayer" unique_id=1805668521]
-position = Vector2(160, 16)
-texture = ExtResource("2_p45ro")
-script = ExtResource("3_p45ro")
+[node name="Sprite2D" type="Sprite2D" parent="Camada_7" unique_id=569916026]
+position = Vector2(160, 24)
+texture = ExtResource("1_73t8j")
 
-[node name="MountainLayer" type="Parallax2D" parent="." unique_id=729909092]
-z_index = -5
-scroll_scale = Vector2(0.15, 0.1)
-repeat_size = Vector2(400, 0)
-repeat_times = 4
-
-[node name="MountainSprite" type="Sprite2D" parent="MountainLayer" unique_id=1320265519]
-position = Vector2(160, 120)
-texture = ExtResource("3_73t8j")
-
-[node name="Treelayer" type="Parallax2D" parent="." unique_id=1867750042]
-z_index = -4
-scroll_scale = Vector2(0.3, 0.15)
-repeat_size = Vector2(400, 0)
-repeat_times = 4
-
-[node name="TreeSprite" type="Sprite2D" parent="Treelayer" unique_id=1293120017]
-position = Vector2(160, 136)
-texture = ExtResource("4_cdbj2")
-
-[node name="BushLayer" type="Parallax2D" parent="." unique_id=962595198]
+[node name="Camada_6" type="Parallax2D" parent="." unique_id=1029725704]
 z_index = -2
-scroll_scale = Vector2(0.5, 0.2)
+scroll_scale = Vector2(0, 0)
 repeat_size = Vector2(400, 0)
 repeat_times = 4
 
-[node name="BushSprite" type="Sprite2D" parent="BushLayer" unique_id=210630004]
-position = Vector2(168, 184)
-texture = ExtResource("5_620eq")
+[node name="Sprite2D" type="Sprite2D" parent="Camada_6" unique_id=1269088938]
+position = Vector2(152, 24)
+texture = ExtResource("2_cdbj2")
+
+[node name="Camada_5" type="Parallax2D" parent="." unique_id=1208187031]
+z_index = -2
+scroll_scale = Vector2(0.1, 0)
+scroll_offset = Vector2(152, 80)
+repeat_size = Vector2(400, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Camada_5" unique_id=127153414]
+position = Vector2(400, -56)
+texture = ExtResource("3_620eq")
+
+[node name="Camada_4" type="Parallax2D" parent="." unique_id=411279437]
+z_index = -2
+scroll_scale = Vector2(0.2, 0.1)
+repeat_size = Vector2(400, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Camada_4" unique_id=717508582]
+position = Vector2(152, 32)
+texture = ExtResource("4_76wgk")
+
+[node name="Camada_3" type="Parallax2D" parent="." unique_id=1057960244]
+z_index = -2
+scroll_scale = Vector2(0.3, 0.1)
+scroll_offset = Vector2(80, 16)
+repeat_size = Vector2(400, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Camada_3" unique_id=156485456]
+position = Vector2(400, 8)
+texture = ExtResource("5_g60iu")
+
+[node name="Camada_2" type="Parallax2D" parent="." unique_id=1055805596]
+z_index = -2
+scroll_scale = Vector2(0.5, 0.1)
+repeat_size = Vector2(400, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Camada_2" unique_id=329722408]
+position = Vector2(152, 24)
+texture = ExtResource("6_8p0p3")
+
+[node name="Camada_1" type="Parallax2D" parent="." unique_id=1974904143]
+z_index = -2
+scroll_scale = Vector2(0.7, 0.2)
+repeat_size = Vector2(400, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Camada_1" unique_id=276689147]
+position = Vector2(280, 24)
+texture = ExtResource("7_8ygpe")

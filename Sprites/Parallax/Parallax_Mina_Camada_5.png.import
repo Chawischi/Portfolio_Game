@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1tn1wurbsjld"
-path="res://.godot/imported/background_parallax_floresta.png-3efab502257d3210e007683928ee4572.ctex"
+uid="uid://colcl16yh3dvn"
+path="res://.godot/imported/Parallax_Mina_Camada_5.png-ce2d49ab7c566c9fec1431227dc9b3b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Parallax/background_parallax_floresta.png"
-dest_files=["res://.godot/imported/background_parallax_floresta.png-3efab502257d3210e007683928ee4572.ctex"]
+source_file="res://Sprites/Parallax/Parallax_Mina_Camada_5.png"
+dest_files=["res://.godot/imported/Parallax_Mina_Camada_5.png-ce2d49ab7c566c9fec1431227dc9b3b1.ctex"]
 
 [params]
 

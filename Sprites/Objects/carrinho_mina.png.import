@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qat0ptir1f1a"
-path="res://.godot/imported/camada_1_nuvem_parallax_floresta.png-9acfd183707fc26faacf62527ba93224.ctex"
+uid="uid://dnuhihacwxlhp"
+path="res://.godot/imported/carrinho_mina.png-eac45159f2ab588a185df150249f53ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Parallax/camada_1_nuvem_parallax_floresta.png"
-dest_files=["res://.godot/imported/camada_1_nuvem_parallax_floresta.png-9acfd183707fc26faacf62527ba93224.ctex"]
+source_file="res://Sprites/Objects/carrinho_mina.png"
+dest_files=["res://.godot/imported/carrinho_mina.png-eac45159f2ab588a185df150249f53ac.ctex"]
 
 [params]
 

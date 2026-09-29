@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wfx73pyh1f0u"
-path="res://.godot/imported/camada_1_parallax_floresta.png-00a6726206ea2f46f9698a61c5a8ebce.ctex"
+uid="uid://drg5u3gus0gl8"
+path="res://.godot/imported/Floresta_Camada_4.png-5398e07b6c82aa7734bfaf11a55851b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Parallax/camada_1_parallax_floresta.png"
-dest_files=["res://.godot/imported/camada_1_parallax_floresta.png-00a6726206ea2f46f9698a61c5a8ebce.ctex"]
+source_file="res://Sprites/Parallax/Floresta_Camada_4.png"
+dest_files=["res://.godot/imported/Floresta_Camada_4.png-5398e07b6c82aa7734bfaf11a55851b6.ctex"]
 
 [params]
 
