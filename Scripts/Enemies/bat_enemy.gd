@@ -23,12 +23,15 @@ var zone_max: Vector2
 
 @onready var stomp_zone: Area2D = $StompZone
 
+
 func _ready() -> void:
 	patrol_target = patrol_point_b.global_position
 
 	if attack_zone:
-		attack_zone.body_entered.connect(_on_attack_zone_body_entered)
 		_compute_zone_bounds()
+		await get_tree().create_timer(0.3).timeout
+		attack_zone.body_entered.connect(_on_attack_zone_body_entered)
+
 
 func _compute_zone_bounds() -> void:
 	var shape_node: CollisionShape2D = attack_zone.get_node("CollisionShape2D")
@@ -36,6 +39,7 @@ func _compute_zone_bounds() -> void:
 	var center: Vector2 = shape_node.global_position
 	zone_min = center - extents
 	zone_max = center + extents
+
 
 func _physics_process(delta: float) -> void:
 	if base_state == BaseState.DEAD:
@@ -64,6 +68,7 @@ func _physics_process(delta: float) -> void:
 
 	_update_animation()
 
+
 func _handle_patrol() -> void:
 	var direction: Vector2 = (patrol_target - global_position).normalized()
 	velocity = direction * patrol_speed
@@ -74,11 +79,13 @@ func _handle_patrol() -> void:
 	sprite.flip_h = velocity.x > 0.0
 	sprite.flip_v = false
 
+
 func _handle_alert(delta: float) -> void:
 	velocity = Vector2.ZERO
 	alert_timer -= delta
 	if alert_timer <= 0.0:
 		_start_chase()
+
 
 func _handle_chase(delta: float) -> void:
 	velocity = chase_direction * chase_speed
@@ -87,11 +94,13 @@ func _handle_chase(delta: float) -> void:
 	if chase_timer <= 0.0:
 		_end_chase()
 
+
 func _start_alert(player_body: Node2D) -> void:
 	target_player = player_body
 	bat_state = BatState.ALERT
 	alert_timer = alert_duration
 	velocity = Vector2.ZERO
+
 
 func _start_chase() -> void:
 	if target_player:
@@ -101,29 +110,29 @@ func _start_chase() -> void:
 	chase_timer = chase_duration
 	bat_state = BatState.CHASE
 
+
 func _end_chase() -> void:
 	bat_state = BatState.PATROL
 	chase_cooldown_timer = chase_cooldown
+
 
 func _on_attack_zone_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player") or bat_state != BatState.PATROL or chase_cooldown_timer > 0.0:
 		return
 	_start_alert(body)
 
+
 func _on_stomp_zone_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
 
-	print("Stomp check | body.velocity.y: ", body.velocity.y, " | body.y: ", body.global_position.y, " | bat.y: ", global_position.y)
-
 	if body.velocity.y > 0.0 and body.global_position.y < global_position.y:
-		print("STOMP confirmado!")
 		die()
 		body.velocity.y = -100.0
 	else:
-		print("Não foi stomp, aplicando hazard")
 		var direction: Vector2 = (body.global_position - global_position).normalized()
 		body.play_hit_and_respawn(direction, 150.0, 0.3)
+
 
 func _update_animation() -> void:
 	match bat_state:
