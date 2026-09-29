@@ -6,6 +6,7 @@ func start_new_game() -> void:
 	flowers_collected.clear()
 	get_tree().call_deferred("change_scene_to_file", level_scenes[current_level_index])
 	HUD.visible = true
+	HUD.update_flower_count()
 
 # ---------- Mudança de Level ----------
 @export var level_scenes: Array[String] = [
@@ -15,6 +16,15 @@ func start_new_game() -> void:
 	"res://Scenes/Levels/Level4.tscn",
 	"res://Scenes/Levels/Level5_final.tscn"
 ]
+
+# ---- Comentário para testes, pode ignorar ----
+#@export var level_scenes: Array[String] = [
+	#"res://Scenes/Levels/Level2.tscn", 
+	#"res://Scenes/Levels/Level1_tutorial.tscn",
+	#"res://Scenes/Levels/Level3.tscn",
+	#"res://Scenes/Levels/Level4.tscn",
+	#"res://Scenes/Levels/Level5_final.tscn"
+#]
 
 var current_level_index: int = 0
 
