@@ -15,10 +15,10 @@ func _ready() -> void:
 		orchestrator = get_tree().get_first_node_in_group("orchestrator")
 		attempts += 1
 		
-		if not orchestrator:
-			push_warning("IntroSequence: orchestrator não encontrado, pulando cutscene de abertura.")
-			player.unlock_movement()
-			return
+	if not orchestrator:
+		push_warning("IntroSequence: orchestrator não encontrado, pulando cutscene de abertura.")
+		player.unlock_movement()
+		return
 		
 	walk_target = orchestrator.current_trecho_instance.get_node(marker_name)
 	
