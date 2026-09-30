@@ -8,14 +8,18 @@
 [ext_resource type="PackedScene" uid="uid://nud8ttcc3ylx" path="res://Scenes/Trechos/Level2/Trecho3_level2.tscn" id="4_f8qf7"]
 [ext_resource type="PackedScene" uid="uid://bfuedtbosuamj" path="res://Scenes/Trechos/Level2/Trecho4_level2.tscn" id="5_lmdar"]
 [ext_resource type="PackedScene" uid="uid://86j64tq3gom6" path="res://Scenes/Trechos/Level2/Trecho5_level2.tscn" id="6_d1swa"]
-[ext_resource type="PackedScene" uid="uid://b7i08grpsotci" path="res://Scenes/Trechos/Level2/Trecho6_level2.tscn" id="7_ipaot"]
+[ext_resource type="PackedScene" uid="uid://336li2t8ulch" path="res://Scenes/Trechos/Level2/Trecho6_level2.tscn" id="7_ipaot"]
+[ext_resource type="PackedScene" uid="uid://b7i08grpsotci" path="res://Scenes/Trechos/Level2/Trecho7_level2.tscn" id="8_ipaot"]
+[ext_resource type="PackedScene" uid="uid://cve71n3rk32m2" path="res://Scenes/UIs/Parallax_Mina.tscn" id="11_ao4h1"]
 
 [node name="Level2" type="Node2D" unique_id=790786194]
 script = ExtResource("1_svn12")
-trecho_scenes = Array[PackedScene]([ExtResource("2_5iseo"), ExtResource("3_4rk67"), ExtResource("4_f8qf7"), ExtResource("5_lmdar"), ExtResource("6_d1swa"), ExtResource("7_ipaot")])
+trecho_scenes = Array[PackedScene]([ExtResource("2_5iseo"), ExtResource("3_4rk67"), ExtResource("4_f8qf7"), ExtResource("5_lmdar"), ExtResource("6_d1swa"), ExtResource("7_ipaot"), ExtResource("8_ipaot")])
 
 [node name="Camera2D" parent="." unique_id=200463703 instance=ExtResource("2_smuj1")]
 position = Vector2(104, 88)
 
 [node name="Player_Eugene" parent="." unique_id=1699571630 instance=ExtResource("3_5iseo")]
 position = Vector2(24, 116)
+
+[node name="Parallax_Mina" parent="." unique_id=382382962 instance=ExtResource("11_ao4h1")]

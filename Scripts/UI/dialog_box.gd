@@ -17,26 +17,6 @@ var letter_index: int = 0
 func _ready() -> void:
 	letter_timer.timeout.connect(_on_letter_timer_timeout)
 
-
-#func display_text(text_to_display: String) -> void:
-	#visible = false
-	#text = text_to_display
-	#text_label.text = text
-#
-	#await get_tree().process_frame
-	#custom_minimum_size.x = min(size.x, max_width)
-#
-	#await get_tree().process_frame
-	#custom_minimum_size.y = size.y
-#
-	#global_position.x -= size.x / 2.0
-	#global_position.y -= size.y + 24.0
-#
-	#text_label.text = ""
-	#letter_index = 0
-	#visible = true
-	#_display_letter()
-
 func display_text(text_to_display: String, side: String = "Centro") -> void:
 	visible = false
 	text = _substitute_placeholders(text_to_display)

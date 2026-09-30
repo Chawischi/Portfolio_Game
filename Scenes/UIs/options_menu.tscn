@@ -464,11 +464,11 @@ text = "Teclas"
 
 [node name="ControlLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=1281097614]
 layout_mode = 0
-offset_left = 142.0
+offset_left = 141.0
 offset_top = -28.0
-offset_right = 190.0
+offset_right = 197.0
 offset_bottom = -20.0
-text = "Botões"
+text = "Control"
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=491594915]
 layout_mode = 0

@@ -1,0 +1,627 @@
+[gd_scene format=3 uid="uid://s24ixs7hw1po"]
+
+[ext_resource type="Script" uid="uid://c88x5vh3njvvw" path="res://Scripts/Managers/options_menu.gd" id="1_jf556"]
+[ext_resource type="Theme" uid="uid://bc2r7v2hg6wvf" path="res://UI/button_options.tres" id="2_bhn1i"]
+[ext_resource type="ButtonGroup" uid="uid://f0ni8ixg56ov" path="res://UI/option_button_group.tres" id="2_qook7"]
+[ext_resource type="Script" uid="uid://m36ni4vhfqkp" path="res://Scripts/Managers/remap_row.gd" id="4_6260w"]
+[ext_resource type="Theme" uid="uid://c8ik3k6fvjkrv" path="res://UI/option_controls_button.tres" id="4_kuxcg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h17jm"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.029007766, 0, 0.33197868, 0.36078432)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kuxcg"]
+bg_color = Color(1, 1, 1, 1)
+border_width_top = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhn1i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6260w"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0mpev"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n6jro"]
+bg_color = Color(1, 1, 1, 1)
+corner_detail = 1
+expand_margin_top = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pb7q7"]
+bg_color = Color(1, 1, 1, 1)
+corner_detail = 1
+expand_margin_right = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ribim"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.12941177, 0.12941177, 0.12941177, 0.5372549)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_76cmv"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0.16684571, 0.3208647, 0.9265942, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vanjv"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0.16862746, 0.32156864, 0.9254902, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1gx45"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.12941177, 0.12941177, 0.12941177, 0.5372549)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0q728"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0.16862746, 0.32156864, 0.9254902, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_26a05"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0.16862746, 0.32156864, 0.9254902, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pflpe"]
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.12941177, 0.12941177, 0.12941177, 0.5372549)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5i8t"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0.16862746, 0.32156864, 0.9254902, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqumw"]
+content_margin_top = 1.0
+content_margin_bottom = 1.0
+bg_color = Color(0.16862746, 0.32156864, 0.9254902, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+corner_detail = 1
+
+[node name="OptionsMenu" type="CanvasLayer" unique_id=1703689140]
+script = ExtResource("1_jf556")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=2087119360]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h17jm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1206515887]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1723783744]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Options"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer" unique_id=696440664]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_kuxcg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1830955236]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=1332979025]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ControlsButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=137401503]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../AudioButton")
+theme = ExtResource("2_bhn1i")
+toggle_mode = true
+button_group = ExtResource("2_qook7")
+text = "Controles"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=504506170]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_bhn1i")
+
+[node name="AudioButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=917903120]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ControlsButton")
+focus_neighbor_right = NodePath("../../TabContainer/AudioTab/GeralOption/HSlider")
+focus_neighbor_bottom = NodePath("../VideoButton")
+theme = ExtResource("2_bhn1i")
+toggle_mode = true
+button_group = ExtResource("2_qook7")
+text = "Áudio"
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1044859218]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_bhn1i")
+
+[node name="VideoButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1965936415]
+layout_mode = 2
+focus_neighbor_top = NodePath("../AudioButton")
+theme = ExtResource("2_bhn1i")
+toggle_mode = true
+button_group = ExtResource("2_qook7")
+text = "Vídeo"
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=329244072]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxFlat_6260w")
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=758234871]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_0mpev")
+current_tab = 2
+tabs_visible = false
+
+[node name="ControlsTab" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer" unique_id=2016452775]
+visible = false
+layout_mode = 2
+script = ExtResource("4_6260w")
+metadata/_tab_index = 0
+
+[node name="MoveLeftRow" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=1713798091]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveLeftRow" unique_id=297664279]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 68.0
+offset_bottom = 28.0
+text = "Esquerda"
+
+[node name="KeyboardButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveLeftRow" unique_id=236984640]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 18.0
+offset_right = 128.0
+offset_bottom = 30.0
+focus_neighbor_right = NodePath("../GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveRightRow/KeyboardButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="GamepadButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveLeftRow" unique_id=229397449]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 18.0
+offset_right = 193.0
+offset_bottom = 30.0
+focus_neighbor_left = NodePath("../KeyboardButton")
+focus_neighbor_bottom = NodePath("../../MoveRightRow/GamepadButton")
+theme = ExtResource("4_kuxcg")
+toggle_mode = true
+button_group = ExtResource("2_qook7")
+text = "Autom."
+
+[node name="MoveRightRow" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=1381695810]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveRightRow" unique_id=1513426904]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 32.0
+offset_right = 60.0
+offset_bottom = 40.0
+text = "Direita"
+
+[node name="KeyboardButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveRightRow" unique_id=573306976]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 30.0
+offset_right = 128.0
+offset_bottom = 42.0
+focus_neighbor_top = NodePath("../../MoveLeftRow/KeyboardButton")
+focus_neighbor_right = NodePath("../GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveUpRow/KeyboardButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="GamepadButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveRightRow" unique_id=827091160]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 30.0
+offset_right = 193.0
+offset_bottom = 42.0
+focus_neighbor_left = NodePath("../KeyboardButton")
+focus_neighbor_top = NodePath("../../MoveLeftRow/GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveUpRow/GamepadButton")
+theme = ExtResource("4_kuxcg")
+text = "Autom."
+
+[node name="MoveUpRow" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=742950751]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveUpRow" unique_id=1373515909]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 44.0
+offset_right = 44.0
+offset_bottom = 52.0
+text = "Cima"
+
+[node name="KeyboardButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveUpRow" unique_id=707548895]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 42.0
+offset_right = 128.0
+offset_bottom = 54.0
+focus_neighbor_top = NodePath("../../MoveRightRow/KeyboardButton")
+focus_neighbor_right = NodePath("../GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveDownRow/KeyboardButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="GamepadButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveUpRow" unique_id=1321549632]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 42.0
+offset_right = 193.0
+offset_bottom = 54.0
+focus_neighbor_left = NodePath("../KeyboardButton")
+focus_neighbor_top = NodePath("../../MoveRightRow/GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveDownRow/GamepadButton")
+theme = ExtResource("4_kuxcg")
+text = "Autom."
+
+[node name="MoveDownRow" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=1542749664]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveDownRow" unique_id=1879313755]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 56.0
+offset_right = 44.0
+offset_bottom = 64.0
+text = "Baixo"
+
+[node name="KeyboardButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveDownRow" unique_id=983552679]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 54.0
+offset_right = 128.0
+offset_bottom = 66.0
+focus_neighbor_top = NodePath("../../MoveUpRow/KeyboardButton")
+focus_neighbor_right = NodePath("../GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveJumpRow/KeyboardButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="GamepadButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveDownRow" unique_id=1304327090]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 54.0
+offset_right = 193.0
+offset_bottom = 66.0
+focus_neighbor_left = NodePath("../KeyboardButton")
+focus_neighbor_top = NodePath("../../MoveUpRow/GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveJumpRow/GamepadButton")
+theme = ExtResource("4_kuxcg")
+text = "Autom."
+
+[node name="MoveJumpRow" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=562076323]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveJumpRow" unique_id=656689710]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 68.0
+offset_right = 44.0
+offset_bottom = 76.0
+text = "Pular"
+
+[node name="KeyboardButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveJumpRow" unique_id=319342505]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 66.0
+offset_right = 128.0
+offset_bottom = 78.0
+focus_neighbor_top = NodePath("../../MoveDownRow/KeyboardButton")
+focus_neighbor_right = NodePath("../GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveDashRow/KeyboardButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="GamepadButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveJumpRow" unique_id=993152455]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 66.0
+offset_right = 193.0
+offset_bottom = 78.0
+focus_neighbor_left = NodePath("../KeyboardButton")
+focus_neighbor_top = NodePath("../../MoveDownRow/GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveDashRow/GamepadButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="MoveDashRow" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=1179685378]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveDashRow" unique_id=1421647007]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 80.0
+offset_right = 44.0
+offset_bottom = 88.0
+text = "Dash"
+
+[node name="KeyboardButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveDashRow" unique_id=1601132663]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 78.0
+offset_right = 128.0
+offset_bottom = 90.0
+focus_neighbor_top = NodePath("../../MoveJumpRow/KeyboardButton")
+focus_neighbor_right = NodePath("../GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveClimbRow/KeyboardButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="GamepadButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveDashRow" unique_id=399926675]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 78.0
+offset_right = 193.0
+offset_bottom = 90.0
+focus_neighbor_left = NodePath("../KeyboardButton")
+focus_neighbor_top = NodePath("../../MoveJumpRow/GamepadButton")
+focus_neighbor_bottom = NodePath("../../MoveClimbRow/GamepadButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="MoveClimbRow" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=2099629603]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveClimbRow" unique_id=811206353]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 92.0
+offset_right = 60.0
+offset_bottom = 100.0
+text = "Escalar"
+
+[node name="KeyboardButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveClimbRow" unique_id=1556065014]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 90.0
+offset_right = 128.0
+offset_bottom = 102.0
+focus_neighbor_top = NodePath("../../MoveDashRow/KeyboardButton")
+focus_neighbor_right = NodePath("../GamepadButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="GamepadButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/MoveClimbRow" unique_id=2074727079]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 90.0
+offset_right = 193.0
+offset_bottom = 102.0
+focus_neighbor_left = NodePath("../KeyboardButton")
+focus_neighbor_top = NodePath("../../MoveDashRow/GamepadButton")
+theme = ExtResource("4_kuxcg")
+
+[node name="Header" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=1135355500]
+layout_mode = 2
+
+[node name="ActionLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=480582139]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -28.0
+offset_right = 56.0
+offset_bottom = -20.0
+text = "Ações"
+
+[node name="TeclasLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=1539497260]
+layout_mode = 0
+offset_left = 78.0
+offset_top = -28.0
+offset_right = 126.0
+offset_bottom = -20.0
+text = "Teclas"
+
+[node name="ControlLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=1281097614]
+layout_mode = 0
+offset_left = 141.0
+offset_top = -28.0
+offset_right = 197.0
+offset_bottom = -20.0
+text = "Control"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=491594915]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -18.0
+offset_right = 196.0
+offset_bottom = -14.0
+theme_override_styles/separator = SubResource("StyleBoxFlat_n6jro")
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=702503629]
+layout_mode = 0
+offset_left = 67.0
+offset_top = -28.0
+offset_right = 71.0
+offset_bottom = 102.0
+theme_override_styles/separator = SubResource("StyleBoxFlat_pb7q7")
+
+[node name="VSeparator2" type="VSeparator" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Header" unique_id=1253927579]
+layout_mode = 0
+offset_left = 132.0
+offset_top = -28.0
+offset_right = 136.0
+offset_bottom = 102.0
+theme_override_styles/separator = SubResource("StyleBoxFlat_pb7q7")
+
+[node name="AudioTab" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer" unique_id=1396408584]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="GeralOption" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab" unique_id=764851532]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab/GeralOption" unique_id=1430664522]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 40.0
+offset_right = 56.0
+offset_bottom = 48.0
+text = "Geral"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab/GeralOption" unique_id=955702380]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 70.0
+offset_top = 39.0
+offset_right = 170.0
+offset_bottom = 50.0
+focus_neighbor_left = NodePath("../../../../VBoxContainer/AudioButton")
+focus_neighbor_bottom = NodePath("../../MusicOption/HSlider")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ribim")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_76cmv")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_vanjv")
+max_value = 1.0
+step = 0.05
+
+[node name="MusicOption" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab" unique_id=1022606935]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab/MusicOption" unique_id=710864477]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 60.0
+offset_right = 56.0
+offset_bottom = 68.0
+text = "Music"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab/MusicOption" unique_id=49474654]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 70.0
+offset_top = 59.0
+offset_right = 170.0
+offset_bottom = 70.0
+focus_neighbor_left = NodePath("../../../../VBoxContainer/AudioButton")
+focus_neighbor_top = NodePath("../../GeralOption/HSlider")
+focus_neighbor_bottom = NodePath("../../SFXOption/HSlider")
+theme_override_styles/slider = SubResource("StyleBoxFlat_1gx45")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_0q728")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_26a05")
+max_value = 1.0
+step = 0.05
+
+[node name="SFXOption" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab" unique_id=1347501652]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab/SFXOption" unique_id=390387499]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 84.0
+offset_right = 40.0
+offset_bottom = 92.0
+text = "SFX"
+
+[node name="HSlider" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/AudioTab/SFXOption" unique_id=1909961794]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 70.0
+offset_top = 82.0
+offset_right = 170.0
+offset_bottom = 93.0
+focus_neighbor_left = NodePath("../../../../VBoxContainer/AudioButton")
+focus_neighbor_top = NodePath("../../MusicOption/HSlider")
+theme_override_styles/slider = SubResource("StyleBoxFlat_pflpe")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_k5i8t")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_kqumw")
+max_value = 1.0
+step = 0.05
+
+[node name="VideoTab" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer" unique_id=1212473959]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="FullScreenOption" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab" unique_id=1530540636]
+layout_mode = 2
+
+[node name="FullScreenLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/FullScreenOption" unique_id=459646]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 96.0
+offset_bottom = 64.0
+text = "FullScreen"
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/FullScreenOption" unique_id=679215831]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 49.0
+offset_right = 144.0
+offset_bottom = 73.0
+
+[node name="VSyncOption" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab" unique_id=1666233094]
+layout_mode = 2
+
+[node name="VSyncLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/VSyncOption" unique_id=1699180195]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 72.0
+offset_right = 64.0
+offset_bottom = 80.0
+text = "V-Sync"
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/VSyncOption" unique_id=1841500301]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 64.0
+offset_right = 144.0
+offset_bottom = 88.0
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/VSyncOption" unique_id=873977249]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 48.0
+offset_bottom = 108.0

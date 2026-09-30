@@ -17,6 +17,7 @@ extends CanvasLayer
 
 var is_focus_on_audio_sliders: bool = false
 var previous_focus: Control = null
+var previous_hud_visible: bool = true
 
 
 func _ready() -> void:
@@ -46,9 +47,10 @@ func _ready() -> void:
 	music_slider.value = 1.0
 	sfx_slider.value = 1.0
 
-
 func open() -> void:
 	previous_focus = get_viewport().gui_get_focus_owner()
+	previous_hud_visible = HUD.visible
+	HUD.visible = false
 	menu_painel.visible = true
 	controls_tab_button.grab_focus()
 
@@ -56,6 +58,7 @@ func open() -> void:
 func close() -> void:
 	controls_tab_script.cancel_listening()
 	menu_painel.visible = false
+	HUD.visible = previous_hud_visible
 	if previous_focus:
 		previous_focus.grab_focus()
 
