@@ -9,6 +9,9 @@ var is_transitioning: bool = false
 @onready var player: CharacterBody2D = $Player_Eugene/Player_Eugene
 @onready var camera: Camera2D = $Camera2D
 
+const DEFAULT_RESPAWN_MARKER: String = "Marker_Respawn"
+var current_respawn_marker: String = DEFAULT_RESPAWN_MARKER
+
 
 func _ready() -> void:
 	add_to_group("orchestrator")
@@ -35,6 +38,7 @@ func move_backward(marker_override: String = "") -> void:
 
 func _load_trecho_at(index: int, entry_side: String, marker_override: String = "") -> void:
 	is_transitioning = true
+	current_respawn_marker = DEFAULT_RESPAWN_MARKER
 	player.lock_movement()
 
 	await TransitionEffect.play(player, func():
@@ -58,6 +62,10 @@ func _load_trecho_at(index: int, entry_side: String, marker_override: String = "
 	is_transitioning = false
 
 
+# Recriamos o trecho INTEIRO (não só reposicionamos o player) de propósito:
+	# isso garante que inimigos mortos, hazards já acionados e qualquer outro
+	# estado temporário voltem ao estado inicial a cada tentativa, dando ao
+	# jogador uma "vida nova" limpa no trecho atual.
 func respawn_player() -> void:
 	if is_transitioning:
 		return
@@ -73,7 +81,9 @@ func respawn_player() -> void:
 		add_child(current_trecho_instance)
 		_apply_camera_limits()
 
-		var respawn_marker: Marker2D = current_trecho_instance.get_node("Marker_Respawn")
+		var respawn_marker: Marker2D = current_trecho_instance.get_node_or_null(current_respawn_marker)
+		if respawn_marker == null:
+			respawn_marker = current_trecho_instance.get_node("Marker_Respawn")
 		player.global_position = respawn_marker.global_position
 		player.reset_movement_state()
 	)
@@ -81,6 +91,11 @@ func respawn_player() -> void:
 	player.unlock_movement()
 	is_transitioning = false
 
+func set_respawn_marker(marker_name: String) -> void:
+	if current_trecho_instance.has_node(marker_name):
+		current_respawn_marker = marker_name
+	else:
+		push_warning("Respawn marker não escontrado: " + marker_name)
 
 func _apply_camera_limits() -> void:
 	camera.limit_left = current_trecho_instance.camera_limit_left
@@ -88,3 +103,10 @@ func _apply_camera_limits() -> void:
 	camera.limit_top = current_trecho_instance.camera_limit_top
 	camera.limit_bottom = current_trecho_instance.camera_limit_bottom
 	camera.offset.x = current_trecho_instance.camera_offset_x
+	
+	var swarm_threat = current_trecho_instance.get_node_or_null("SwarmThreat")
+	camera.swarm_threat = swarm_threat
+	if swarm_threat:
+		camera.corner_point = current_trecho_instance.get_node("SwarmCornerPoint")
+		camera.camera_center_point = current_trecho_instance.get_node_or_null("CameraCenterPoint")
+	
