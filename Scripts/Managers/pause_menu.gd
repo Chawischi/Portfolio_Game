@@ -11,6 +11,7 @@ func _ready() -> void:
 	
 	resume_button.pressed.connect(_on_resume_pressed)
 	main_menu_button.pressed.connect(_on_main_menu_pressed)
+	option_button.pressed.connect(_on_options_button_pressed)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("pause"):
@@ -20,16 +21,40 @@ func _unhandled_input(event: InputEvent) -> void:
 	if current_scene_path == "res://Scenes/UIs/main_menu.tscn":
 		return
 		
+	if ResumeCountdown.is_counting:
+		ResumeCountdown.cancel()
+		menu_control.visible = true
+		resume_button.grab_focus()
+		get_viewport().set_input_as_handled()
+		return
+		
 	_toggle_pause()
 		
 func _toggle_pause() -> void:
-	var new_paused: bool = not get_tree().paused
-	get_tree().paused = new_paused
-	menu_control.visible = new_paused
+	if get_tree().paused:
+		_resume()
+	else:
+		_pause()
+		
+func _pause() -> void:
+	get_tree().paused = true
+	menu_control.visible = true
+	resume_button.grab_focus()
 	
-	if new_paused:
-		resume_button.grab_focus()
+func _resume() -> void:
+	menu_control.visible = false
 	
+	if _is_chase_running():
+		var finished: bool =  await ResumeCountdown.start()
+		if not finished:
+			return
+		
+	get_tree().paused = false
+	
+func _is_chase_running() -> bool:
+	var threat = get_tree().get_first_node_in_group("swarm_threat")
+	return threat != null and threat.is_active and threat.progress < threat.max_progress
+
 func _on_resume_pressed() -> void:
 	_toggle_pause()
 	
