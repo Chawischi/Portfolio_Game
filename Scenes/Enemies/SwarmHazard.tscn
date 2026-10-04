@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://btlluegug1tex"]
+
+[ext_resource type="Script" uid="uid://fegr8n3f7itu" path="res://Scripts/Enemies/swarm_hazard.gd" id="1_2dbow"]
+[ext_resource type="Texture2D" uid="uid://dxhqo0vfy21em" path="res://Sprites/Enemies/Enxame_horizontal_level_3.png" id="2_dajwj"]
+[ext_resource type="Texture2D" uid="uid://cmk33eg1oc0ui" path="res://Sprites/Enemies/Enxame_vertical_level_3.png" id="3_1y6p3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1y6p3"]
+atlas = ExtResource("2_dajwj")
+region = Rect2(0, 0, 60, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgktk"]
+atlas = ExtResource("2_dajwj")
+region = Rect2(60, 0, 60, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5kyn"]
+atlas = ExtResource("2_dajwj")
+region = Rect2(120, 0, 60, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fv2v5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1y6p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgktk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5kyn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lgh6i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv2v5"]
+atlas = ExtResource("3_1y6p3")
+region = Rect2(0, 0, 360, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ma6xu"]
+atlas = ExtResource("3_1y6p3")
+region = Rect2(360, 0, 360, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aadh5"]
+atlas = ExtResource("3_1y6p3")
+region = Rect2(720, 0, 360, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ase6c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fv2v5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ma6xu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aadh5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2dbow"]
+
+[node name="SwarmHazard" type="Area2D" unique_id=375257342]
+script = ExtResource("1_2dbow")
+
+[node name="HorizontalSprite" type="AnimatedSprite2D" parent="." unique_id=151706533]
+sprite_frames = SubResource("SpriteFrames_fv2v5")
+frame = 2
+frame_progress = 0.34189975
+
+[node name="HorizontalShape" type="CollisionShape2D" parent="." unique_id=933863156]
+shape = SubResource("RectangleShape2D_lgh6i")
+debug_color = Color(0.9403668, 0.11788473, 0.5375103, 0.41960785)
+
+[node name="VerticalSprite" type="AnimatedSprite2D" parent="." unique_id=142524174]
+position = Vector2(-30, 0)
+sprite_frames = SubResource("SpriteFrames_ase6c")
+
+[node name="VerticalShape" type="CollisionShape2D" parent="." unique_id=1373606189]
+position = Vector2(0, 30)
+shape = SubResource("RectangleShape2D_2dbow")
+debug_color = Color(0.7903699, 0.42938396, 0, 0.41960785)

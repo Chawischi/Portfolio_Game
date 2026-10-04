@@ -17,9 +17,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 	if swarm_path_follow:
 		swarm_path_follow.activate()
-		#var tween: Tween = create_tween()
-		#tween.tween_property(swarm_path_follow, "progress", swarm_path_follow.get_parent().curve.get_baked_length(), lock_duration)
-
+		
 	body.lock_movement(false)
 	body.velocity = knockback_direction * knockback_strength
 
