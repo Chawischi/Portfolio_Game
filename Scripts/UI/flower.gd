@@ -9,7 +9,7 @@ const EUGENE_DIALOG_BOX: PackedScene = preload("res://Scenes/UIs/Dialog_box_Euge
 	"Acho que vou levar."
 ]
 
-@onready var sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
+@onready var sprite: AnimatedSprite2D = get_node_or_null("ProximityTrigger/AnimatedSprite2D")
 @onready var proximity_trigger: Area2D = get_node_or_null("ProximityTrigger")
 
 var monologue_played: bool = false

@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://isn4wu5rj5kj"]
+
+[ext_resource type="Script" uid="uid://cy53rvcuf5w3u" path="res://Scripts/Enemies/stalagmite.gd" id="1_e4gu6"]
+[ext_resource type="Texture2D" uid="uid://gxt7sgax61g0" path="res://Sprites/Enemies/Estalagmite.png" id="2_8k51b"]
+[ext_resource type="Texture2D" uid="uid://bi2fm3laa5nhw" path="res://Sprites/Enemies/Estalagmite_crash.png" id="2_daykp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt8jq"]
+atlas = ExtResource("2_daykp")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvg78"]
+atlas = ExtResource("2_daykp")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7o4tq"]
+atlas = ExtResource("2_daykp")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sopoa"]
+atlas = ExtResource("2_daykp")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uej1f"]
+atlas = ExtResource("2_daykp")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_daykp"]
+atlas = ExtResource("2_8k51b")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dt8jq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt8jq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvg78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o4tq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sopoa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uej1f")
+}],
+"loop": false,
+"name": &"break",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_daykp")
+}],
+"loop": false,
+"name": &"stuck",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4gu6"]
+size = Vector2(48, 192)
+
+[node name="Stalagmite" type="Area2D" unique_id=1243683728]
+script = ExtResource("1_e4gu6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=509410988]
+position = Vector2(0, 3)
+sprite_frames = SubResource("SpriteFrames_dt8jq")
+animation = &"break"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=731471332]
+polygon = PackedVector2Array(5, -8, -6, -8, -0.5, 7)
+
+[node name="ProximityZone" type="Area2D" parent="." unique_id=1686949948]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityZone" unique_id=1414184917]
+position = Vector2(0, 88)
+shape = SubResource("RectangleShape2D_e4gu6")
+
+[node name="GroundRay" type="RayCast2D" parent="." unique_id=2042304847]
+target_position = Vector2(0, 7)

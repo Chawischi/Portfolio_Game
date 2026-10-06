@@ -29,6 +29,7 @@ TransitionEffect="*uid://bybxqquft1wlm"
 HUD="*uid://bqmsxxtsvo8v5"
 DreamOverlay="*uid://iv7r8faocflq"
 InputLabels="*uid://crte62h4r83d5"
+ResumeCountdown="*uid://t04bbqlun37o"
 
 [display]
 

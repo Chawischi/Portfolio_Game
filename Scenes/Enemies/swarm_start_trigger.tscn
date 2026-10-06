@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://w2itjqeq1i1p"]
+
+[ext_resource type="Script" uid="uid://dv7nbafxyoelx" path="res://Scripts/Enemies/swarm_start_trigger.gd" id="1_ptflx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wjrmv"]
+size = Vector2(8, 184)
+
+[node name="SwarmStartTrigger" type="Area2D" unique_id=1520098228]
+script = ExtResource("1_ptflx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=797557856]
+position = Vector2(4, 92)
+shape = SubResource("RectangleShape2D_wjrmv")
+debug_color = Color(1.973361e-06, 0.6434652, 0.30516958, 0.41960785)

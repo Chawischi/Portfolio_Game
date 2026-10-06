@@ -23,15 +23,19 @@ var zone_max: Vector2
 
 @onready var stomp_zone: Area2D = $StompZone
 
-
 func _ready() -> void:
 	patrol_target = patrol_point_b.global_position
 
 	if attack_zone:
 		_compute_zone_bounds()
-		await get_tree().create_timer(0.3).timeout
 		attack_zone.body_entered.connect(_on_attack_zone_body_entered)
 
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		for body in attack_zone.get_overlapping_bodies():
+			if body.is_in_group("player") and bat_state == BatState.PATROL and not body.is_invulnerable:
+				_start_alert(body)
+				break
 
 func _compute_zone_bounds() -> void:
 	var shape_node: CollisionShape2D = attack_zone.get_node("CollisionShape2D")
@@ -118,6 +122,8 @@ func _end_chase() -> void:
 
 func _on_attack_zone_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player") or bat_state != BatState.PATROL or chase_cooldown_timer > 0.0:
+		return
+	if body.is_invulnerable:
 		return
 	_start_alert(body)
 

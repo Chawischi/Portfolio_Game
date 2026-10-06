@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cs8d2w4phiwht" path="res://Scripts/Trechos/trecho_trigger.gd" id="2_uqi84"]
 [ext_resource type="Script" uid="uid://b0wrmnq47606w" path="res://Scripts/Trechos/kill_zone.gd" id="4_bw6q2"]
 [ext_resource type="PackedScene" uid="uid://bdhfcj4xcftiw" path="res://Scenes/UIs/PitGradient.tscn" id="5_6n1lq"]
+[ext_resource type="Script" uid="uid://dn71kmrl2r6gm" path="res://Scripts/Managers/respawn_trigger.gd" id="6_jeh7i"]
 [ext_resource type="PackedScene" uid="uid://bcs18qayh7lml" path="res://Scenes/Enemies/Spikes.tscn" id="6_k37pu"]
 [ext_resource type="Texture2D" uid="uid://yedfh2k6fjmv" path="res://Sprites/Enemies/spikes_fase_2.png" id="7_jeh7i"]
 
@@ -19,6 +20,9 @@ size = Vector2(40, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k37pu"]
 size = Vector2(320, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jcmpf"]
+size = Vector2(12, 40)
 
 [node name="Trecho2Level2" type="Node2D" unique_id=1633506223]
 script = ExtResource("1_uqi84")
@@ -80,68 +84,88 @@ offset_right = 320.0
 offset_bottom = 216.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Spikes" parent="." unique_id=2095472339 instance=ExtResource("6_k37pu")]
+[node name="RespawnTrigger" type="Area2D" parent="." unique_id=1602468050]
+script = ExtResource("6_jeh7i")
+respawn_marker_name = "Marker_Entrada_Esquerda_Baixa"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RespawnTrigger" unique_id=310628442]
+position = Vector2(16, 172)
+shape = SubResource("RectangleShape2D_jcmpf")
+debug_color = Color(0.1923024, 0.6392144, 0.17705444, 0.41960785)
+
+[node name="RespawnTrigger2" type="Area2D" parent="." unique_id=2087941971]
+script = ExtResource("6_jeh7i")
+respawn_marker_name = "Marker_Entrada_Esquerda_Alta"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RespawnTrigger2" unique_id=1988371391]
+position = Vector2(16, 80)
+shape = SubResource("RectangleShape2D_jcmpf")
+debug_color = Color(0.1923024, 0.6392144, 0.17705444, 0.41960785)
+
+[node name="PastaSpikes" type="Node2D" parent="." unique_id=324797198]
+
+[node name="Spikes" parent="PastaSpikes" unique_id=2095472339 instance=ExtResource("6_k37pu")]
 position = Vector2(156, 50)
-rotation = 3.1415927
+rotation = -3.1415925
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 23
 
-[node name="Spikes2" parent="." unique_id=2016229675 instance=ExtResource("6_k37pu")]
+[node name="Spikes2" parent="PastaSpikes" unique_id=2016229675 instance=ExtResource("6_k37pu")]
 position = Vector2(66, 80)
 rotation = 1.5707964
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 8
 
-[node name="Spikes3" parent="." unique_id=1208047614 instance=ExtResource("6_k37pu")]
+[node name="Spikes3" parent="PastaSpikes" unique_id=1208047614 instance=ExtResource("6_k37pu")]
 position = Vector2(26, 124)
 rotation = 1.5707964
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 7
 
-[node name="Spikes4" parent="." unique_id=1001515216 instance=ExtResource("6_k37pu")]
+[node name="Spikes4" parent="PastaSpikes" unique_id=1001515216 instance=ExtResource("6_k37pu")]
 position = Vector2(100, 206)
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 9
 
-[node name="Spikes5" parent="." unique_id=1617429433 instance=ExtResource("6_k37pu")]
+[node name="Spikes5" parent="PastaSpikes" unique_id=1617429433 instance=ExtResource("6_k37pu")]
 position = Vector2(280, 206)
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 8
 
-[node name="Spikes6" parent="." unique_id=677435949 instance=ExtResource("6_k37pu")]
+[node name="Spikes6" parent="PastaSpikes" unique_id=677435949 instance=ExtResource("6_k37pu")]
 position = Vector2(244, 154)
-rotation = 3.1415927
+rotation = -3.1415925
 spike_texture = ExtResource("7_jeh7i")
 
-[node name="Spikes7" parent="." unique_id=79564925 instance=ExtResource("6_k37pu")]
+[node name="Spikes7" parent="PastaSpikes" unique_id=79564925 instance=ExtResource("6_k37pu")]
 position = Vector2(310, 116)
 rotation = -1.5707964
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 22
 
-[node name="Spikes8" parent="." unique_id=338566156 instance=ExtResource("6_k37pu")]
+[node name="Spikes8" parent="PastaSpikes" unique_id=338566156 instance=ExtResource("6_k37pu")]
 position = Vector2(244, 118)
 spike_texture = ExtResource("7_jeh7i")
 
-[node name="Spikes9" parent="." unique_id=1515659672 instance=ExtResource("6_k37pu")]
+[node name="Spikes9" parent="PastaSpikes" unique_id=1515659672 instance=ExtResource("6_k37pu")]
 position = Vector2(100, 142)
 spike_texture = ExtResource("7_jeh7i")
 
-[node name="Spikes10" parent="." unique_id=1737698367 instance=ExtResource("6_k37pu")]
+[node name="Spikes10" parent="PastaSpikes" unique_id=1737698367 instance=ExtResource("6_k37pu")]
 position = Vector2(106, 156)
 rotation = 1.5707964
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 3
 
-[node name="Spikes12" parent="." unique_id=926620893 instance=ExtResource("6_k37pu")]
+[node name="Spikes12" parent="PastaSpikes" unique_id=926620893 instance=ExtResource("6_k37pu")]
 position = Vector2(94, 156)
 rotation = -1.5707964
 spike_texture = ExtResource("7_jeh7i")
 spike_count = 3
 
-[node name="Spikes11" parent="." unique_id=638853146 instance=ExtResource("6_k37pu")]
+[node name="Spikes11" parent="PastaSpikes" unique_id=638853146 instance=ExtResource("6_k37pu")]
 position = Vector2(100, 170)
-rotation = 3.1415927
+rotation = -3.1415925
 spike_texture = ExtResource("7_jeh7i")
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

@@ -394,15 +394,18 @@ func _update_animation() -> void:
 				sprite.play("climb_idle")
 		State.WALL_SLIDE:
 			sprite.play("climb_idle")
-
-
+		
 func _update_climb_visual_feedback() -> void:
 	if is_hurt:
 		return
 
 	var ratio: float = climb_stamina / climb_stamina_max
-	var tint: float = lerp(0.4, 1.0, ratio)
-	sprite.modulate = Color(1.0, tint, tint)	# Fica mais vermelho conforme a estamina cai
+
+	if is_climbing or ratio < 0.8:
+		var tint: float = lerp(0.4, 1.0, ratio)
+		sprite.modulate = Color(1.0, tint, tint)	# Fica mais vermelho conforme a estamina cai
+	else:
+		sprite.modulate = Color.WHITE
 
 	if is_climbing and ratio < 0.3:
 		sprite.offset = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0))	# Tremor, avisando que vai cair

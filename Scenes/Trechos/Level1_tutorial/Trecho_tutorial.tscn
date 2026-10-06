@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bn34tmkkainrh" path="res://Sprites/Objects/cerca_3.png" id="16_xsdh5"]
 [ext_resource type="Texture2D" uid="uid://dlscgpuhxplf" path="res://Sprites/Objects/cerca_2.png" id="17_e7ygs"]
 [ext_resource type="Texture2D" uid="uid://dy3pgeavxgf6p" path="res://Sprites/Objects/cerca_4.png" id="18_xsdh5"]
+[ext_resource type="Script" uid="uid://dn71kmrl2r6gm" path="res://Scripts/Managers/respawn_trigger.gd" id="19_e7ygs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_225o6"]
 size = Vector2(8, 200)
@@ -36,6 +37,9 @@ size = Vector2(16, 185)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_71o04"]
 size = Vector2(128, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tc8yy"]
+size = Vector2(8, 80)
 
 [node name="TrechoTutorial" type="Node2D" unique_id=1200786775]
 script = ExtResource("1_fs4gk")
@@ -229,6 +233,54 @@ texture = ExtResource("15_wgbyk")
 z_index = -1
 position = Vector2(928, 184)
 texture = ExtResource("18_xsdh5")
+
+[node name="RespawnTrigger" type="Area2D" parent="." unique_id=31475514]
+script = ExtResource("19_e7ygs")
+respawn_marker_name = "Marker_Respawn_2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RespawnTrigger" unique_id=1690776090]
+position = Vector2(244, 80)
+shape = SubResource("RectangleShape2D_tc8yy")
+debug_color = Color(0.1923024, 0.6392144, 0.17705444, 0.41960785)
+
+[node name="RespawnTrigger2" type="Area2D" parent="." unique_id=427155956]
+script = ExtResource("19_e7ygs")
+respawn_marker_name = "Marker_Respawn_3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RespawnTrigger2" unique_id=413888569]
+position = Vector2(696, 128)
+shape = SubResource("RectangleShape2D_tc8yy")
+debug_color = Color(0.1923024, 0.6392144, 0.17705444, 0.41960785)
+
+[node name="RespawnTrigger3" type="Area2D" parent="." unique_id=267848051]
+script = ExtResource("19_e7ygs")
+respawn_marker_name = "Marker_Respawn_4"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RespawnTrigger3" unique_id=328585061]
+position = Vector2(928, 152)
+shape = SubResource("RectangleShape2D_tc8yy")
+debug_color = Color(0.1923024, 0.6392144, 0.17705444, 0.41960785)
+
+[node name="RespawnTrigger4" type="Area2D" parent="." unique_id=1890735550]
+script = ExtResource("19_e7ygs")
+respawn_marker_name = "Marker_Respawn_5"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RespawnTrigger4" unique_id=1790665625]
+position = Vector2(1112, 144)
+shape = SubResource("RectangleShape2D_tc8yy")
+debug_color = Color(0.1923024, 0.6392144, 0.17705444, 0.41960785)
+
+[node name="Marker_Respawn_2" type="Marker2D" parent="." unique_id=1275637263]
+position = Vector2(248, 112)
+
+[node name="Marker_Respawn_3" type="Marker2D" parent="." unique_id=221133169]
+position = Vector2(696, 160)
+
+[node name="Marker_Respawn_4" type="Marker2D" parent="." unique_id=337409629]
+position = Vector2(928, 184)
+
+[node name="Marker_Respawn_5" type="Marker2D" parent="." unique_id=1341091228]
+position = Vector2(1112, 176)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
