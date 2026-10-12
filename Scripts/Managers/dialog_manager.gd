@@ -86,7 +86,6 @@ func force_close() -> void:
 	current_actor = null
 	conversation_finished.emit()
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and message_active and can_advance_message:
 		can_advance_message = false

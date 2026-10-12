@@ -128,6 +128,7 @@ corner_radius_bottom_left = 1
 corner_detail = 1
 
 [node name="OptionsMenu" type="CanvasLayer" unique_id=1703689140]
+layer = 11
 script = ExtResource("1_jf556")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=2087119360]
@@ -494,6 +495,18 @@ offset_right = 136.0
 offset_bottom = 102.0
 theme_override_styles/separator = SubResource("StyleBoxFlat_pb7q7")
 
+[node name="Warning" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab" unique_id=1911458811]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="WarningLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab/Warning" unique_id=1457211688]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 104.0
+offset_right = 168.0
+offset_bottom = 112.0
+text = "Teclas em Conflito"
+
 [node name="AudioTab" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer" unique_id=1396408584]
 visible = false
 layout_mode = 2
@@ -588,17 +601,17 @@ layout_mode = 2
 
 [node name="FullScreenLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/FullScreenOption" unique_id=459646]
 layout_mode = 0
-offset_left = 16.0
+offset_left = 8.0
 offset_top = 56.0
-offset_right = 96.0
+offset_right = 88.0
 offset_bottom = 64.0
 text = "FullScreen"
 
 [node name="CheckButton" type="CheckButton" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/FullScreenOption" unique_id=679215831]
 layout_mode = 0
-offset_left = 100.0
+offset_left = 156.0
 offset_top = 49.0
-offset_right = 144.0
+offset_right = 200.0
 offset_bottom = 73.0
 
 [node name="VSyncOption" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab" unique_id=1666233094]
@@ -606,15 +619,33 @@ layout_mode = 2
 
 [node name="VSyncLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/VSyncOption" unique_id=1699180195]
 layout_mode = 0
-offset_left = 16.0
+offset_left = 8.0
 offset_top = 72.0
-offset_right = 64.0
+offset_right = 56.0
 offset_bottom = 80.0
 text = "V-Sync"
 
 [node name="CheckButton" type="CheckButton" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/VSyncOption" unique_id=1841500301]
 layout_mode = 0
-offset_left = 100.0
+offset_left = 156.0
 offset_top = 64.0
-offset_right = 144.0
+offset_right = 200.0
 offset_bottom = 88.0
+
+[node name="CounterDeathOption" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab" unique_id=515341246]
+layout_mode = 2
+
+[node name="DeathLabel" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/CounterDeathOption" unique_id=1028945625]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 152.0
+offset_bottom = 96.0
+text = "Contador de mortes"
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/CounterDeathOption" unique_id=1522795621]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 79.0
+offset_right = 200.0
+offset_bottom = 103.0
