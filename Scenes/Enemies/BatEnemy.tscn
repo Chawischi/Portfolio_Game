@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://xdy51u1bbf3j" path="res://Scripts/Enemies/bat_enemy.gd" id="1_h02iw"]
 [ext_resource type="Texture2D" uid="uid://pbiolxobuy1x" path="res://Sprites/Enemies/Morcego_ataque.png" id="2_h64mf"]
 [ext_resource type="Texture2D" uid="uid://brn6r4clme1ni" path="res://Sprites/Enemies/Morcego_idle_patrol.png" id="3_wrv1i"]
+[ext_resource type="Texture2D" uid="uid://b1jvtucfq2lmu" path="res://Sprites/Enemies/Morcego_Death.png" id="4_avp3d"]
 [ext_resource type="Texture2D" uid="uid://d4lftrsponsve" path="res://Sprites/Enemies/Morcego_alerta.png" id="4_wrv1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xgbqx"]
@@ -23,6 +24,22 @@ region = Rect2(30, 0, 15, 15)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s3lup"]
 atlas = ExtResource("2_h64mf")
 region = Rect2(15, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_en5p7"]
+atlas = ExtResource("4_avp3d")
+region = Rect2(0, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nu2dd"]
+atlas = ExtResource("4_avp3d")
+region = Rect2(15, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jn0vm"]
+atlas = ExtResource("4_avp3d")
+region = Rect2(30, 0, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sip45"]
+atlas = ExtResource("4_avp3d")
+region = Rect2(45, 0, 15, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_esypq"]
 atlas = ExtResource("3_wrv1i")
@@ -66,6 +83,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_en5p7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu2dd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jn0vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sip45")
+}],
+"loop": false,
+"name": &"death",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_esypq")
 }, {
 "duration": 1.0,
@@ -96,7 +130,7 @@ debug_color = Color(0.7434557, 0.46418983, 0.04046478, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=880360334]
 sprite_frames = SubResource("SpriteFrames_jdk5n")
-animation = &"idle_patrol"
+animation = &"death"
 
 [node name="StompZone" type="Area2D" parent="." unique_id=1000483111]
 
