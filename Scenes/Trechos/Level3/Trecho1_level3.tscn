@@ -15,6 +15,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sbydg"]
 size = Vector2(192, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4mmx"]
+size = Vector2(48, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbm8h"]
 size = Vector2(16, 200)
 
@@ -72,6 +75,14 @@ position = Vector2(96, 192)
 shape = SubResource("RectangleShape2D_sbydg")
 debug_color = Color(0.86874795, 0.3069911, 0.45735455, 0.41960785)
 
+[node name="KillZone2" type="Area2D" parent="." unique_id=1563502012]
+script = ExtResource("4_bvk6t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone2" unique_id=1306614800]
+position = Vector2(224, 192)
+shape = SubResource("RectangleShape2D_c4mmx")
+debug_color = Color(0.86874795, 0.3069911, 0.45735455, 0.41960785)
+
 [node name="LimiteMap" type="StaticBody2D" parent="." unique_id=406155139]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimiteMap" unique_id=2062314376]
@@ -87,10 +98,11 @@ target_marker_name = "Marker_Entrada_Cima"
 position = Vector2(224, 232)
 shape = SubResource("RectangleShape2D_bvk6t")
 
-[node name="SwarmAmbush" type="Area2D" parent="." unique_id=581792363 node_paths=PackedStringArray("swarm_visual", "swarm_path_follow")]
+[node name="SwarmAmbush" type="Area2D" parent="." unique_id=581792363 node_paths=PackedStringArray("swarm_visual", "swarm_path_follow", "pit_kill_zone")]
 script = ExtResource("5_egihh")
 swarm_visual = NodePath("../SwarmPath/PathFollow2D/AnimatedSprite2D")
 swarm_path_follow = NodePath("../SwarmPath/PathFollow2D")
+pit_kill_zone = NodePath("../KillZone2")
 knockback_direction = Vector2(-1, -1)
 knockback_strength = 120.0
 
@@ -282,5 +294,6 @@ spike_texture = ExtResource("9_ajjk3")
 spike_count = 2
 
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
+[connection signal="body_entered" from="KillZone2" to="KillZone2" method="_on_body_entered"]
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="SwarmAmbush" to="SwarmAmbush" method="_on_body_entered"]
