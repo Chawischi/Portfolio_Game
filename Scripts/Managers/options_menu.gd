@@ -12,6 +12,7 @@ extends CanvasLayer
 
 @onready var fullscreen_button: CheckButton = $PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/FullScreenOption/CheckButton
 @onready var vsync_button: CheckButton = $PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/VSyncOption/CheckButton
+@onready var death_counter_check: CheckButton = $PanelContainer/VBoxContainer/HBoxContainer/TabContainer/VideoTab/CounterDeathOption/CheckButton
 
 @onready var controls_tab_script: Control = $PanelContainer/VBoxContainer/HBoxContainer/TabContainer/ControlsTab
 
@@ -34,6 +35,7 @@ func _ready() -> void:
 
 	fullscreen_button.toggled.connect(_on_fullscreen_toggled)
 	vsync_button.toggled.connect(_on_vsync_toggled)
+	death_counter_check.toggled.connect(_on_death_counter_toggled)
 
 	general_slider.focus_entered.connect(func(): _track_audio_focus())
 	music_slider.focus_entered.connect(func(): _track_audio_focus())
@@ -53,6 +55,7 @@ func open() -> void:
 	HUD.visible = false
 	menu_painel.visible = true
 	controls_tab_button.grab_focus()
+	death_counter_check.set_pressed_no_signal(GameManager.show_death_counter)
 
 
 func close() -> void:
@@ -73,7 +76,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 
-	if event.is_action_pressed("pause"):
+	if event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel"):
 		close()
 		get_viewport().set_input_as_handled()
 
@@ -103,8 +106,10 @@ func _on_fullscreen_toggled(pressed: bool) -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
-
 func _on_vsync_toggled(pressed: bool) -> void:
 	DisplayServer.window_set_vsync_mode(
 		DisplayServer.VSYNC_ENABLED if pressed else DisplayServer.VSYNC_DISABLED
 	)
+
+func _on_death_counter_toggled(pressed: bool) -> void:
+	GameManager.set_show_death_counter(pressed)
