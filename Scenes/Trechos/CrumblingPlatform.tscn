@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://bvrcckeg4r63r"]
+
+[ext_resource type="Script" uid="uid://hqmm8om4eha3" path="res://Scripts/Trechos/crumbling_platform.gd" id="1_wmxke"]
+[ext_resource type="Texture2D" uid="uid://h7exkjbplc6r" path="res://Sprites/Objects/plataforma_livre_quebrando.png" id="2_xoqx8"]
+[ext_resource type="Texture2D" uid="uid://dd1m4rj0i1yvy" path="res://Sprites/Objects/plataforma_livre_contorno.png" id="3_do8l6"]
+[ext_resource type="Texture2D" uid="uid://bgrnnow37wkc0" path="res://Sprites/Objects/plataforma_livre_aparecendo.png" id="4_4qv0t"]
+[ext_resource type="Texture2D" uid="uid://c5avnkmj35uok" path="res://Sprites/Objects/plataforma_livre.png" id="5_lg381"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lg381"]
+atlas = ExtResource("3_do8l6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cga7v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lg381")
+}],
+"loop": true,
+"name": &"ghost",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cga7v"]
+atlas = ExtResource("2_xoqx8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r416v"]
+atlas = ExtResource("2_xoqx8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tp0rd"]
+atlas = ExtResource("2_xoqx8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bb84i"]
+atlas = ExtResource("2_xoqx8")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xoqx8"]
+atlas = ExtResource("4_4qv0t")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_do8l6"]
+atlas = ExtResource("4_4qv0t")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qv0t"]
+atlas = ExtResource("4_4qv0t")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_486iw"]
+atlas = ExtResource("5_lg381")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fn3vc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cga7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r416v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tp0rd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bb84i")
+}],
+"loop": false,
+"name": &"break",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xoqx8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_do8l6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qv0t")
+}],
+"loop": false,
+"name": &"return",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_486iw")
+}],
+"loop": true,
+"name": &"stable",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5gagd"]
+size = Vector2(14, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wmxke"]
+size = Vector2(12, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpp5k"]
+size = Vector2(14, 6)
+
+[node name="CrumblingPlatform" type="StaticBody2D" unique_id=2064970557]
+script = ExtResource("1_wmxke")
+
+[node name="GhostSprite" type="AnimatedSprite2D" parent="." unique_id=309737251]
+sprite_frames = SubResource("SpriteFrames_cga7v")
+animation = &"ghost"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1366254917]
+sprite_frames = SubResource("SpriteFrames_fn3vc")
+animation = &"break"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2044106077]
+shape = SubResource("RectangleShape2D_5gagd")
+one_way_collision = true
+debug_color = Color(0, 0.6503175, 0.11705484, 0.41960785)
+
+[node name="TopDetector" type="Area2D" parent="." unique_id=1044824204]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopDetector" unique_id=648736596]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_wmxke")
+debug_color = Color(0, 0.5448824, 0.94333285, 0.41960785)
+
+[node name="OverlapCheck" type="Area2D" parent="." unique_id=1222938419]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OverlapCheck" unique_id=1000342171]
+shape = SubResource("RectangleShape2D_gpp5k")
+debug_color = Color(0.9997985, 0, 0.11625322, 0.41960785)
