@@ -4,6 +4,8 @@ extends Area2D
 @export var hop_height: float = 12.0
 @export var hop_duration: float = 0.4
 
+@export var show_interact_hint: bool = false
+
 @export var dream_lines: Array[String] = []
 @export var eugene_mutter: Array[String] = []
 @export_enum ("Centro", "Esquerda", "Direita") var mutter_ballon_side: String = "Centro"
@@ -26,6 +28,9 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
+		
+	if show_interact_hint and not GameManager.activated_checkpoint.has(checkpoint_id):
+		TutorialPanel.show_panel(self, "INTERAGIR", "{pad:interact}", "{key:interact}", true)
 
 	player_ref = body
 	state = CheckpointState.IN_RANGE
@@ -39,6 +44,7 @@ func _on_body_exited(body: Node2D) -> void:
 		state = CheckpointState.IDLE
 		alert_icon.visible = false
 		player_ref = null
+		TutorialPanel.hide_panel(self)
 
 
 func _process(_delta: float) -> void:
@@ -52,6 +58,7 @@ func _process(_delta: float) -> void:
 
 
 func _start_sitting() -> void:
+	TutorialPanel.hide_panel(self)
 	state = CheckpointState.SITTING
 	player_ref.lock_movement(true, true)
 	player_ref.sprite.play("checkpoint_sleep")
