@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cn20l1j8bbcd8" path="res://Sprites/Flores/buque_3.png" id="4_8sh0i"]
 [ext_resource type="Texture2D" uid="uid://r8mprvot0uug" path="res://Sprites/Flores/buque_4.png" id="5_anust"]
 [ext_resource type="Texture2D" uid="uid://dvn0w5xpm5ao4" path="res://Sprites/Flores/buque_final.png" id="6_6hqs7"]
+[ext_resource type="Texture2D" uid="uid://dyhosl6h4lrk7" path="res://Sprites/Objects/caveira.png" id="7_8sh0i"]
 
 [node name="HUD" type="CanvasLayer" unique_id=728739656]
 script = ExtResource("1_adibq")
@@ -17,4 +18,23 @@ offset_right = 24.0
 offset_bottom = 26.0
 
 [node name="FlowerIcon" type="TextureRect" parent="FlowerCounter" unique_id=2016254482]
+layout_mode = 2
+
+[node name="DeathCounter" type="HBoxContainer" parent="." unique_id=1919687492]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_right = 4.0
+offset_bottom = 24.0
+grow_horizontal = 0
+
+[node name="DeathIcon" type="TextureRect" parent="DeathCounter" unique_id=1021751045]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture = ExtResource("7_8sh0i")
+stretch_mode = 2
+
+[node name="DeathLabel" type="Label" parent="DeathCounter" unique_id=354351810]
 layout_mode = 2

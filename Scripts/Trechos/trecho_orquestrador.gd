@@ -19,7 +19,6 @@ func _ready() -> void:
 	add_child(current_trecho_instance)
 	_apply_camera_limits()
 
-
 func move_forward(marker_override: String = "") -> void:
 	if is_transitioning:
 		return
@@ -70,7 +69,9 @@ func respawn_player() -> void:
 	if is_transitioning:
 		return
 	is_transitioning = true
-
+	
+	GameManager.register_death()
+	
 	player.lock_movement()
 
 	await TransitionEffect.play(player, func():

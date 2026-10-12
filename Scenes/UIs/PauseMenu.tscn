@@ -6,6 +6,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3un8k"]
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=1683923025]
+layer = 10
 script = ExtResource("1_3un8k")
 
 [node name="Control" type="Control" parent="." unique_id=1693183196]
@@ -64,5 +65,3 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../OptionsButton")
 theme = ExtResource("1_n2yb7")
 text = "Menu Principal"
-
-[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]

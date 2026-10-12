@@ -14,7 +14,10 @@ func _ready() -> void:
 	option_button.pressed.connect(_on_options_button_pressed)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed("pause"):
+	var wants_toggle: bool = event.is_action_pressed("pause")
+	var wants_back: bool = event.is_action_pressed("ui_cancel")
+	
+	if not wants_toggle and not wants_back:
 		return
 		
 	var current_scene_path: String = get_tree().current_scene.scene_file_path
@@ -28,7 +31,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 		
-	_toggle_pause()
+	if wants_toggle:
+		_toggle_pause()
+	elif get_tree().paused and menu_control.visible:
+		_resume()
+		get_viewport().set_input_as_handled()
 		
 func _toggle_pause() -> void:
 	if get_tree().paused:

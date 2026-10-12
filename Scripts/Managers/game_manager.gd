@@ -4,9 +4,17 @@ extends Node
 func start_new_game() -> void:
 	current_level_index = 0
 	flowers_collected.clear()
+	deaths = 0
+	
+	activated_checkpoint.clear()
+	current_checkpoint_id = ""
+	current_checkpoint_level = ""
+	current_checkpoint_position = Vector2.ZERO
+	
 	get_tree().call_deferred("change_scene_to_file", level_scenes[current_level_index])
 	HUD.visible = true
 	HUD.update_flower_count()
+	HUD.update_death_counter()
 
 # ---------- Mudança de Level ----------
 @export var level_scenes: Array[String] = [
@@ -19,7 +27,7 @@ func start_new_game() -> void:
 
 # ---- Comentário para testes, pode ignorar ----
 #@export var level_scenes: Array[String] = [
-	#"res://Scenes/Levels/Level2.tscn", 
+	#"res://Scenes/Levels/Level4.tscn", 
 	#"res://Scenes/Levels/Level1_tutorial.tscn",
 	#"res://Scenes/Levels/Level3.tscn",
 	#"res://Scenes/Levels/Level4.tscn",
@@ -64,3 +72,15 @@ func collect_flowers(flower_id: String) -> void:
 	
 func has_all_flowers() -> bool:
 	return flowers_collected.size() >= TOTAL_FLOWERS
+
+# ---------- Mortes ----------
+var deaths: int = 0
+var show_death_counter: bool = false
+
+func register_death() -> void:
+	deaths += 1
+	HUD.update_death_counter()	
+	
+func set_show_death_counter(value: bool) -> void:
+	show_death_counter = value
+	HUD.update_death_counter()

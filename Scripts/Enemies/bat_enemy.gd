@@ -139,6 +139,15 @@ func _on_stomp_zone_body_entered(body: Node2D) -> void:
 		var direction: Vector2 = (body.global_position - global_position).normalized()
 		body.play_hit_and_respawn(direction, 150.0, 0.3)
 
+func _on_death() -> void:
+	if not sprite.sprite_frames.has_animation("death"):
+		queue_free()
+		return
+		
+	sprite.flip_h = false
+	sprite.play("death")
+	await sprite.animation_finished
+	queue_free()
 
 func _update_animation() -> void:
 	match bat_state:

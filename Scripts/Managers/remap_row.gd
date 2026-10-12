@@ -1,27 +1,5 @@
 extends Control
 
-@onready var move_left_keyboard: Button = $MoveLeftRow/KeyboardButton
-@onready var move_left_gamepad: Button = $MoveLeftRow/GamepadButton
-@onready var move_right_keyboard: Button = $MoveRightRow/KeyboardButton
-@onready var move_right_gamepad: Button = $MoveRightRow/GamepadButton
-@onready var move_up_keyboard: Button = $MoveUpRow/KeyboardButton
-@onready var move_up_gamepad: Button = $MoveUpRow/GamepadButton
-@onready var move_down_keyboard: Button = $MoveDownRow/KeyboardButton
-@onready var move_down_gamepad: Button = $MoveDownRow/GamepadButton
-@onready var jump_keyboard: Button = $MoveJumpRow/KeyboardButton
-@onready var jump_gamepad: Button = $MoveJumpRow/GamepadButton
-@onready var dash_keyboard: Button = $MoveDashRow/KeyboardButton
-@onready var dash_gamepad: Button = $MoveDashRow/GamepadButton
-@onready var climb_keyboard: Button = $MoveClimbRow/KeyboardButton
-@onready var climb_gamepad: Button = $MoveClimbRow/GamepadButton
-
-var listening_action: String = ""
-var listening_device: String = ""
-var just_started_listening: bool = false
-var listening_button: Button = null
-
-const ALL_ACTIONS: Array = ["move_left", "move_right", "move_up", "move_down", "jump", "dash", "climb"]
-
 const GAMEPAD_BUTTON_NAMES: Dictionary = {
 	JOY_BUTTON_A: "A",
 	JOY_BUTTON_B: "B",
@@ -35,76 +13,81 @@ const GAMEPAD_BUTTON_NAMES: Dictionary = {
 	JOY_BUTTON_DPAD_RIGHT: "D-Pad Direita",
 }
 
+const CONFLICT_COLOR: Color = Color.WHITE
+const CONFLICT_BORDER: float = 1.0
+
+@onready var move_left_keyboard: Button = $MoveLeftRow/KeyboardButton
+@onready var move_right_keyboard: Button = $MoveRightRow/KeyboardButton
+@onready var move_up_keyboard: Button = $MoveUpRow/KeyboardButton
+@onready var move_down_keyboard: Button = $MoveDownRow/KeyboardButton
+@onready var jump_keyboard: Button = $MoveJumpRow/KeyboardButton
+@onready var jump_gamepad: Button = $MoveJumpRow/GamepadButton
+@onready var dash_keyboard: Button = $MoveDashRow/KeyboardButton
+@onready var dash_gamepad: Button = $MoveDashRow/GamepadButton
+@onready var climb_keyboard: Button = $MoveClimbRow/KeyboardButton
+@onready var climb_gamepad: Button = $MoveClimbRow/GamepadButton
+@onready var warning_label: Label = find_child("WarningLabel", true, false) as Label
+
+var entries: Array[Dictionary] = []
+var actions: Array[String] = []
+var listening_entry: Dictionary = {}
+var committed_events: Dictionary = {}
+var has_conflict: bool = false
+
 func _ready() -> void:
-	move_left_keyboard.pressed.connect(func(): _start_listening("move_left", "keyboard", move_left_keyboard))
-	move_right_keyboard.pressed.connect(func(): _start_listening("move_right", "keyboard", move_right_keyboard))
-	move_up_keyboard.pressed.connect(func(): _start_listening("move_up", "keyboard", move_up_keyboard))
-	move_down_keyboard.pressed.connect(func(): _start_listening("move_down", "keyboard", move_down_keyboard))
-	jump_keyboard.pressed.connect(func(): _start_listening("jump", "keyboard", jump_keyboard))
-	jump_gamepad.pressed.connect(func(): _start_listening("jump", "gamepad", jump_gamepad))
-	dash_keyboard.pressed.connect(func(): _start_listening("dash", "keyboard", dash_keyboard))
-	dash_gamepad.pressed.connect(func(): _start_listening("dash", "gamepad", dash_gamepad))
-	climb_keyboard.pressed.connect(func(): _start_listening("climb", "keyboard", climb_keyboard))
-	climb_gamepad.pressed.connect(func(): _start_listening("climb", "gamepad", climb_gamepad))
+	_register("move_left", "keyboard", move_left_keyboard)
+	_register("move_right", "keyboard", move_right_keyboard)
+	_register("move_up", "keyboard", move_up_keyboard)
+	_register("move_down", "keyboard", move_down_keyboard)
+	_register("jump", "keyboard", jump_keyboard)
+	_register("jump", "gamepad", jump_gamepad)
+	_register("dash", "keyboard", dash_keyboard)
+	_register("dash", "gamepad", dash_gamepad)
+	_register("climb", "keyboard", climb_keyboard)
+	_register("climb", "gamepad", climb_gamepad)
 
-	_refresh_all_labels()
+	visibility_changed.connect(_on_visibility_changed)
+	_commit()
+	_refresh_all()
+	_clear_outlines()
 
-func _refresh_all_labels() -> void:
-	_refresh_button(move_left_keyboard, "move_left", "keyboard")
-	_refresh_button(move_right_keyboard, "move_right", "keyboard")
-	_refresh_button(move_up_keyboard, "move_up", "keyboard")
-	_refresh_button(move_down_keyboard, "move_down", "keyboard")
-	_refresh_button(jump_keyboard, "jump", "keyboard")
-	_refresh_button(jump_gamepad, "jump", "gamepad")
-	_refresh_button(dash_keyboard, "dash", "keyboard")
-	_refresh_button(dash_gamepad, "dash", "gamepad")
-	_refresh_button(climb_keyboard, "climb", "keyboard")
-	_refresh_button(climb_gamepad, "climb", "gamepad")
+func _register(action: String, device: String, button: Button) -> void:
+	var outline := ReferenceRect.new()
+	outline.editor_only = false
+	outline.border_color = CONFLICT_COLOR
+	outline.border_width = CONFLICT_BORDER
+	outline.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	outline.visible = false
+	button.add_child(outline)
+	outline.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-func _refresh_button(button: Button, action: String, device: String) -> void:
-	var events: Array = InputMap.action_get_events(action)
-	for event in events:
-		if device == "keyboard" and event is InputEventKey:
-			var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
-			button.text = OS.get_keycode_string(code)
-			return
-		elif device == "gamepad" and event is InputEventJoypadButton:
-			button.text = GAMEPAD_BUTTON_NAMES.get(event.button_index, "Botão " + str(event.button_index))
-			return
-		elif device == "gamepad" and event is InputEventJoypadMotion:
-			if event.axis == JOY_AXIS_TRIGGER_LEFT:
-				button.text = "LT"
-				return
-			elif event.axis == JOY_AXIS_TRIGGER_RIGHT:
-				button.text = "RT"
-				return
-	button.text = "—"
+	entries.append({"action": action, "device": device, "button": button, "outline": outline})
+	if not actions.has(action):
+		actions.append(action)
+
+	button.pressed.connect(func(): _start_listening(action, device, button))
+
+# ---------- Captura ----------
 
 func _start_listening(action: String, device: String, button: Button) -> void:
-	_refresh_all_labels()
-
-	listening_action = action
-	listening_device = device
-	listening_button = button
-	just_started_listening = true
+	_refresh_all()
+	listening_entry = {"action": action, "device": device, "button": button}
 	button.text = "..."
 	button.release_focus()
 
 func cancel_listening() -> void:
-	listening_action = ""
-	listening_device = ""
-	_refresh_all_labels()
-	
-	if listening_button:
-		listening_button.grab_focus()
-	listening_button = null
-
-func _input(event: InputEvent) -> void:
-	if listening_action == "":
+	if listening_entry.is_empty():
 		return
 
-	if just_started_listening:
-		just_started_listening = false
+	var button: Button = listening_entry["button"]
+	listening_entry = {}
+	_refresh_all()
+
+	if is_visible_in_tree():
+		button.grab_focus()
+
+func _input(event: InputEvent) -> void:
+	if listening_entry.is_empty():
 		return
 
 	if event.is_action_pressed("ui_cancel"):
@@ -112,46 +95,135 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 
-	if listening_device == "keyboard" and event is InputEventKey and event.pressed:
-		_rebind(event)
-	elif listening_device == "gamepad":
+	if listening_entry["device"] == "keyboard":
+		if event is InputEventKey and event.pressed and not event.echo:
+			_rebind(event)
+	else:
 		if event is InputEventJoypadButton and event.pressed:
 			_rebind(event)
-		elif event is InputEventJoypadMotion and (event.axis == JOY_AXIS_TRIGGER_LEFT or event.axis == JOY_AXIS_TRIGGER_RIGHT) and event.axis_value > 0.5:
+		elif _is_trigger(event) and event.axis_value > 0.5:
 			_rebind(event)
 
 func _rebind(new_event: InputEvent) -> void:
-	var conflicting_action: String = _find_conflict(new_event)
-	if conflicting_action != "" and conflicting_action != listening_action:
-		cancel_listening()
-		return
+	var action: String = listening_entry["action"]
+	var device: String = listening_entry["device"]
+	var button: Button = listening_entry["button"]
 
-	var events: Array = InputMap.action_get_events(listening_action)
-	for old_event in events:
-		if listening_device == "keyboard" and old_event is InputEventKey:
-			InputMap.action_erase_event(listening_action, old_event)
-		elif listening_device == "gamepad" and old_event is InputEventJoypadButton:
-			InputMap.action_erase_event(listening_action, old_event)
-		elif listening_device == "gamepad" and old_event is InputEventJoypadMotion:
-			if old_event.axis == JOY_AXIS_TRIGGER_LEFT or old_event.axis == JOY_AXIS_TRIGGER_RIGHT:
-				InputMap.action_erase_event(listening_action, old_event)
+	for old_event in InputMap.action_get_events(action):
+		if _belongs_to_device(old_event, device):
+			InputMap.action_erase_event(action, old_event)
 
-	InputMap.action_add_event(listening_action, new_event)
-	listening_action = ""
-	listening_device = ""
-	_refresh_all_labels()
-	
-	if listening_button:
-		listening_button.grab_focus()
-		listening_button = null
-	
+	InputMap.action_add_event(action, new_event)
+
+	listening_entry = {}
+	_refresh_all()
+	_update_conflicts()
+
+	if is_visible_in_tree():
+		button.grab_focus()
 	get_viewport().set_input_as_handled()
 
-func _find_conflict(new_event: InputEvent) -> String:
-	for action in ALL_ACTIONS:
-		for existing_event in InputMap.action_get_events(action):
-			if existing_event is InputEventKey and new_event is InputEventKey and existing_event.physical_keycode == new_event.physical_keycode:
-				return action
-			if existing_event is InputEventJoypadButton and new_event is InputEventJoypadButton and existing_event.button_index == new_event.button_index:
-				return action
+# ---------- Conflitos ----------
+
+func _update_conflicts() -> void:
+	_clear_outlines()
+
+	var groups: Dictionary = {}
+	for entry in entries:
+		var event: InputEvent = _primary_event(entry["action"], entry["device"])
+		if event == null:
+			continue
+		var key: String = entry["device"] + "|" + _signature(event)
+		if not groups.has(key):
+			groups[key] = []
+		groups[key].append(entry)
+
+	for key in groups:
+		if groups[key].size() > 1:
+			has_conflict = true
+			for entry in groups[key]:
+				entry["outline"].visible = true
+
+	if warning_label:
+		warning_label.visible = has_conflict
+
+	if not has_conflict:
+		_commit()
+
+func _clear_outlines() -> void:
+	has_conflict = false
+	for entry in entries:
+		entry["outline"].visible = false
+	if warning_label:
+		warning_label.visible = false
+
+func _commit() -> void:
+	committed_events.clear()
+	for action in actions:
+		committed_events[action] = InputMap.action_get_events(action)
+
+func _revert_to_committed() -> void:
+	for action in committed_events:
+		InputMap.action_erase_events(action)
+		for event in committed_events[action]:
+			InputMap.action_add_event(action, event)
+
+func _on_visibility_changed() -> void:
+	if is_visible_in_tree():
+		_commit()
+		_refresh_all()
+		_update_conflicts()
+		return
+
+	cancel_listening()
+	if has_conflict:
+		_revert_to_committed()
+	_refresh_all()
+	_clear_outlines()
+
+# ---------- Eventos e rótulos ----------
+
+func _is_trigger(event: InputEvent) -> bool:
+	return event is InputEventJoypadMotion and (event.axis == JOY_AXIS_TRIGGER_LEFT or event.axis == JOY_AXIS_TRIGGER_RIGHT)
+
+func _belongs_to_device(event: InputEvent, device: String) -> bool:
+	if device == "keyboard":
+		return event is InputEventKey
+	return event is InputEventJoypadButton or _is_trigger(event)
+
+func _primary_event(action: String, device: String) -> InputEvent:
+	var fallback: InputEvent = null
+	for event in InputMap.action_get_events(action):
+		if device == "keyboard" and event is InputEventKey:
+			return event
+		if device == "gamepad":
+			if event is InputEventJoypadButton:
+				return event
+			if _is_trigger(event) and fallback == null:
+				fallback = event
+	return fallback
+
+func _signature(event: InputEvent) -> String:
+	if event is InputEventKey:
+		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		return "key:" + str(code)
+	if event is InputEventJoypadButton:
+		return "btn:" + str(event.button_index)
+	if event is InputEventJoypadMotion:
+		return "axis:" + str(event.axis)
 	return ""
+
+func _event_label(event: InputEvent) -> String:
+	if event is InputEventKey:
+		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		return OS.get_keycode_string(code)
+	if event is InputEventJoypadButton:
+		return GAMEPAD_BUTTON_NAMES.get(event.button_index, "Botão " + str(event.button_index))
+	if event is InputEventJoypadMotion:
+		return "LT" if event.axis == JOY_AXIS_TRIGGER_LEFT else "RT"
+	return "?"
+
+func _refresh_all() -> void:
+	for entry in entries:
+		var event: InputEvent = _primary_event(entry["action"], entry["device"])
+		entry["button"].text = _event_label(event) if event else "—"

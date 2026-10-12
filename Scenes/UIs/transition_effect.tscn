@@ -11,7 +11,7 @@ shader_parameter/aspect = 1.2228
 shader_parameter/edge_softness = 0.03
 
 [node name="TransitionEffect" type="CanvasLayer" unique_id=1325204768]
-layer = 2
+layer = 10
 script = ExtResource("1_4ghf3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=940257182]
