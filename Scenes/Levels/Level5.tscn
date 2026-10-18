@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d2cqp74hfvb3p"]
+
+[ext_resource type="Script" uid="uid://btql8xcvoaujr" path="res://Scripts/Trechos/trecho_orquestrador.gd" id="1_xwlei"]
+[ext_resource type="PackedScene" uid="uid://1crawx7hu8hc" path="res://Scenes/Trechos/Level5_final/Trecho4_level5.tscn" id="5_ux5je"]
+[ext_resource type="PackedScene" uid="uid://cve71n3rk32m2" path="res://Scenes/UIs/Parallax_Mina.tscn" id="6_5scs2"]
+[ext_resource type="PackedScene" uid="uid://crw84o4wxcksi" path="res://Scenes/Player/CameraController.tscn" id="8_d7ipn"]
+[ext_resource type="PackedScene" uid="uid://1h8r72i7c2qv" path="res://Scenes/Player/Player_Eugene.tscn" id="9_yawv8"]
+
+[node name="Level5Final" type="Node2D" unique_id=1284398703]
+script = ExtResource("1_xwlei")
+trecho_scenes = Array[PackedScene]([ExtResource("5_ux5je")])
+
+[node name="Camera2D" parent="." unique_id=200463703 instance=ExtResource("8_d7ipn")]
+position = Vector2(104, 88)
+offset = Vector2(50, 0)
+
+[node name="Player_Eugene" parent="." unique_id=1699571630 instance=ExtResource("9_yawv8")]
+position = Vector2(16, 104)
+
+[node name="Parallax_Mina" parent="." unique_id=382382962 instance=ExtResource("6_5scs2")]
