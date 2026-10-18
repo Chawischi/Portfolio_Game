@@ -30,7 +30,7 @@ var jumps_done: int = 0
 @export var dash_duration: float = 0.18
 @export var dash_start_ratio: float = 0.55
 @export var dash_end_ratio: float = 0.45
-@export var dash_cooldown: float = 0.6
+@export var dash_cooldown: float = 0.45
 @export var dash_gravity_influence: float = 6.0
 @export var momentum_duration: float = 0.08
 
@@ -88,12 +88,19 @@ var knockback_tween: Tween = null
 @onready var ray_up: RayCast2D = $RayUp
 @onready var ray_down: RayCast2D = $RayDown
 
+# ---------- Caminhada Forçada (final) ----------
+var forced_walk_active: bool = false
+var forced_walk_collapsed: bool = false
+var forced_walk_auto: bool = false  
+var forced_walk_speed: float = 0.0
+var forced_walk_dir: float = 1.0
+var forced_walk_anim: String = "run"
+
 # ---------- Estados da FSM ----------
 enum State { IDLE, RUN, JUMP_UP, JUMP_FALL, DASH, CLIMB, WALL_SLIDE }
 var current_state: State = State.IDLE
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-
 
 func _ready() -> void:
 	jump_velocity = -(2.0 * jump_height) / jump_time_to_peak
@@ -104,12 +111,17 @@ func _ready() -> void:
 	var accel_area: float = (dash_start_ratio + 1.0) / 2.0 * half_duration
 	var decel_area: float = (1.0 + dash_end_ratio) / 2.0 * half_duration
 	dash_peak_speed = dash_distance / (accel_area + decel_area)
-
+	
+	set_carrying_bouquet(GameManager.carrying_bouquet)
 
 func _physics_process(delta: float) -> void:
 	if knockback_vector != Vector2.ZERO:
 		velocity = knockback_vector
 		move_and_slide()
+		return
+	
+	if forced_walk_active:
+		_handle_forced_walk(delta)
 		return
 
 	if is_input_locked:
@@ -143,7 +155,6 @@ func _physics_process(delta: float) -> void:
 	_update_animation()
 	_update_climb_visual_feedback()
 
-
 func _handle_gravity(delta: float) -> void:
 	if not is_on_floor():
 		var current_gravity: float = gravity_rise if velocity.y < 0.0 else gravity_fall
@@ -151,7 +162,6 @@ func _handle_gravity(delta: float) -> void:
 		velocity.y = min(velocity.y, max_fall_speed)
 	else:
 		jumps_done = 0 	# Para resetar o pulo ao tocar o chão
-
 
 func _handle_timers(delta: float) -> void:
 	# Coyote time: só conta enquanto o personagem está no ar, ou seja, ele saiu da plataforma;
@@ -174,7 +184,6 @@ func _handle_timers(delta: float) -> void:
 	wall_jump_lockout_timer -= delta
 	momentum_timer -= delta
 
-
 func _handle_jump_input() -> void:
 	# Passo 1: "anota/guarda" a intenção no exato frame do clique
 	if Input.is_action_just_pressed("jump"):
@@ -193,7 +202,6 @@ func _handle_jump_input() -> void:
 	if Input.is_action_just_released("jump") and velocity.y < 0.0:
 		velocity.y *= jump_cut_multiplier
 
-
 func _handle_movement() -> void:
 	var direction: float = Input.get_axis("move_left", "move_right")
 	var target_speed: float = direction * speed
@@ -206,12 +214,10 @@ func _handle_movement() -> void:
 	if direction != 0.0:
 		sprite.flip_h = direction < 0.0
 
-
 func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
 	var angle: float = raw_direction.angle()
 	var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
 	return Vector2.RIGHT.rotated(snapped_angle)
-
 
 func _handle_dash_input() -> void:
 	if Input.is_action_just_pressed("dash") and cooldown_timer <= 0.0 and not is_dashing and not is_climbing:
@@ -228,7 +234,6 @@ func _handle_dash_input() -> void:
 		dash_direction = _get_snapped_dash_direction(input_vector)
 	else:
 		dash_direction = Vector2.LEFT if sprite.flip_h else Vector2.RIGHT
-
 
 func _handle_dash_movement(delta: float) -> void:
 	var elapsed: float = dash_duration - dash_timer
@@ -257,7 +262,6 @@ func _handle_dash_movement(delta: float) -> void:
 		is_dashing = false
 		momentum_timer = momentum_duration
 
-
 func _spawn_afterimage() -> void:
 	var ghost := Sprite2D.new()
 	ghost.texture = sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
@@ -273,7 +277,6 @@ func _spawn_afterimage() -> void:
 	var tween: Tween = create_tween()
 	tween.tween_property(ghost, "modulate:a", 0.0, afterimage_fade_duration)
 	tween.tween_callback(ghost.queue_free)
-
 
 func _handle_climb_input(delta: float) -> void:
 	var touching_wall: bool = _is_touching_climbable_wall() and not is_on_floor()
@@ -301,7 +304,6 @@ func _handle_climb_input(delta: float) -> void:
 		if Input.is_action_just_pressed("jump"):
 			_climb_jump()
 
-
 func _climb_jump() -> void:
 	is_climbing = false
 	is_climb_jumping = true
@@ -311,13 +313,11 @@ func _climb_jump() -> void:
 	climb_lockout_timer = climb_regrab_lockout
 	wall_jump_lockout_timer = wall_jump_lockout
 
-
 func _handle_climb_movement() -> void:
 	climb_vertical_input = Input.get_axis("move_up", "move_down")
 	velocity.y = climb_vertical_input * climb_speed
 	velocity.x = 0.0
 	sprite.flip_h = wall_direction < 0.0
-
 
 func _handle_wall_input(_delta: float) -> bool:
 	var touching_wall: bool = _is_touching_climbable_wall() and not is_on_floor()
@@ -340,7 +340,6 @@ func _handle_wall_input(_delta: float) -> bool:
 		return true
 
 	return false
-
 
 func _is_touching_climbable_wall() -> bool:
 	for i in get_slide_collision_count():
@@ -371,13 +370,12 @@ func _update_state() -> void:
 	else:
 		current_state = State.IDLE
 
-
 func _update_animation() -> void:
 	match current_state:
 		State.IDLE:
-			sprite.play("idle")
+			_play_anim("idle")
 		State.RUN:
-			sprite.play("run")
+			_play_anim("run")
 		State.JUMP_UP:
 			if is_climb_jumping:
 				sprite.play("climb_jump_up")
@@ -414,6 +412,7 @@ func _update_climb_visual_feedback() -> void:
 
 
 func lock_movement(freeze_velocity: bool = true, force_idle: bool = false) -> void:
+	forced_walk_active = false
 	is_input_locked = true
 	freeze_velocity_while_locked = freeze_velocity
 	if freeze_velocity:
@@ -421,10 +420,8 @@ func lock_movement(freeze_velocity: bool = true, force_idle: bool = false) -> vo
 	if force_idle:
 		sprite.play("idle")
 
-
 func unlock_movement() -> void:
 	is_input_locked = false
-
 
 func _check_hazard_rays() -> void:
 	if is_hurt:
@@ -443,7 +440,6 @@ func _check_hazard_rays() -> void:
 		is_hurt = true
 		play_hit_and_respawn(Vector2.UP, 150.0, 0.3)
 
-
 func apply_knockback(direction: Vector2, strength: float, duration: float) -> void:
 	knockback_vector = direction * strength
 
@@ -456,7 +452,6 @@ func apply_knockback(direction: Vector2, strength: float, duration: float) -> vo
 	sprite.modulate = Color(1, 0, 0, 1)
 	var color_tween: Tween = create_tween()
 	color_tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), duration)
-
 
 func play_hit_and_respawn(direction: Vector2, strength: float, duration: float) -> void:
 	if is_invulnerable:
@@ -479,7 +474,6 @@ func play_hit_and_respawn(direction: Vector2, strength: float, duration: float) 
 	await get_tree().create_timer(0.5).timeout
 	is_invulnerable = false
 
-
 func reset_movement_state(face_right: bool = true) -> void:
 	velocity = Vector2.ZERO
 	knockback_vector = Vector2.ZERO
@@ -497,4 +491,85 @@ func reset_movement_state(face_right: bool = true) -> void:
 	momentum_timer = 0.0
 	sprite.modulate = Color.WHITE
 	sprite.flip_h = not face_right
-	sprite.play("idle")
+	
+	forced_walk_active = false
+	forced_walk_collapsed = false
+	sprite.speed_scale = 1.0
+	sprite.rotation_degrees = 0.0
+	
+	_play_anim("idle")
+
+func start_forced_walk(walk_speed: float, anim: String = "run", auto: bool = false, dir: float = 1.0) -> void:
+	forced_walk_active = true
+	forced_walk_collapsed = false
+	forced_walk_auto = auto
+	forced_walk_dir = dir
+	forced_walk_speed = walk_speed
+	forced_walk_anim = anim
+	is_dashing = false
+	is_climbing = false
+	is_wall_sliding = false
+	velocity.x = 0.0
+	sprite.flip_h = dir < 0.0
+	sprite.modulate = Color.WHITE
+	sprite.offset = Vector2.ZERO
+	
+func set_forced_walk_speed(walk_speed: float) -> void:
+	forced_walk_speed = walk_speed
+
+func stop_forced_walk() -> void:
+	forced_walk_active = false
+	forced_walk_auto = false
+	velocity = Vector2.ZERO
+	sprite.speed_scale = 1.0
+	_play_anim("idle")
+	
+func collapsed() -> void:
+	forced_walk_active = false
+	forced_walk_collapsed = true
+	lock_movement(true, false)
+	sprite.speed_scale = 1.0
+	
+	var anim: String = ""
+	for candidate in ["collapsed" + anim_suffix, "collapsed", "collapsed_flower"]:
+		if sprite.sprite_frames.has_animation(candidate):
+			anim = candidate
+			break
+	
+	if anim != "":
+		sprite.play(anim)
+	else:
+		_play_anim("idle")
+		var tween: Tween = create_tween()
+		tween.tween_property(sprite, "rotation_degrees", 90.0, 0.5)
+		
+func _handle_forced_walk(delta: float) -> void:
+	sprite.flip_h = forced_walk_dir < 0.0
+	velocity.y = min(velocity.y + gravity * delta, max_fall_speed)
+	
+	if forced_walk_collapsed:
+		velocity.x = 0.0
+	elif forced_walk_auto or Input.is_action_pressed("move_right"):
+		velocity.x = forced_walk_speed * forced_walk_dir
+		sprite.speed_scale = forced_walk_speed / speed
+		_play_anim(forced_walk_anim)
+	else:
+		velocity.x = 0.0
+		sprite.speed_scale = 1.0
+		_play_anim("idle")
+	move_and_slide()
+
+# ---------- Animação com buquê ----------
+var anim_suffix: String = ""
+
+func set_carrying_bouquet(value: bool) -> void:
+	anim_suffix = "_flower" if value else ""
+	
+func _play_anim(anim_name: String) -> void:
+	var with_suffix: String = anim_name + anim_suffix
+	if anim_suffix != "" and sprite.sprite_frames.has_animation(with_suffix):
+		sprite.play(with_suffix)
+	else:
+		sprite.play(anim_name)
+		
+		
