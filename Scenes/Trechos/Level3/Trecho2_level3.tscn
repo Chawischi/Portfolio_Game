@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dkfusqqnm1mfd" path="res://Sprites/Enemies/spikes_fase_3.png" id="10_0jynu"]
 [ext_resource type="PackedScene" uid="uid://isn4wu5rj5kj" path="res://Scenes/Enemies/Stalagmite.tscn" id="11_0jynu"]
 [ext_resource type="PackedScene" uid="uid://cja62y8nqsxnu" path="res://Scenes/UIs/Flower.tscn" id="12_wt8j6"]
+[ext_resource type="Script" uid="uid://coctlad1yyjtj" path="res://Scripts/UI/flower_safe_zone.gd" id="13_xtm0g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gbm8h"]
 size = Vector2(16, 64)
@@ -19,8 +20,14 @@ size = Vector2(16, 64)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_31n6a"]
 size = Vector2(960, 24)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xtm0g"]
+size = Vector2(12, 6)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wt8j6"]
 size = Vector2(16, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhloj"]
+size = Vector2(112, 48)
 
 [node name="Trecho1Level3" type="Node2D" unique_id=1889954611]
 script = ExtResource("1_gbm8h")
@@ -1154,9 +1161,11 @@ proximity_size = Vector2(56, 120)
 
 [node name="Flower" parent="." unique_id=1601396762 instance=ExtResource("12_wt8j6")]
 position = Vector2(708, -286)
+flower_id = "flower_level_3"
 
 [node name="CollisionShape2D" parent="Flower/ProximityTrigger" parent_id_path=PackedInt32Array(1601396762, 1683368282) index="0" unique_id=1911227380]
 position = Vector2(-8, 24)
+shape = SubResource("RectangleShape2D_xtm0g")
 
 [node name="LimiteMap" type="StaticBody2D" parent="." unique_id=897860569]
 
@@ -1164,6 +1173,14 @@ position = Vector2(-8, 24)
 position = Vector2(-8, 100)
 shape = SubResource("RectangleShape2D_wt8j6")
 debug_color = Color(0, 0.63041776, 0.47598165, 0.41960785)
+
+[node name="FlowerSafeZone" type="Area2D" parent="." unique_id=1344523017]
+script = ExtResource("13_xtm0g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSafeZone" unique_id=1371627278]
+position = Vector2(728, -536)
+shape = SubResource("RectangleShape2D_dhloj")
+debug_color = Color(0.87991565, 0.00037041426, 0.8248162, 0.41960785)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]

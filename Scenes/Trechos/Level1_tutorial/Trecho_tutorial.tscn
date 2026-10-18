@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://dn71kmrl2r6gm" path="res://Scripts/Managers/respawn_trigger.gd" id="19_e7ygs"]
 [ext_resource type="Texture2D" uid="uid://1patcwxedvfq" path="res://Sprites/Objects/orientation_setas_tutorial_2.png" id="20_53ew4"]
 [ext_resource type="Texture2D" uid="uid://b5xnf2q4lrl2c" path="res://Sprites/Objects/orientation_setas_tutorial_1.png" id="21_qcy0v"]
+[ext_resource type="Script" uid="uid://coctlad1yyjtj" path="res://Scripts/UI/flower_safe_zone.gd" id="22_qcy0v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_225o6"]
 size = Vector2(8, 200)
@@ -37,11 +38,17 @@ size = Vector2(232, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpnj3"]
 size = Vector2(16, 185)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qcy0v"]
+size = Vector2(12, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tc8yy"]
 size = Vector2(8, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e7ygs"]
 size = Vector2(8, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53ew4"]
+size = Vector2(32, 18)
 
 [node name="TrechoTutorial" type="Node2D" unique_id=1200786775]
 script = ExtResource("1_fs4gk")
@@ -86,7 +93,7 @@ debug_color = Color(0.86874795, 0.3069911, 0.45735455, 0.41960785)
 script = ExtResource("3_225o6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone3" unique_id=1422599552]
-position = Vector2(1044, 224)
+position = Vector2(1044, 232)
 shape = SubResource("RectangleShape2D_6ov3d")
 debug_color = Color(0.86874795, 0.3069911, 0.45735455, 0.41960785)
 
@@ -171,7 +178,8 @@ position = Vector2(24, 4)
 position = Vector2(-8, 0)
 
 [node name="CollisionShape2D" parent="Flower/ProximityTrigger" index="0" unique_id=1911227380]
-position = Vector2(20, -16)
+position = Vector2(20, 0)
+shape = SubResource("RectangleShape2D_qcy0v")
 
 [node name="AnimatedSprite2D" parent="Flower/ProximityTrigger" index="1" unique_id=485018086]
 position = Vector2(32, 0)
@@ -315,6 +323,14 @@ texture = ExtResource("20_53ew4")
 position = Vector2(760, 88)
 rotation = -1.5707964
 texture = ExtResource("21_qcy0v")
+
+[node name="FlowerSafeZone" type="Area2D" parent="." unique_id=554573077]
+script = ExtResource("22_qcy0v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSafeZone" unique_id=1552445251]
+position = Vector2(888, 81)
+shape = SubResource("RectangleShape2D_53ew4")
+debug_color = Color(0.87991565, 0.00037041426, 0.8248162, 0.41960785)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
