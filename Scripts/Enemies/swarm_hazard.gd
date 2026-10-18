@@ -20,17 +20,17 @@ func _ready() -> void:
 	horizontal_shape.shape = horizontal_shape.shape.duplicate()
 	vertical_shape.shape = vertical_shape.shape.duplicate()
 
-	var horizontal_lenght: float = swarm_threat.get_horizontal_distance() + SAFETY_MARGIN
-	horizontal_shape.shape.size = Vector2(horizontal_lenght, SCREEN_HEIGHT + SAFETY_MARGIN)
-	horizontal_shape.position = Vector2(-horizontal_lenght / 2.0, 0) + horizontal_offset
+	var horizontal_length: float = swarm_threat.get_horizontal_distance() + SAFETY_MARGIN
+	horizontal_shape.shape.size = Vector2(horizontal_length, SCREEN_HEIGHT + SAFETY_MARGIN)
+	horizontal_shape.position = Vector2(-horizontal_length / 2.0, 0) + horizontal_offset
 
 	var corner_x: float = corner_point.global_position.x
 	var local_left: float = corridor_left.global_position.x - corner_x
 	var local_right: float = corridor_right.global_position.x - corner_x
 
-	var vertical_lenght: float = swarm_threat.max_vertical_reach + SAFETY_MARGIN
-	vertical_shape.shape.size = Vector2(local_right - local_left, vertical_lenght)
-	vertical_shape.position = Vector2((local_left + local_right) / 2.0, vertical_lenght / 2.0) + vertical_offset
+	var vertical_length: float = swarm_threat.max_vertical_reach + SAFETY_MARGIN
+	vertical_shape.shape.size = Vector2(local_right - local_left, vertical_length)
+	vertical_shape.position = Vector2((local_left + local_right) / 2.0, vertical_length / 2.0) + vertical_offset
 
 	horizontal_sprite.play("default")
 	vertical_sprite.play("default")

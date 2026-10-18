@@ -2,6 +2,7 @@ extends Area2D
 
 @export var swarm_visual: Node2D
 @export var swarm_path_follow: PathFollow2D
+@export var  pit_kill_zone: Area2D
 @export var swarm_animation_name: String = "armadilha_enxame"
 @export var knockback_direction: Vector2 = Vector2(-1, 1).normalized()
 @export var knockback_strength: float = 200.0
@@ -17,6 +18,9 @@ func _on_body_entered(body: Node2D) -> void:
 
 	if swarm_path_follow:
 		swarm_path_follow.activate()
+		
+	if pit_kill_zone:
+		pit_kill_zone.set_deferred("monitoring", false)
 		
 	body.lock_movement(false)
 	body.velocity = knockback_direction * knockback_strength
