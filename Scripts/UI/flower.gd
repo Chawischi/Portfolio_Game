@@ -12,18 +12,16 @@ const EUGENE_DIALOG_BOX: PackedScene = preload("res://Scenes/UIs/Dialog_box_Euge
 @onready var sprite: AnimatedSprite2D = get_node_or_null("ProximityTrigger/AnimatedSprite2D")
 @onready var proximity_trigger: Area2D = get_node_or_null("ProximityTrigger")
 
-var monologue_played: bool = false
-
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
 	
 	if sprite:
 		sprite.play()
 	
-	if flower_id in GameManager.flowers_collected:
+	if GameManager.is_flower_taken(flower_id):
 		queue_free()
 		return
 		
+	body_entered.connect(_on_body_entered)
 	if proximity_trigger:
 		proximity_trigger.body_entered.connect(_on_proximity_entered)
 		
@@ -31,10 +29,10 @@ func _on_proximity_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
 	
-	if not GameManager.flowers_collected.is_empty():
+	if GameManager.first_flower_seen:
 		return
 		
-	monologue_played = true
+	GameManager.first_flower_seen = true
 	proximity_trigger.set_deferred("monitoring", false)
 	set_deferred("monitoring", false)
 	
@@ -49,7 +47,10 @@ func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
 		
+	print("[FLOR] flor tocada pelo player")
+		
 	GameManager.collect_flowers(flower_id)
 	HUD.update_flower_count()
+	#aqui  vai aúdio depois
 	queue_free()
 	

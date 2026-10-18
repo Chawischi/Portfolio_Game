@@ -88,6 +88,8 @@ func respawn_player() -> void:
 		player.global_position = respawn_marker.global_position
 		player.reset_movement_state()
 	)
+	
+	GameManager.show_flower_loss_feedback()
 
 	player.unlock_movement()
 	is_transitioning = false
