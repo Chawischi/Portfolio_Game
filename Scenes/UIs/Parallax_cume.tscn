@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cfxsky6qwnfmy"]
+
+[ext_resource type="Texture2D" uid="uid://bu1dylleclwxj" path="res://Sprites/Parallax/Parallax_cume_background.png" id="1_v3mo0"]
+[ext_resource type="Texture2D" uid="uid://1l6uc2e1sjhj" path="res://Sprites/Parallax/Parallax_cume_estrelas_1.png" id="2_101pj"]
+[ext_resource type="Texture2D" uid="uid://ypx37j1emb0n" path="res://Sprites/Parallax/Parallax_cume_estrelas_2.png" id="3_hjum3"]
+[ext_resource type="Texture2D" uid="uid://cq3vyhnl1h5py" path="res://Sprites/Parallax/Parallax_cume_halo_lua.png" id="4_5bbei"]
+[ext_resource type="Script" uid="uid://c76fkoin7c17n" path="res://Scripts/UI/brilho_star.gd" id="4_101pj"]
+[ext_resource type="Texture2D" uid="uid://dk3ugeiqgccpe" path="res://Sprites/Parallax/Parallax_cume_lua.png" id="5_dylmn"]
+[ext_resource type="Texture2D" uid="uid://c366v6hp7jws7" path="res://Sprites/Parallax/Parallax_cume_nuvens_2.png" id="6_fu2up"]
+[ext_resource type="Texture2D" uid="uid://2kkxgrgrolee" path="res://Sprites/Parallax/Parallax_cume_nuvens.png" id="7_u13yf"]
+
+[node name="ParallaxCume" type="Node2D" unique_id=1268164425]
+z_index = -5
+
+[node name="Background" type="Parallax2D" parent="." unique_id=176471701]
+repeat_size = Vector2(400, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=995204650]
+position = Vector2(160, 64)
+texture = ExtResource("1_v3mo0")
+
+[node name="Stars" type="Parallax2D" parent="." unique_id=361219419]
+scroll_scale = Vector2(0.02, 1)
+repeat_size = Vector2(400, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Stars" unique_id=288744599]
+position = Vector2(160, 64)
+texture = ExtResource("2_101pj")
+script = ExtResource("4_101pj")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Stars" unique_id=759684600]
+position = Vector2(160, 64)
+texture = ExtResource("3_hjum3")
+script = ExtResource("4_101pj")
+
+[node name="Halo" type="Parallax2D" parent="." unique_id=2095907529]
+scroll_scale = Vector2(0.02, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Halo" unique_id=288459406]
+position = Vector2(160, 64)
+texture = ExtResource("4_5bbei")
+
+[node name="Moon" type="Parallax2D" parent="." unique_id=394029044]
+scroll_scale = Vector2(0.02, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moon" unique_id=43228760]
+position = Vector2(160, 64)
+texture = ExtResource("5_dylmn")
+
+[node name="Nuvem_2" type="Parallax2D" parent="." unique_id=1573743860]
+scroll_scale = Vector2(0.2, 1)
+repeat_size = Vector2(400, 0)
+autoscroll = Vector2(-2, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Nuvem_2" unique_id=2122367411]
+position = Vector2(160, 64)
+texture = ExtResource("6_fu2up")
+
+[node name="Nuvem_1" type="Parallax2D" parent="." unique_id=729813116]
+scroll_scale = Vector2(0.4, 1)
+repeat_size = Vector2(400, 0)
+autoscroll = Vector2(-2, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Nuvem_1" unique_id=54951135]
+position = Vector2(160, 64)
+texture = ExtResource("7_u13yf")
