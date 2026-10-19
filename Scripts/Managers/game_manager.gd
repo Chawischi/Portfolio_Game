@@ -25,24 +25,24 @@ func start_new_game() -> void:
 	HUD.update_death_counter()
 
 # ---------- Mudança de Level ----------
-@export var level_scenes: Array[String] = [
-	"res://Scenes/Levels/Level1_tutorial.tscn",
-	"res://Scenes/Levels/Level2.tscn",
-	"res://Scenes/Levels/Level3.tscn",
-	"res://Scenes/Levels/Level4.tscn",
-	"res://Scenes/Levels/Level5.tscn",
-	"res://Scenes/Levels/Level5_final.tscn"
-]
-
-# ---------- teste ----------
 #@export var level_scenes: Array[String] = [
-	#"res://Scenes/Levels/Level5.tscn",
-	#"res://Scenes/Levels/Level5_final.tscn",
+	#"res://Scenes/Levels/Level1_tutorial.tscn",
+	#"res://Scenes/Levels/Level2.tscn",
 	#"res://Scenes/Levels/Level3.tscn",
 	#"res://Scenes/Levels/Level4.tscn",
 	#"res://Scenes/Levels/Level5.tscn",
 	#"res://Scenes/Levels/Level5_final.tscn"
 #]
+
+# ---------- teste ----------
+@export var level_scenes: Array[String] = [
+	"res://Scenes/Levels/Level5.tscn",
+	"res://Scenes/Levels/Level5_final.tscn",
+	"res://Scenes/Levels/Level3.tscn",
+	"res://Scenes/Levels/Level4.tscn",
+	"res://Scenes/Levels/Level5.tscn",
+	"res://Scenes/Levels/Level5_final.tscn"
+]
 
 var current_level_index: int = 0
 var is_changing_level: bool = false
