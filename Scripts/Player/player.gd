@@ -30,9 +30,15 @@ var jumps_done: int = 0
 @export var dash_duration: float = 0.18
 @export var dash_start_ratio: float = 0.55
 @export var dash_end_ratio: float = 0.45
-@export var dash_cooldown: float = 0.45
+@export var dash_cooldown: float = 0.7
 @export var dash_gravity_influence: float = 6.0
 @export var momentum_duration: float = 0.08
+@export var max_dashes: int = 1
+@export var dash_input_window: float = 0.05
+
+var dash_is_pending: bool = false
+var dash_pending_timer: float = 0.0
+var dash_pending_vector: Vector2 = Vector2.ZERO
 
 var dash_peak_speed: float
 var is_dashing: bool = false
@@ -40,6 +46,7 @@ var dash_timer: float = 0.0
 var cooldown_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.RIGHT		# guarda a direção do dash mesmo se soltar a tecla no meio do trajeto
 var momentum_timer: float = 0.0
+var dashes_left: int = 1
 
 # ----- Rastro do Dash -----
 @export var afterimage_interval: float = 0.03
@@ -112,6 +119,8 @@ func _ready() -> void:
 	var decel_area: float = (1.0 + dash_end_ratio) / 2.0 * half_duration
 	dash_peak_speed = dash_distance / (accel_area + decel_area)
 	
+	dashes_left = max_dashes
+	
 	set_carrying_bouquet(GameManager.carrying_bouquet)
 
 func _physics_process(delta: float) -> void:
@@ -133,6 +142,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_handle_timers(delta)
+	_handle_dash_refill()
 	_handle_dash_input()
 
 	if is_dashing:
@@ -183,6 +193,14 @@ func _handle_timers(delta: float) -> void:
 	climb_lockout_timer -= delta
 	wall_jump_lockout_timer -= delta
 	momentum_timer -= delta
+	
+func _handle_dash_refill() -> void:
+	if is_dashing:
+		return
+	
+	var on_wall: bool = is_on_wall() and _is_touching_climbable_wall()
+	if is_on_floor() or on_wall:
+		dashes_left = max_dashes
 
 func _handle_jump_input() -> void:
 	# Passo 1: "anota/guarda" a intenção no exato frame do clique
@@ -220,20 +238,38 @@ func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
 	return Vector2.RIGHT.rotated(snapped_angle)
 
 func _handle_dash_input() -> void:
-	if Input.is_action_just_pressed("dash") and cooldown_timer <= 0.0 and not is_dashing and not is_climbing:
-		is_dashing = true
-		dash_timer = dash_duration
-		cooldown_timer = dash_cooldown
+	# 1) Apertou o dash: abre uma janela curta para completar a diagonal
+	if Input.is_action_just_pressed("dash") and cooldown_timer <= 0.0 and not is_dashing and not is_climbing and not dash_is_pending and dashes_left > 0:
+		dash_is_pending = true
+		dash_pending_timer = dash_input_window
+		dash_pending_vector = Vector2.ZERO
 
-	# Direção do dash: usa o input atual, ou a direção que o sprite já está olhando
-	var input_x: float = Input.get_axis("move_left", "move_right")
-	var input_y: float = Input.get_axis("move_up", "move_down")
-	var input_vector: Vector2 = Vector2(input_x, input_y)
+	if not dash_is_pending:
+		return
 
-	if input_vector != Vector2.ZERO:
-		dash_direction = _get_snapped_dash_direction(input_vector)
+	# 2) Durante a janela, guarda a direção mais forte (a diagonal vence a reta)
+	var input_vector: Vector2 = Vector2(
+		Input.get_axis("move_left", "move_right"),
+		Input.get_axis("move_up", "move_down")
+	)
+	if input_vector != Vector2.ZERO and input_vector.length() >= dash_pending_vector.length():
+		dash_pending_vector = input_vector
+
+	# 3) A janela acabou: o dash começa com a direção guardada
+	dash_pending_timer -= get_physics_process_delta_time()
+	if dash_pending_timer <= 0.0:
+		_start_dash()
+		
+func _start_dash() -> void:
+	dash_is_pending = false
+	if dash_pending_vector != Vector2.ZERO:
+		dash_direction = _get_snapped_dash_direction(dash_pending_vector)
 	else:
 		dash_direction = Vector2.LEFT if sprite.flip_h else Vector2.RIGHT
+	is_dashing = true
+	dash_timer = dash_duration
+	cooldown_timer = dash_cooldown
+	dashes_left -= 1
 
 func _handle_dash_movement(delta: float) -> void:
 	var elapsed: float = dash_duration - dash_timer
@@ -414,6 +450,7 @@ func _update_climb_visual_feedback() -> void:
 func lock_movement(freeze_velocity: bool = true, force_idle: bool = false) -> void:
 	forced_walk_active = false
 	is_input_locked = true
+	dash_is_pending = false
 	freeze_velocity_while_locked = freeze_velocity
 	if freeze_velocity:
 		velocity = Vector2.ZERO
@@ -478,7 +515,9 @@ func reset_movement_state(face_right: bool = true) -> void:
 	velocity = Vector2.ZERO
 	knockback_vector = Vector2.ZERO
 	is_dashing = false
+	dash_is_pending = false
 	dash_timer = 0.0
+	dashes_left = max_dashes
 	cooldown_timer = 0.0
 	is_climbing = false
 	climb_lockout_timer = 0.0

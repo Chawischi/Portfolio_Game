@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://khr7f08ebknc"]
+
+[ext_resource type="PackedScene" uid="uid://isn4wu5rj5kj" path="res://Scenes/Enemies/Stalagmite.tscn" id="1_iq6ll"]
+[ext_resource type="Texture2D" uid="uid://egnstc2yitjk" path="res://Sprites/Enemies/Estalagmite_p2_crash_small.png" id="2_4dgq5"]
+[ext_resource type="Texture2D" uid="uid://b3b354805fg4w" path="res://Sprites/Enemies/Estalagmite_p2.png" id="3_vgv4h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4805p"]
+atlas = ExtResource("2_4dgq5")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p30k"]
+atlas = ExtResource("2_4dgq5")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7uq4"]
+atlas = ExtResource("2_4dgq5")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtv04"]
+atlas = ExtResource("2_4dgq5")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bg81"]
+atlas = ExtResource("2_4dgq5")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itsmp"]
+atlas = ExtResource("3_vgv4h")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4805p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4805p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8p30k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7uq4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jtv04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4bg81")
+}],
+"loop": false,
+"name": &"break",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itsmp")
+}],
+"loop": false,
+"name": &"stuck",
+"speed": 5.0
+}]
+
+[node name="Stalagmite_B" unique_id=1243683728 instance=ExtResource("1_iq6ll")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=509410988]
+sprite_frames = SubResource("SpriteFrames_4805p")
+animation = &"stuck"
+
+[node name="CollisionPolygon2D" parent="." index="1" unique_id=731471332]
+polygon = PackedVector2Array(3, -8, -4, -8, -0.5, 7)

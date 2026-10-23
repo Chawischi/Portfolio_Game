@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cq4805gjphar7" path="res://Sprites/Enemies/spikes_fase_4.png" id="7_gp87a"]
 [ext_resource type="PackedScene" uid="uid://bvrcckeg4r63r" path="res://Scenes/Trechos/CrumblingPlatform.tscn" id="8_gp87a"]
 [ext_resource type="PackedScene" uid="uid://isn4wu5rj5kj" path="res://Scenes/Enemies/Stalagmite.tscn" id="9_b0llg"]
+[ext_resource type="PackedScene" uid="uid://khr7f08ebknc" path="res://Scenes/Enemies/Stalagmite_B.tscn" id="10_b0llg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8q5rn"]
 size = Vector2(16, 40)
@@ -479,12 +480,6 @@ proximity_size = Vector2(30, 80)
 shake_duration = 0.2
 fall_gravity = 1200.0
 
-[node name="Stalagmite2" parent="." unique_id=1841290773 instance=ExtResource("9_b0llg")]
-position = Vector2(154, 104)
-proximity_size = Vector2(24, 96)
-shake_duration = 0.2
-fall_gravity = 1200.0
-
 [node name="Stalagmite3" parent="." unique_id=742648281 instance=ExtResource("9_b0llg")]
 position = Vector2(40, 32)
 proximity_size = Vector2(20, 64)
@@ -497,16 +492,18 @@ proximity_size = Vector2(48, 40)
 shake_duration = 0.2
 fall_gravity = 1200.0
 
-[node name="Stalagmite5" parent="." unique_id=1594218751 instance=ExtResource("9_b0llg")]
-position = Vector2(86, 96)
-proximity_size = Vector2(20, 64)
-shake_duration = 0.2
-fall_gravity = 1200.0
-
 [node name="ColorRect" parent="." unique_id=51628477 instance=ExtResource("3_j1vji")]
 offset_top = 304.0
 offset_right = 328.0
 offset_bottom = 328.0
+
+[node name="Stalagmite_B" parent="." unique_id=1416260659 instance=ExtResource("10_b0llg")]
+position = Vector2(156, 104)
+proximity_size = Vector2(16, 96)
+
+[node name="Stalagmite_B2" parent="." unique_id=1279776815 instance=ExtResource("10_b0llg")]
+position = Vector2(85, 96)
+proximity_size = Vector2(16, 64)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]

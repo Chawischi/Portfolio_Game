@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bdhfcj4xcftiw" path="res://Scenes/UIs/PitGradient.tscn" id="7_hjs75"]
 [ext_resource type="PackedScene" uid="uid://isn4wu5rj5kj" path="res://Scenes/Enemies/Stalagmite.tscn" id="8_ftl2d"]
 [ext_resource type="PackedScene" uid="uid://bvrcckeg4r63r" path="res://Scenes/Trechos/CrumblingPlatform.tscn" id="9_oycbi"]
+[ext_resource type="PackedScene" uid="uid://khr7f08ebknc" path="res://Scenes/Enemies/Stalagmite_B.tscn" id="10_oycbi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u17o8"]
 size = Vector2(16, 32)
@@ -415,11 +416,6 @@ position = Vector2(152, 160)
 proximity_size = Vector2(48, 40)
 fall_gravity = 1200.0
 
-[node name="Stalagmite4" parent="." unique_id=935918582 instance=ExtResource("8_ftl2d")]
-position = Vector2(56, 72)
-proximity_size = Vector2(16, 96)
-fall_gravity = 1200.0
-
 [node name="Stalagmite5" parent="." unique_id=601594864 instance=ExtResource("8_ftl2d")]
 position = Vector2(256, 24)
 proximity_size = Vector2(40, 32)
@@ -433,6 +429,10 @@ position = Vector2(208, 280)
 
 [node name="CrumblingPlatform3" parent="." unique_id=1745047000 instance=ExtResource("9_oycbi")]
 position = Vector2(256, 80)
+
+[node name="Stalagmite_B" parent="." unique_id=1243683728 instance=ExtResource("10_oycbi")]
+position = Vector2(53, 72)
+proximity_size = Vector2(12, 96)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]

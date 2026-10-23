@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bdhfcj4xcftiw" path="res://Scenes/UIs/PitGradient.tscn" id="11_bxbem"]
 [ext_resource type="PackedScene" uid="uid://cja62y8nqsxnu" path="res://Scenes/UIs/Flower.tscn" id="12_fpxdu"]
 [ext_resource type="Script" uid="uid://coctlad1yyjtj" path="res://Scripts/UI/flower_safe_zone.gd" id="13_fpxdu"]
+[ext_resource type="PackedScene" uid="uid://khr7f08ebknc" path="res://Scenes/Enemies/Stalagmite_B.tscn" id="14_4hekf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwi50"]
 size = Vector2(16, 32)
@@ -633,12 +634,6 @@ position = Vector2(32, 104)
 [node name="CrumblingPlatform3" parent="." unique_id=1823687983 instance=ExtResource("8_0fqg3")]
 position = Vector2(80, 400)
 
-[node name="Stalagmite" parent="." unique_id=1243683728 instance=ExtResource("9_0ipbf")]
-position = Vector2(160, 104)
-proximity_size = Vector2(20, 112)
-shake_duration = 0.2
-fall_gravity = 1200.0
-
 [node name="Stalagmite4" parent="." unique_id=158721668 instance=ExtResource("9_0ipbf")]
 position = Vector2(224, 104)
 proximity_size = Vector2(40, 40)
@@ -701,6 +696,10 @@ script = ExtResource("13_fpxdu")
 position = Vector2(296, 32)
 shape = SubResource("RectangleShape2D_4hekf")
 debug_color = Color(0.87991565, 0.00037041426, 0.8248162, 0.41960785)
+
+[node name="Stalagmite_B" parent="." unique_id=1243683728 instance=ExtResource("14_4hekf")]
+position = Vector2(164, 104)
+proximity_size = Vector2(20, 112)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]
