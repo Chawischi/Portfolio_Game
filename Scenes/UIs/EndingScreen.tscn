@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dvseht3if05um"]
+
+[ext_resource type="Script" uid="uid://d02riswovy0q8" path="res://Scripts/UI/ending_screen.gd" id="1_a5pt1"]
+
+[node name="EndingScreen" type="Control" unique_id=1979210237]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a5pt1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=830802795]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Lines" type="VBoxContainer" parent="." unique_id=1538628415]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Lines" unique_id=1015140365]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 8
+
+[node name="EndingLabel" type="Label" parent="Lines" unique_id=1431240421]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 8
+
+[node name="DeathsLabel" type="Label" parent="Lines" unique_id=425102118]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 8
+
+[node name="FlowersLabel" type="Label" parent="Lines" unique_id=1687054485]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 8
+
+[node name="TimeLabel" type="Label" parent="Lines" unique_id=938403260]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 8
+
+[node name="PromptLabel" type="Label" parent="." unique_id=1736274400]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -0.5
+offset_top = -8.0
+offset_right = 0.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 8

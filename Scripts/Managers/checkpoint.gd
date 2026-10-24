@@ -20,10 +20,8 @@ var state: CheckpointState = CheckpointState.IDLE
 
 var player_ref: CharacterBody2D = null
 
-
 func _ready() -> void:
 	alert_icon.visible = false
-
 
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
@@ -36,7 +34,6 @@ func _on_body_entered(body: Node2D) -> void:
 	state = CheckpointState.IN_RANGE
 	alert_icon.visible = true
 
-
 func _on_body_exited(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
@@ -46,7 +43,6 @@ func _on_body_exited(body: Node2D) -> void:
 		player_ref = null
 		TutorialPanel.hide_panel(self)
 
-
 func _process(_delta: float) -> void:
 	match state:
 		CheckpointState.IN_RANGE:
@@ -55,7 +51,6 @@ func _process(_delta: float) -> void:
 		CheckpointState.WAITING_STAND:
 			if Input.is_anything_pressed():
 				_stand_up()
-
 
 func _start_sitting() -> void:
 	TutorialPanel.hide_panel(self)
@@ -88,14 +83,12 @@ func _start_sitting() -> void:
 
 	state = CheckpointState.WAITING_STAND
 
-
 func _stand_up() -> void:
 	player_ref.sprite.play("checkpoint_wake")
 	await player_ref.sprite.animation_finished
 
 	player_ref.unlock_movement()
 	state = CheckpointState.IN_RANGE
-
 
 func _hop_to_seat() -> void:
 	var start_pos: Vector2 = player_ref.global_position

@@ -44,6 +44,9 @@ func _toggle_pause() -> void:
 		_pause()
 		
 func _pause() -> void:
+	if not GameManager.can_pause:
+		return
+	
 	get_tree().paused = true
 	menu_control.visible = true
 	resume_button.grab_focus()

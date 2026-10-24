@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cja62y8nqsxnu" path="res://Scenes/UIs/Flower.tscn" id="8_ufxwc"]
 [ext_resource type="Script" uid="uid://dn71kmrl2r6gm" path="res://Scripts/Managers/respawn_trigger.gd" id="8_vih0v"]
 [ext_resource type="PackedScene" uid="uid://bdhfcj4xcftiw" path="res://Scenes/UIs/PitGradient.tscn" id="9_ekcu2"]
+[ext_resource type="Script" uid="uid://coctlad1yyjtj" path="res://Scripts/UI/flower_safe_zone.gd" id="11_arthu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fye27"]
 size = Vector2(40, 16)
@@ -29,11 +30,17 @@ size = Vector2(160.5, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ekcu2"]
 size = Vector2(200, 48)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_risie"]
+size = Vector2(12, 17)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eamy7"]
 size = Vector2(64, 16)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ekcu2"]
 load_path = "res://.godot/imported/spikes_fase_2.png-4f077391be48806a9519c8b6eb43e30b.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3v017"]
+size = Vector2(96, 56)
 
 [node name="Trecho5Level2" type="Node2D" unique_id=79303025]
 script = ExtResource("1_nkdhk")
@@ -137,6 +144,7 @@ flower_id = "flower_level_2"
 
 [node name="CollisionShape2D" parent="Flower/ProximityTrigger" parent_id_path=PackedInt32Array(1601396762, 1683368282) index="0" unique_id=1911227380]
 position = Vector2(-8, 30)
+shape = SubResource("RectangleShape2D_risie")
 
 [node name="BatEnemy3" parent="." unique_id=1375396349 node_paths=PackedStringArray("patrol_point_a", "patrol_point_b", "attack_zone") instance=ExtResource("7_phngq")]
 position = Vector2(336, -288)
@@ -435,6 +443,14 @@ spike_count = 5
 
 [node name="Marker_Respawn_2" type="Marker2D" parent="." unique_id=1685169960]
 position = Vector2(264, -208)
+
+[node name="FlowerSafeZone" type="Area2D" parent="." unique_id=875553912]
+script = ExtResource("11_arthu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSafeZone" unique_id=1654508228]
+position = Vector2(456, -276)
+shape = SubResource("RectangleShape2D_3v017")
+debug_color = Color(0.87991565, 0.00037041426, 0.8248162, 0.41960785)
 
 [connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]

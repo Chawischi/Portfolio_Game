@@ -64,3 +64,11 @@ func hide_background() -> void:
 	background.visible = false
 	text_label.visible = false
 	text_label.text = ""
+
+func fade_text_out(duration: float = 1.0) -> void:
+	var tween: Tween = create_tween()
+	tween.tween_property(text_label, "modulate:a", 0.0, duration)
+	await tween.finished
+	text_label.visible = false
+	text_label.text = ""
+	text_label.modulate.a = 1.0
