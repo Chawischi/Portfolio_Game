@@ -1,5 +1,29 @@
 extends Control
 
+# =====================================================================
+#  REMAPEAMENTO DE CONTROLES (aba Controles das opções)
+#
+#  Fluxo: clicar num botão -> "..." (esperando tecla/botão) -> _rebind()
+#  troca o evento no InputMap -> _update_conflicts() destaca botões que
+#  repetem a mesma tecla. Sem conflito, o estado é confirmado (_commit).
+#  Ao sair da aba ou fechar as opções com conflito, volta ao último
+#  estado confirmado (_revert_to_committed).
+#
+#  Índice:
+#    1. Constantes e variáveis
+#    2. Ciclo do jogo
+#    3. Captura de input
+#    4. Conflitos
+#    5. Estado confirmado e visibilidade
+#    6. Eventos e rótulos
+# =====================================================================
+
+
+# =====================================================================
+#  1. CONSTANTES E VARIÁVEIS
+# =====================================================================
+
+# ---------- Constantes ----------
 const GAMEPAD_BUTTON_NAMES: Dictionary = {
 	JOY_BUTTON_A: "A",
 	JOY_BUTTON_B: "B",
@@ -16,6 +40,7 @@ const GAMEPAD_BUTTON_NAMES: Dictionary = {
 const CONFLICT_COLOR: Color = Color.WHITE
 const CONFLICT_BORDER: float = 1.0
 
+# ---------- Nós ----------
 @onready var move_left_keyboard: Button = $MoveLeftRow/KeyboardButton
 @onready var move_right_keyboard: Button = $MoveRightRow/KeyboardButton
 @onready var move_up_keyboard: Button = $MoveUpRow/KeyboardButton
@@ -28,11 +53,17 @@ const CONFLICT_BORDER: float = 1.0
 @onready var climb_gamepad: Button = $MoveClimbRow/GamepadButton
 @onready var warning_label: Label = find_child("WarningLabel", true, false) as Label
 
+# ---------- Estado ----------
 var entries: Array[Dictionary] = []
 var actions: Array[String] = []
 var listening_entry: Dictionary = {}
 var committed_events: Dictionary = {}
 var has_conflict: bool = false
+
+
+# =====================================================================
+#  2. CICLO DO JOGO
+# =====================================================================
 
 func _ready() -> void:
 	_register("move_left", "keyboard", move_left_keyboard)
@@ -51,6 +82,8 @@ func _ready() -> void:
 	_refresh_all()
 	_clear_outlines()
 
+
+# Cadastra um botão (ação + dispositivo), cria o contorno de conflito e liga o clique
 func _register(action: String, device: String, button: Button) -> void:
 	var outline := ReferenceRect.new()
 	outline.editor_only = false
@@ -67,13 +100,17 @@ func _register(action: String, device: String, button: Button) -> void:
 
 	button.pressed.connect(func(): _start_listening(action, device, button))
 
-# ---------- Captura ----------
+
+# =====================================================================
+#  3. CAPTURA DE INPUT
+# =====================================================================
 
 func _start_listening(action: String, device: String, button: Button) -> void:
 	_refresh_all()
 	listening_entry = {"action": action, "device": device, "button": button}
 	button.text = "..."
 	button.release_focus()
+
 
 func cancel_listening() -> void:
 	if listening_entry.is_empty():
@@ -85,6 +122,7 @@ func cancel_listening() -> void:
 
 	if is_visible_in_tree():
 		button.grab_focus()
+
 
 func _input(event: InputEvent) -> void:
 	if listening_entry.is_empty():
@@ -104,6 +142,8 @@ func _input(event: InputEvent) -> void:
 		elif _is_trigger(event) and event.axis_value > 0.5:
 			_rebind(event)
 
+
+# Troca o evento da ação (só do dispositivo que está sendo remapeado)
 func _rebind(new_event: InputEvent) -> void:
 	var action: String = listening_entry["action"]
 	var device: String = listening_entry["device"]
@@ -123,8 +163,12 @@ func _rebind(new_event: InputEvent) -> void:
 		button.grab_focus()
 	get_viewport().set_input_as_handled()
 
-# ---------- Conflitos ----------
 
+# =====================================================================
+#  4. CONFLITOS
+# =====================================================================
+
+# Agrupa os botões pela tecla/botão atual; grupo com mais de um = conflito
 func _update_conflicts() -> void:
 	_clear_outlines()
 
@@ -150,6 +194,7 @@ func _update_conflicts() -> void:
 	if not has_conflict:
 		_commit()
 
+
 func _clear_outlines() -> void:
 	has_conflict = false
 	for entry in entries:
@@ -157,16 +202,25 @@ func _clear_outlines() -> void:
 	if warning_label:
 		warning_label.visible = false
 
+
+# =====================================================================
+#  5. ESTADO CONFIRMADO E VISIBILIDADE
+# =====================================================================
+
+# Guarda o mapeamento atual como "último estado válido"
 func _commit() -> void:
 	committed_events.clear()
 	for action in actions:
 		committed_events[action] = InputMap.action_get_events(action)
 
+
+# Restaura o último estado válido (usado ao sair com conflito)
 func _revert_to_committed() -> void:
 	for action in committed_events:
 		InputMap.action_erase_events(action)
 		for event in committed_events[action]:
 			InputMap.action_add_event(action, event)
+
 
 func _on_visibility_changed() -> void:
 	if is_visible_in_tree():
@@ -181,16 +235,22 @@ func _on_visibility_changed() -> void:
 	_refresh_all()
 	_clear_outlines()
 
-# ---------- Eventos e rótulos ----------
+
+# =====================================================================
+#  6. EVENTOS E RÓTULOS
+# =====================================================================
 
 func _is_trigger(event: InputEvent) -> bool:
 	return event is InputEventJoypadMotion and (event.axis == JOY_AXIS_TRIGGER_LEFT or event.axis == JOY_AXIS_TRIGGER_RIGHT)
+
 
 func _belongs_to_device(event: InputEvent, device: String) -> bool:
 	if device == "keyboard":
 		return event is InputEventKey
 	return event is InputEventJoypadButton or _is_trigger(event)
 
+
+# Evento que representa a ação no dispositivo (botão tem preferência sobre gatilho)
 func _primary_event(action: String, device: String) -> InputEvent:
 	var fallback: InputEvent = null
 	for event in InputMap.action_get_events(action):
@@ -203,6 +263,8 @@ func _primary_event(action: String, device: String) -> InputEvent:
 				fallback = event
 	return fallback
 
+
+# Texto único que identifica a tecla/botão (usado para achar conflitos)
 func _signature(event: InputEvent) -> String:
 	if event is InputEventKey:
 		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
@@ -213,6 +275,8 @@ func _signature(event: InputEvent) -> String:
 		return "axis:" + str(event.axis)
 	return ""
 
+
+# Nome que aparece no botão
 func _event_label(event: InputEvent) -> String:
 	if event is InputEventKey:
 		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
@@ -222,6 +286,7 @@ func _event_label(event: InputEvent) -> String:
 	if event is InputEventJoypadMotion:
 		return "LT" if event.axis == JOY_AXIS_TRIGGER_LEFT else "RT"
 	return "?"
+
 
 func _refresh_all() -> void:
 	for entry in entries:

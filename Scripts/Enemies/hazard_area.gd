@@ -32,7 +32,6 @@ func _update_size() -> void:
 	collision.shape.size = spike.get_rect().size
 	collision.position = Vector2.ZERO
 	
-
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
