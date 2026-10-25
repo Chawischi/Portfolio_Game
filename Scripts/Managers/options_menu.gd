@@ -1,5 +1,10 @@
 extends CanvasLayer
 
+# Volumes iniciais dos sliders (0.0 a 1.0)
+const DEFAULT_GENERAL_VOLUME: float = 0.7
+const DEFAULT_MUSIC_VOLUME: float = 0.6
+const DEFAULT_SFX_VOLUME: float = 0.6
+
 @onready var menu_painel: Control = $PanelContainer
 @onready var content_tabs: TabContainer = $PanelContainer/VBoxContainer/HBoxContainer/TabContainer
 @onready var controls_tab_button: Button = $PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer/ControlsButton
@@ -45,9 +50,14 @@ func _ready() -> void:
 	audio_tab_button.pressed.connect(func(): controls_tab_script.cancel_listening(); content_tabs.current_tab = 1)
 	video_tab_button.pressed.connect(func(): controls_tab_script.cancel_listening(); content_tabs.current_tab = 2)
 
-	general_slider.value = 1.0
-	music_slider.value = 1.0
-	sfx_slider.value = 1.0
+	general_slider.value = DEFAULT_GENERAL_VOLUME
+	music_slider.value = DEFAULT_MUSIC_VOLUME
+	sfx_slider.value = DEFAULT_SFX_VOLUME
+
+	# Aplica aos buses na hora (o slider só avisa quando o valor muda)
+	_on_general_volume_changed(general_slider.value)
+	_on_music_volume_changed(music_slider.value)
+	_on_sfx_volume_changed(sfx_slider.value)
 
 func open() -> void:
 	previous_focus = get_viewport().gui_get_focus_owner()

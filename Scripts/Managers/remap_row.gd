@@ -129,6 +129,7 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_pressed("ui_cancel"):
+		AudioManager.play_sfx("ui_cancel")
 		cancel_listening()
 		get_viewport().set_input_as_handled()
 		return
