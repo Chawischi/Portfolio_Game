@@ -34,9 +34,9 @@ func start_new_game() -> void:
 	"res://Scenes/Levels/Level5_final.tscn"
 ]
 
-# ---------- teste ----------
+ #---------- teste ----------
 #@export var level_scenes: Array[String] = [
-	#"res://Scenes/Levels/Level3.tscn",
+	#"res://Scenes/Levels/Level5_final.tscn",
 	#"res://Scenes/Levels/Level5_final.tscn",
 	#"res://Scenes/Levels/Level3.tscn",
 	#"res://Scenes/Levels/Level4.tscn",
@@ -72,6 +72,7 @@ var current_checkpoint_position: Vector2 = Vector2.ZERO
 func activate_checkpoint(id: String, level_path: String, position: Vector2) -> void:
 	if not activated_checkpoint.has(id):
 		activated_checkpoint.append(id)
+		AudioManager.play_sfx("checkpoint")
 
 	current_checkpoint_id = id
 	current_checkpoint_level = level_path
@@ -100,7 +101,7 @@ func secure_flowers() -> void:
 	flowers_carried.clear()
 	HUD.update_flower_count()
 	HUD.flash_secured()
-	#Aúdio depois
+	AudioManager.play_sfx("flower_secured")
 
 	
 func lose_carried_flower() -> void:
@@ -109,12 +110,12 @@ func lose_carried_flower() -> void:
 	flowers_carried.clear()
 	flower_lose_pending = true
 	
-	#aúdio depois
 func show_flower_loss_feedback() -> void:
 	if not flower_lose_pending:
 		return
 	flower_lose_pending = false
-	HUD.flash_lost()	
+	HUD.flash_lost()
+	AudioManager.play_sfx("flower_lost")
 
 func total_flowers() -> int:
 	return flowers_collected.size() + flowers_carried.size()
