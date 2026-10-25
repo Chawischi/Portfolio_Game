@@ -24,11 +24,92 @@ Godot 4
 
 
 Música
-[Ainda a preencher]
+
+"Emotional piano loop"
+extenz (CC0)
+
+"melancholy piano bgm"
+syncopika (CC BY 3.0)
+opengameart.org/content/melancholy-piano-bgm
+
+"Evil Awaits"
+bosslevelaudio (CC0)
+
+"Melodic & gentle ambient music"
+PetterTheSturgeon (CC BY 3.0)
+opengameart.org/content/melodic-gentle-ambient-music
+
+
+Ambientes
+
+"Little birds singing among the trees"
+aneolus (CC0)
+
+"ambience cave7"
+fonografico (CC0)
+
+"Ambiance Atmosphere Cave Loop Stereo"
+Nox_Sound (CC0)
+
+"Wind"
+ATRUNA (CC0)
 
 
 Efeitos Sonoros
-[Ainda a preencher]
+
+"woosh"
+freakinbehemoth (CC0)
+
+"Jump/Dash 2"
+Avaol (CC0)
+
+"The Best Bubble Pop Sound For Game and UI"
+el_boss (CC0)
+
+"Coin pickup"
+gobbe57 (CC0)
+
+"collected"
+MATUSTRM (CC0)
+
+"glass_break8"
+sgossner (CC0)
+
+"Video Game Squeak"
+Breviceps (CC0)
+
+"Umbrella that sounds like bat wings"
+Scottrex05 (CC0)
+
+"crumple"
+j1987 (CC0)
+
+"Heart"
+frantramp (CC0)
+
+"Footsteps Dirt Single 01"
+BenDrain (CC0)
+
+"click"
+florianreichelt (CC0)
+
+"GASP UI Confirm"
+Rob_Marion (CC0)
+
+"achievement-sparkle"
+SkySpeira (CC0)
+
+"Cancel (Sci-Fi UI SFX Free)"
+heyheytheree (CC BY 4.0, editado)
+freesound.org/s/872703
+
+
+Alguns áudios foram cortados e ajustados
+pelo autor do jogo.
+
+Licenças CC BY:
+creativecommons.org/licenses/by/3.0
+creativecommons.org/licenses/by/4.0
 
 
 Código sob licença MIT

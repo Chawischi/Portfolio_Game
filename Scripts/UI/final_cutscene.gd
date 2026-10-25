@@ -26,6 +26,7 @@ extends Area2D
 @export var sit_faces_left: bool = true
 @export var sit_pause: float = 5.0
 @export var end_pause: float = 2.0
+@export var urn_sound_frame: int = 1
 
 @export_group("Falas")
 @export var dialog_box_scene: PackedScene
@@ -52,6 +53,7 @@ func _on_body_entered(body: Node2D) -> void:
 func _run(player: CharacterBody2D) -> void:
 	GameManager.can_pause = false
 	HUD.visible = false
+	AudioManager.play_summit()
 
 	# 1. Anda sozinho até o ponto do buquê
 	await _walk_to(player, kneel_marker.global_position.x)
@@ -76,7 +78,6 @@ func _run(player: CharacterBody2D) -> void:
 	player.sprite.play(anim_ashes)
 	await player.sprite.animation_finished
 	await get_tree().create_timer(ashes_start_delay).timeout
-	# TODO áudio: vento
 	if ashes:
 		ashes.emitting = true
 		await get_tree().create_timer(ashes_duration).timeout
@@ -87,8 +88,10 @@ func _run(player: CharacterBody2D) -> void:
 
 	# 5. A urna cai e quebra
 	player.sprite.play(anim_urn)
-	# TODO áudio: urna quebrando
+	_play_urn_sound(player)
 	await player.sprite.animation_finished
+	if urn_sound_frame < 0:
+		AudioManager.play_sfx("flower_lost")
 	await get_tree().create_timer(step_pause).timeout
 
 	# 6. Anda para o lado onde o banco está até perto dele, para, e só então pula
@@ -106,6 +109,8 @@ func _run(player: CharacterBody2D) -> void:
 
 	await DreamOverlay.play_dream(final_dream_lines)
 	await DreamOverlay.fade_text_out()
+	AudioManager.stop_music(2.0)
+	AudioManager.stop_ambient(2.0)
 	await get_tree().create_timer(end_pause).timeout
 	GameManager.go_to_ending_screen(0.0)
 
@@ -117,6 +122,14 @@ func _walk_to(player: CharacterBody2D, target_x: float) -> void:
 	while (player.global_position.x - target_x) * dir < 0.0:
 		await get_tree().physics_frame
 	player.stop_forced_walk()
+
+# Toca o som da urna num frame específico da animação (roda em paralelo, sem await)
+func _play_urn_sound(player: CharacterBody2D) -> void:
+	if urn_sound_frame < 0:
+		return
+	while player.sprite.animation == anim_urn and player.sprite.frame < urn_sound_frame:
+		await player.sprite.frame_changed
+	AudioManager.play_sfx("flower_lost")
 
 # Mostra o buquê no frame certo do "honor" (roda em paralelo, sem await)
 func _reveal_bouquet(player: CharacterBody2D) -> void:
