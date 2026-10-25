@@ -354,8 +354,6 @@ func _handle_dash_movement(delta: float) -> void:
 
 	velocity = dash_direction * current_speed
 
-	#if dash_direction.y < 0.0:
-		#velocity.y += gravity_rise * dash_gravity_influence * delta
 	if dash_direction.y < -0.1:
 		velocity.y += gravity_rise * dash_gravity_influence * delta
 

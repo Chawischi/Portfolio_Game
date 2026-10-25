@@ -36,7 +36,7 @@ func start_new_game() -> void:
 
  #---------- teste ----------
 #@export var level_scenes: Array[String] = [
-	#"res://Scenes/Levels/Level5_final.tscn",
+	#"res://Scenes/Levels/Level5.tscn",
 	#"res://Scenes/Levels/Level5_final.tscn",
 	#"res://Scenes/Levels/Level3.tscn",
 	#"res://Scenes/Levels/Level4.tscn",
