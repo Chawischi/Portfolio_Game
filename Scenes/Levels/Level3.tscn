@@ -12,6 +12,9 @@
 [node name="Level3" type="Node2D" unique_id=1651477053]
 script = ExtResource("1_3gtua")
 trecho_scenes = Array[PackedScene]([ExtResource("2_ve7n4"), ExtResource("2_0kf4d"), ExtResource("4_ve7n4"), ExtResource("3_ve7n4")])
+trecho_music = Array[String](["", "silencio", "", ""])
+level_music = "cave_level_2"
+level_ambient = "cave_2_3"
 
 [node name="Camera2D" parent="." unique_id=200463703 instance=ExtResource("4_d4xud")]
 position = Vector2(104, 88)

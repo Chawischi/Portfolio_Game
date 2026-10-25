@@ -117,12 +117,5 @@ dream_lines = Array[String](["A memória dos que amamos nunca morre.", "Eu sempr
 eugene_mutter = Array[String](["...Eu sei, Lily. Eu sei..."])
 mutter_ballon_side = "Esquerda"
 
-[node name="Label" type="Label" parent="." unique_id=1514840498]
-offset_left = 104.0
-offset_top = 64.0
-offset_right = 232.0
-offset_bottom = 72.0
-text = "Fim Por Enquanto"
-
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="KillZone" to="KillZone" method="_on_body_entered"]

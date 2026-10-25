@@ -10,6 +10,8 @@
 [node name="Level1Tutorial" type="Node2D" unique_id=581019709]
 script = ExtResource("1_7cc54")
 trecho_scenes = Array[PackedScene]([ExtResource("2_tetax")])
+level_music = "menu_level_1"
+level_ambient = "tutorial"
 
 [node name="Parallax" parent="." unique_id=309623274 instance=ExtResource("6_6tsua")]
 
@@ -17,7 +19,7 @@ trecho_scenes = Array[PackedScene]([ExtResource("2_tetax")])
 position = Vector2(104, 88)
 
 [node name="Player_Eugene" parent="." unique_id=1699571630 instance=ExtResource("2_vipxu")]
-position = Vector2(-16, 136)
+position = Vector2(-16, 130)
 
 [node name="IntroSequence" type="Node2D" parent="." unique_id=205292405 node_paths=PackedStringArray("player")]
 position = Vector2(0, 24)
