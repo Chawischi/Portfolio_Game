@@ -328,8 +328,12 @@ func _start_dash() -> void:
 func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
 	var angle: float = raw_direction.angle()
 	var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
-	return Vector2.RIGHT.rotated(snapped_angle)
-
+	var dir: Vector2 = Vector2.RIGHT.rotated(snapped_angle)
+	if absf(dir.x) < 0.001:
+		dir.x = 0.0
+	if absf(dir.y) < 0.001:
+		dir.y = 0.0
+	return dir
 
 func _handle_dash_movement(delta: float) -> void:
 	var elapsed: float = dash_duration - dash_timer
@@ -350,7 +354,9 @@ func _handle_dash_movement(delta: float) -> void:
 
 	velocity = dash_direction * current_speed
 
-	if dash_direction.y < 0.0:
+	#if dash_direction.y < 0.0:
+		#velocity.y += gravity_rise * dash_gravity_influence * delta
+	if dash_direction.y < -0.1:
 		velocity.y += gravity_rise * dash_gravity_influence * delta
 
 	dash_timer -= delta
