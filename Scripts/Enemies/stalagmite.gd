@@ -69,6 +69,7 @@ func _on_proximity_entered(body: Node2D) -> void:
 
 	state = State.SHAKING
 	shake_timer = shake_duration
+	AudioManager.play_sfx("stalagmite_shake")
 
 
 func _on_body_entered(body: Node2D) -> void:
