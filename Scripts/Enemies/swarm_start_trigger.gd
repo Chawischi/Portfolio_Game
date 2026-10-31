@@ -14,5 +14,6 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	already_triggered = true
-	swarm_threat.is_active = true	
+	swarm_threat.is_active = true
+	AudioManager.play_music_delayed("cave_level_3", 1.5)
 	

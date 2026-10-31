@@ -49,12 +49,18 @@ var zone_max: Vector2
 # ---------- Nós ----------
 @onready var stomp_zone: Area2D = $StompZone
 
+# ---------- Som das asas(patrulha) ----------
+const WING_SOUND_PATH: String = "res://Audio/SFX/bat_wing_sfx.wav"
+@export var wing_volume_db: float = -6.0
+@export var wing_max_distance: float = 160.0
+var wing_player: AudioStreamPlayer2D = null
 
 # =====================================================================
 #  2. CICLO DO JOGO
 # =====================================================================
 
 func _ready() -> void:
+	_setup_wing_sound()
 	patrol_target = patrol_point_b.global_position
 
 	if attack_zone:
@@ -98,7 +104,7 @@ func _physics_process(delta: float) -> void:
 	global_position.y = clamp(global_position.y, zone_min.y, zone_max.y)
 
 	_update_animation()
-
+	_update_wing_sound()
 
 # =====================================================================
 #  3. ZONA DE ATAQUE
@@ -143,6 +149,7 @@ func _start_alert(player_body: Node2D) -> void:
 	bat_state = BatState.ALERT
 	alert_timer = alert_duration
 	velocity = Vector2.ZERO
+	AudioManager.play_sfx("bat")
 
 
 func _handle_alert(delta: float) -> void:
@@ -194,6 +201,10 @@ func _on_stomp_zone_body_entered(body: Node2D) -> void:
 
 # Chamado pelo EnemyBase.die(): toca a animação de morte (se existir) e remove
 func _on_death() -> void:
+	AudioManager.play_sfx("bat_death")
+	if wing_player:
+		wing_player.stop()
+	
 	if not sprite.sprite_frames.has_animation("death"):
 		queue_free()
 		return
@@ -216,3 +227,27 @@ func _update_animation() -> void:
 			sprite.play("alerta")
 		BatState.CHASE:
 			sprite.play("ataque")
+
+func _setup_wing_sound() -> void:
+	if not ResourceLoader.exists(WING_SOUND_PATH):
+		push_warning("Bat: som de asas não encontrado: " + WING_SOUND_PATH)
+		return
+		
+	wing_player = AudioStreamPlayer2D.new()
+	wing_player.stream = load(WING_SOUND_PATH)
+	wing_player.bus = "SFX"
+	wing_player.volume_db = wing_volume_db
+	wing_player .max_distance = wing_max_distance
+	add_child(wing_player)
+	
+# O som das asas toca só enquanto o morcego patrulha (no alerta e na investida, cala)
+func _update_wing_sound() -> void:
+	if wing_player == null:
+		return
+		
+	var should_play: bool = bat_state == BatState.PATROL
+	if should_play and not wing_player.playing:
+		# Começa num ponto aleatório, para vários morcegos não baterem asa em sincronia
+		wing_player.play(randf() * wing_player.stream.get_length())
+	elif not should_play and wing_player.playing:
+		wing_player.stop()

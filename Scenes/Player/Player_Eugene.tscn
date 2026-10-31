@@ -746,7 +746,7 @@ shape = SubResource("RectangleShape2D_flf07")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player_Eugene" unique_id=1735654037]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_fshgd")
-animation = &"collapsed_flower"
+animation = &"run"
 
 [node name="RayRight" type="RayCast2D" parent="Player_Eugene" unique_id=904558287]
 target_position = Vector2(8, 0)

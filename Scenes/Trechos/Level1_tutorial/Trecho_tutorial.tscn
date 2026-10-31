@@ -36,7 +36,10 @@ size = Vector2(128, 16)
 size = Vector2(232, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpnj3"]
-size = Vector2(16, 185)
+size = Vector2(16, 408)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djnpf"]
+size = Vector2(1288, 36.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qcy0v"]
 size = Vector2(12, 16)
@@ -106,8 +109,15 @@ mutter_ballon_side = "Esquerda"
 [node name="LimiteMap" type="StaticBody2D" parent="." unique_id=210880277 groups=["no_climb"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LimiteMap" unique_id=1389792842]
-position = Vector2(-8, 91.5)
+position = Vector2(-8, -20)
 shape = SubResource("RectangleShape2D_gpnj3")
+debug_color = Color(0, 0.63041776, 0.47598165, 0.41960785)
+
+[node name="LimiteMap2" type="StaticBody2D" parent="." unique_id=108645936 groups=["no_climb"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LimiteMap2" unique_id=1613914782]
+position = Vector2(644, -210.25)
+shape = SubResource("RectangleShape2D_djnpf")
 debug_color = Color(0, 0.63041776, 0.47598165, 0.41960785)
 
 [node name="WarningSign" parent="." unique_id=1874089775 instance=ExtResource("7_kw36s")]

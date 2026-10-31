@@ -31,6 +31,7 @@ DreamOverlay="*uid://iv7r8faocflq"
 InputLabels="*uid://crte62h4r83d5"
 ResumeCountdown="*uid://t04bbqlun37o"
 TutorialPanel="*uid://bktbggncvisfa"
+AudioManager="*uid://b7sr4tn1jp6py"
 
 [display]
 

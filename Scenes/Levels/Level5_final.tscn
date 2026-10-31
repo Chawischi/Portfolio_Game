@@ -9,6 +9,7 @@
 [node name="Level5Final" type="Node2D" unique_id=1479537365]
 script = ExtResource("1_2ganq")
 trecho_scenes = Array[PackedScene]([ExtResource("2_ixoxo")])
+level_music = "silencio"
 
 [node name="Camera2D" parent="." unique_id=200463703 instance=ExtResource("1_ma1xx")]
 top_margin = 50.0

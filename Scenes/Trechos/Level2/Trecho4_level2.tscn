@@ -132,13 +132,13 @@ spike_texture = ExtResource("5_ykwdl")
 spike_count = 12
 
 [node name="Spikes35" parent="PastaSpikes" unique_id=1579688235 instance=ExtResource("4_pwb0g")]
-position = Vector2(62, 140)
+position = Vector2(62, 142)
 rotation = -1.5707964
 spike_texture = ExtResource("5_ykwdl")
 spike_count = 3
 
 [node name="Spikes36" parent="PastaSpikes" unique_id=857402118 instance=ExtResource("4_pwb0g")]
-position = Vector2(90, 144)
+position = Vector2(90, 146)
 rotation = 1.5707964
 spike_texture = ExtResource("5_ykwdl")
 spike_count = 4

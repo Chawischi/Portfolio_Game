@@ -27,7 +27,9 @@ extends CharacterBody2D
 @export var max_fall_speed: float = 225.0
 
 @export var gravity: float = 550.0
-@export var max_jumps: int = 2	# pulo simples + o pulo duplo || para a mecânica de pulo duplo
+@export var max_jumps: int = 2						# pulo simples + o pulo duplo || para a mecânica de pulo duplo
+
+@export var step_frames: Array[int] = [0, 2]		# os frames que toca o pé no chão
 
 # ---------- Pulo ----------
 @export var jump_height: float = 32.0
@@ -152,6 +154,7 @@ func _ready() -> void:
 	dashes_left = max_dashes
 
 	set_carrying_bouquet(GameManager.carrying_bouquet)
+	sprite.frame_changed.connect(_on_sprite_frame_changed)
 
 
 # Ordem a cada frame: knockback -> caminhada forçada -> travado -> jogo normal
@@ -262,6 +265,7 @@ func _handle_jump_input() -> void:
 	if jump_buffer_timer > 0.0 and (can_coyote_jump or can_air_jump or is_on_floor()):
 		velocity.y = jump_velocity
 		jumps_done += 1
+		AudioManager.play_sfx("jump")
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0 		# Para evitar pulo duplo à toa
 
@@ -317,14 +321,19 @@ func _start_dash() -> void:
 	dash_timer = dash_duration
 	cooldown_timer = dash_cooldown
 	dashes_left -= 1
+	AudioManager.play_sfx("dash")
 
 
 # Trava a direção do dash nas 8 direções (cada 45 graus)
 func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
 	var angle: float = raw_direction.angle()
 	var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
-	return Vector2.RIGHT.rotated(snapped_angle)
-
+	var dir: Vector2 = Vector2.RIGHT.rotated(snapped_angle)
+	if absf(dir.x) < 0.001:
+		dir.x = 0.0
+	if absf(dir.y) < 0.001:
+		dir.y = 0.0
+	return dir
 
 func _handle_dash_movement(delta: float) -> void:
 	var elapsed: float = dash_duration - dash_timer
@@ -345,7 +354,7 @@ func _handle_dash_movement(delta: float) -> void:
 
 	velocity = dash_direction * current_speed
 
-	if dash_direction.y < 0.0:
+	if dash_direction.y < -0.1:
 		velocity.y += gravity_rise * dash_gravity_influence * delta
 
 	dash_timer -= delta
@@ -408,6 +417,7 @@ func _climb_jump() -> void:
 	velocity.y = climb_jump_boost_velocity
 	velocity.x = -wall_direction * climb_jump_push_velocity
 	jumps_done = 0	# Sair da parede recarrega o pulo/pulo duplo
+	AudioManager.play_sfx("jump")
 	climb_lockout_timer = climb_regrab_lockout
 	wall_jump_lockout_timer = wall_jump_lockout
 
@@ -441,6 +451,7 @@ func _handle_wall_input(_delta: float) -> bool:
 		jumps_done = 0
 		wall_jump_lockout_timer = wall_jump_lockout
 		is_wall_sliding = false
+		AudioManager.play_sfx("jump")
 		return true
 
 	return false
@@ -502,6 +513,14 @@ func _update_animation() -> void:
 		State.WALL_SLIDE:
 			sprite.play("climb_idle")
 
+# Toca o passo quando o pé encosta no chão durante a corrida
+func _on_sprite_frame_changed() -> void:
+	if not sprite.animation.begins_with("run"):
+		return
+	if not is_on_floor():
+		return
+	if sprite.frame in step_frames:
+		AudioManager.play_sfx("walk")
 
 # Tom avermelhado e tremor conforme a estamina da escalada acaba
 func _update_climb_visual_feedback() -> void:
@@ -584,6 +603,7 @@ func play_hit_and_respawn(direction: Vector2, strength: float, duration: float) 
 
 	knockback_vector = Vector2.ZERO
 	velocity = Vector2.ZERO
+	AudioManager.play_sfx("death")
 
 	var orchestrator = get_tree().get_first_node_in_group("orchestrator")
 	if orchestrator:

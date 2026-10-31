@@ -26,9 +26,13 @@ extends Node2D
 
 # ---------- Constantes ----------
 const DEFAULT_RESPAWN_MARKER: String = "Marker_Respawn"
+const SILENCE_KEYWORD: String = "silencio"				# Em Trecho Music, significa "sem música neste trecho"
 
 # ---------- Configuração (Inspector) ----------
 @export var trecho_scenes: Array[PackedScene] = []
+@export var trecho_music: Array[String] = []
+@export var level_music: String = ""
+@export var level_ambient: String = ""
 
 # ---------- Estado ----------
 var current_index: int = 0
@@ -50,7 +54,7 @@ func _ready() -> void:
 	current_trecho_instance = trecho_scenes[current_index].instantiate()
 	add_child(current_trecho_instance)
 	_apply_camera_limits()
-
+	_apply_trecho_audio()
 
 # =====================================================================
 #  3. TROCA DE TRECHO
@@ -92,6 +96,7 @@ func _load_trecho_at(index: int, entry_side: String, marker_override: String = "
 		var marker: Marker2D = current_trecho_instance.get_node(marker_name)
 		player.global_position = marker.global_position
 		player.reset_movement_state(entry_side == "esquerda")
+		_apply_trecho_audio()
 	)
 
 	player.unlock_movement()
@@ -129,6 +134,7 @@ func respawn_player() -> void:
 			respawn_marker = current_trecho_instance.get_node("Marker_Respawn")
 		player.global_position = respawn_marker.global_position
 		player.reset_movement_state()
+		_apply_trecho_audio(true)
 	)
 
 	GameManager.show_flower_loss_feedback()
@@ -146,7 +152,7 @@ func set_respawn_marker(marker_name: String) -> void:
 
 
 # =====================================================================
-#  5. CÂMERA
+#  5. CÂMERA e Áudio
 # =====================================================================
 
 # Copia os limites do trecho atual para a câmera e liga o modo "swarm" se o trecho tiver
@@ -162,3 +168,20 @@ func _apply_camera_limits() -> void:
 	if swarm_threat:
 		camera.corner_point = current_trecho_instance.get_node("SwarmCornerPoint")
 		camera.camera_center_point = current_trecho_instance.get_node_or_null("CameraCenterPoint")
+
+# Toca a música e o ambiente do trecho atual. "silencio" no Trecho Music para a música.
+func _apply_trecho_audio(restart: bool = false) -> void:
+	var override: String = ""
+	if current_index < trecho_music.size():
+		override = trecho_music[current_index]
+
+	var music: String = override if override != "" else level_music
+	if music == SILENCE_KEYWORD:
+		AudioManager.stop_music()
+	elif music != "":
+		AudioManager.play_music(music)
+		if restart and override != "":
+			AudioManager.restart_music()
+
+	if level_ambient != "":
+		AudioManager.play_ambient(level_ambient)

@@ -7,6 +7,8 @@ func _ready() -> void:
 	HUD.visible = false
 	play_button.grab_focus()
 	continue_button.disabled = true
+	AudioManager.play_music("menu_level_1")
+	AudioManager.stop_ambient()
 
 func _on_play_button_pressed() -> void:
 	GameManager.start_new_game()

@@ -50,6 +50,7 @@ offset_bottom = 192.0
 
 [node name="Checkpoint_tutorial" parent="." unique_id=869767710 instance=ExtResource("5_thg2v")]
 position = Vector2(184, 148)
+checkpoint_id = "Checkpoint_level_5"
 dream_lines = Array[String](["Pelos astros e pelas dificultades, Eugene.", "Você já chegou lá", "                        Liliana"])
 eugene_mutter = Array[String](["Quase lá... Quase"])
 
@@ -65,7 +66,7 @@ shape = SubResource("RectangleShape2D_thg2v")
 script = ExtResource("7_thg2v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerSafeZone" unique_id=1130117409]
-position = Vector2(108, 96)
+position = Vector2(100, 96)
 shape = SubResource("RectangleShape2D_pdtin")
 debug_color = Color(0.87991565, 0.00037041426, 0.8248162, 0.41960785)
 

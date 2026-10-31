@@ -42,6 +42,7 @@ func _on_body_entered(body: Node2D) -> void:
 		_player.start_forced_walk(walk_speed)
 	else:
 		_player.start_forced_walk(walk_speed * speed_multipliers[0])
+		AudioManager.stop_music(5.0)
 		
 func _physics_process(_delta: float) -> void:
 	if not _running or not is_instance_valid(_player) or end_marker == null:
@@ -82,7 +83,7 @@ func _do_beat() -> void:
 		
 func _pulse_effect() -> void:
 	var strength: float = 0.4 + 0.2 * _beats_done
-	#aqui vai aúdio
+	AudioManager.play_sfx("heartbeat")
 	
 	var tween: Tween = create_tween()
 	tween.tween_property(_vignette, "modulate:a", strength, 0.06)

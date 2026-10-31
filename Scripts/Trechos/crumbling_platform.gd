@@ -34,6 +34,7 @@ func _physics_process(delta: float) -> void:
 				if body.is_in_group("player") and body.is_on_floor():
 					state = State.SHAKING
 					timer = shake_duration
+					AudioManager.play_sfx("platform_shake")
 					break
 
 		State.SHAKING:
