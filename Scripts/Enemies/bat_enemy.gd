@@ -7,6 +7,8 @@ extends EnemyBase
 #  Comportamento: patrulha entre dois pontos; ao ver o player na zona de
 #  ataque, avisa (ALERT), dá uma investida em linha reta (CHASE) e volta a
 #  patrulhar. O player pode matá-lo pulando em cima (StompZone).
+#  O attack_zone é obrigatório: ele define também a área onde o morcego
+#  fica preso.
 #
 #  Índice:
 #    1. Variáveis
@@ -15,12 +17,20 @@ extends EnemyBase
 #    4. Estados (patrulha, alerta, perseguição)
 #    5. Stomp e morte
 #    6. Animação
+#    7. Som das asas
 # =====================================================================
 
 
 # =====================================================================
 #  1. VARIÁVEIS
 # =====================================================================
+
+# ---------- Constantes ----------
+const WING_SOUND_PATH: String = "res://Audio/SFX/bat_wing_sfx.wav"
+const PATROL_ARRIVE_DISTANCE: float = 4.0		# Distância (px) para considerar que chegou no ponto da patrulha
+const STOMP_BOUNCE_VELOCITY: float = -100.0		# Quique do player ao pisar no morcego
+const HIT_KNOCKBACK_STRENGTH: float = 150.0		# Empurrão no player quando o morcego o machuca
+const HIT_KNOCKBACK_DURATION: float = 0.3
 
 # ---------- Estado ----------
 enum BatState { PATROL, ALERT, CHASE }
@@ -35,6 +45,8 @@ var bat_state: BatState = BatState.PATROL
 @export var chase_cooldown: float = 1.0
 @export var alert_duration: float = 0.6
 @export var attack_zone: Area2D
+@export var wing_volume_db: float = -6.0
+@export var wing_max_distance: float = 160.0
 
 # ---------- Controle interno ----------
 var patrol_target: Vector2
@@ -45,15 +57,10 @@ var chase_cooldown_timer: float = 0.0
 var target_player: Node2D = null
 var zone_min: Vector2
 var zone_max: Vector2
+var wing_player: AudioStreamPlayer2D = null
 
 # ---------- Nós ----------
 @onready var stomp_zone: Area2D = $StompZone
-
-# ---------- Som das asas(patrulha) ----------
-const WING_SOUND_PATH: String = "res://Audio/SFX/bat_wing_sfx.wav"
-@export var wing_volume_db: float = -6.0
-@export var wing_max_distance: float = 160.0
-var wing_player: AudioStreamPlayer2D = null
 
 # =====================================================================
 #  2. CICLO DO JOGO
@@ -74,7 +81,6 @@ func _ready() -> void:
 			if body.is_in_group("player") and bat_state == BatState.PATROL and not body.is_invulnerable:
 				_start_alert(body)
 				break
-
 
 func _physics_process(delta: float) -> void:
 	if base_state == BaseState.DEAD:
@@ -118,14 +124,12 @@ func _compute_zone_bounds() -> void:
 	zone_min = center - extents
 	zone_max = center + extents
 
-
 func _on_attack_zone_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player") or bat_state != BatState.PATROL or chase_cooldown_timer > 0.0:
 		return
 	if body.is_invulnerable:
 		return
 	_start_alert(body)
-
 
 # =====================================================================
 #  4. ESTADOS
@@ -136,12 +140,11 @@ func _handle_patrol() -> void:
 	var direction: Vector2 = (patrol_target - global_position).normalized()
 	velocity = direction * patrol_speed
 
-	if global_position.distance_to(patrol_target) < 4.0:
+	if global_position.distance_to(patrol_target) < PATROL_ARRIVE_DISTANCE:
 		patrol_target = patrol_point_a.global_position if patrol_target == patrol_point_b.global_position else patrol_point_b.global_position
 
 	sprite.flip_h = velocity.x > 0.0
 	sprite.flip_v = false
-
 
 # ---------- Alerta ----------
 func _start_alert(player_body: Node2D) -> void:
@@ -151,13 +154,11 @@ func _start_alert(player_body: Node2D) -> void:
 	velocity = Vector2.ZERO
 	AudioManager.play_sfx("bat")
 
-
 func _handle_alert(delta: float) -> void:
 	velocity = Vector2.ZERO
 	alert_timer -= delta
 	if alert_timer <= 0.0:
 		_start_chase()
-
 
 # ---------- Perseguição (investida em linha reta) ----------
 func _start_chase() -> void:
@@ -168,7 +169,6 @@ func _start_chase() -> void:
 	chase_timer = chase_duration
 	bat_state = BatState.CHASE
 
-
 func _handle_chase(delta: float) -> void:
 	velocity = chase_direction * chase_speed
 
@@ -176,11 +176,9 @@ func _handle_chase(delta: float) -> void:
 	if chase_timer <= 0.0:
 		_end_chase()
 
-
 func _end_chase() -> void:
 	bat_state = BatState.PATROL
 	chase_cooldown_timer = chase_cooldown
-
 
 # =====================================================================
 #  5. STOMP E MORTE
@@ -193,18 +191,17 @@ func _on_stomp_zone_body_entered(body: Node2D) -> void:
 
 	if body.velocity.y > 0.0 and body.global_position.y < global_position.y:
 		die()
-		body.velocity.y = -100.0
+		body.velocity.y = STOMP_BOUNCE_VELOCITY
 	else:
 		var direction: Vector2 = (body.global_position - global_position).normalized()
-		body.play_hit_and_respawn(direction, 150.0, 0.3)
-
+		body.play_hit_and_respawn(direction, HIT_KNOCKBACK_STRENGTH, HIT_KNOCKBACK_DURATION)
 
 # Chamado pelo EnemyBase.die(): toca a animação de morte (se existir) e remove
 func _on_death() -> void:
 	AudioManager.play_sfx("bat_death")
 	if wing_player:
 		wing_player.stop()
-	
+
 	if not sprite.sprite_frames.has_animation("death"):
 		queue_free()
 		return
@@ -213,7 +210,6 @@ func _on_death() -> void:
 	sprite.play("death")
 	await sprite.animation_finished
 	queue_free()
-
 
 # =====================================================================
 #  6. ANIMAÇÃO
@@ -228,23 +224,27 @@ func _update_animation() -> void:
 		BatState.CHASE:
 			sprite.play("ataque")
 
+# =====================================================================
+#  7. SOM DAS ASAS
+# =====================================================================
+
 func _setup_wing_sound() -> void:
 	if not ResourceLoader.exists(WING_SOUND_PATH):
 		push_warning("Bat: som de asas não encontrado: " + WING_SOUND_PATH)
 		return
-		
+
 	wing_player = AudioStreamPlayer2D.new()
 	wing_player.stream = load(WING_SOUND_PATH)
 	wing_player.bus = "SFX"
 	wing_player.volume_db = wing_volume_db
-	wing_player .max_distance = wing_max_distance
+	wing_player.max_distance = wing_max_distance
 	add_child(wing_player)
-	
+
 # O som das asas toca só enquanto o morcego patrulha (no alerta e na investida, cala)
 func _update_wing_sound() -> void:
 	if wing_player == null:
 		return
-		
+
 	var should_play: bool = bat_state == BatState.PATROL
 	if should_play and not wing_player.playing:
 		# Começa num ponto aleatório, para vários morcegos não baterem asa em sincronia

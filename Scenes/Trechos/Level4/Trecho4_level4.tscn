@@ -140,6 +140,30 @@ position = Vector2(44, 114)
 rotation = 3.1415927
 spike_texture = ExtResource("7_gp87a")
 
+[node name="Spikes21" parent="PastaSpikes" unique_id=129612893 instance=ExtResource("6_qyef2")]
+position = Vector2(20, 150)
+spike_texture = ExtResource("7_gp87a")
+
+[node name="Spikes33" parent="PastaSpikes" unique_id=974999695 instance=ExtResource("6_qyef2")]
+position = Vector2(20, 130)
+rotation = 3.1415927
+spike_texture = ExtResource("7_gp87a")
+
+[node name="Spikes80" parent="PastaSpikes" unique_id=735428779 instance=ExtResource("6_qyef2")]
+position = Vector2(26, 124)
+rotation = 1.5707964
+spike_texture = ExtResource("7_gp87a")
+
+[node name="Spikes81" parent="PastaSpikes" unique_id=2110825578 instance=ExtResource("6_qyef2")]
+position = Vector2(26, 156)
+rotation = 1.5707964
+spike_texture = ExtResource("7_gp87a")
+
+[node name="Spikes82" parent="PastaSpikes" unique_id=1447312887 instance=ExtResource("6_qyef2")]
+position = Vector2(42, 164)
+rotation = 1.5707964
+spike_texture = ExtResource("7_gp87a")
+
 [node name="Spikes14" parent="PastaSpikes" unique_id=1025024252 instance=ExtResource("6_qyef2")]
 position = Vector2(104, 98)
 rotation = 3.1415927
@@ -192,10 +216,10 @@ position = Vector2(164, 166)
 spike_texture = ExtResource("7_gp87a")
 
 [node name="Spikes20" parent="PastaSpikes" unique_id=717571354 instance=ExtResource("6_qyef2")]
-position = Vector2(214, 236)
+position = Vector2(214, 232)
 rotation = -1.5707964
 spike_texture = ExtResource("7_gp87a")
-spike_count = 3
+spike_count = 2
 
 [node name="Spikes68" parent="PastaSpikes" unique_id=1765356580 instance=ExtResource("6_qyef2")]
 position = Vector2(204, 218)
@@ -227,6 +251,10 @@ spike_texture = ExtResource("7_gp87a")
 position = Vector2(264, 246)
 spike_texture = ExtResource("7_gp87a")
 spike_count = 2
+
+[node name="Spikes78" parent="PastaSpikes" unique_id=70339819 instance=ExtResource("6_qyef2")]
+position = Vector2(228, 230)
+spike_texture = ExtResource("7_gp87a")
 
 [node name="Spikes74" parent="PastaSpikes" unique_id=65708133 instance=ExtResource("6_qyef2")]
 position = Vector2(236, 246)
@@ -305,9 +333,9 @@ spike_texture = ExtResource("7_gp87a")
 spike_count = 2
 
 [node name="Spikes36" parent="PastaSpikes" unique_id=1147206658 instance=ExtResource("6_qyef2")]
-position = Vector2(96, 78)
+position = Vector2(92, 78)
 spike_texture = ExtResource("7_gp87a")
-spike_count = 2
+spike_count = 3
 
 [node name="Spikes37" parent="PastaSpikes" unique_id=1104818000 instance=ExtResource("6_qyef2")]
 position = Vector2(10, 80)
@@ -367,6 +395,14 @@ spike_count = 2
 position = Vector2(252, 102)
 spike_texture = ExtResource("7_gp87a")
 
+[node name="Spikes48" parent="PastaSpikes" unique_id=44224181 instance=ExtResource("6_qyef2")]
+position = Vector2(260, 94)
+spike_texture = ExtResource("7_gp87a")
+
+[node name="Spikes79" parent="PastaSpikes" unique_id=1616252003 instance=ExtResource("6_qyef2")]
+position = Vector2(188, 134)
+spike_texture = ExtResource("7_gp87a")
+
 [node name="Spikes47" parent="PastaSpikes" unique_id=479831710 instance=ExtResource("6_qyef2")]
 position = Vector2(246, 112)
 rotation = -1.5707964
@@ -400,6 +436,15 @@ spike_count = 14
 position = Vector2(292, 190)
 spike_texture = ExtResource("7_gp87a")
 spike_count = 5
+
+[node name="Spikes83" parent="PastaSpikes" unique_id=1411959832 instance=ExtResource("6_qyef2")]
+position = Vector2(310, 188)
+rotation = -1.5707964
+spike_texture = ExtResource("7_gp87a")
+
+[node name="Spikes84" parent="PastaSpikes" unique_id=1956899575 instance=ExtResource("6_qyef2")]
+position = Vector2(316, 182)
+spike_texture = ExtResource("7_gp87a")
 
 [node name="Spikes54" parent="PastaSpikes" unique_id=1204410552 instance=ExtResource("6_qyef2")]
 position = Vector2(270, 196)
@@ -445,6 +490,10 @@ position = Vector2(178, 296)
 rotation = 1.5707964
 spike_texture = ExtResource("7_gp87a")
 spike_count = 6
+
+[node name="Spikes76" parent="PastaSpikes" unique_id=1960739004 instance=ExtResource("6_qyef2")]
+position = Vector2(172, 270)
+spike_texture = ExtResource("7_gp87a")
 
 [node name="Spikes62" parent="PastaSpikes" unique_id=1362994991 instance=ExtResource("6_qyef2")]
 position = Vector2(170, 264)

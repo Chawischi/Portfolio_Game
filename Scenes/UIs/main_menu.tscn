@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://nfqo31xxi3xf"]
 
 [ext_resource type="Script" uid="uid://5dgo4owv0as" path="res://Scripts/Managers/main_menu.gd" id="1_bsjfe"]
-[ext_resource type="Texture2D" uid="uid://bowv0qmitxgya" path="res://Sprites/tileset_florestas/Tela_menu.png" id="1_s7j54"]
+[ext_resource type="Texture2D" uid="uid://cnny8lfhdtbca" path="res://Sprites/Menu/menu_bg.png" id="2_1tfvi"]
+[ext_resource type="PackedScene" uid="uid://xmlaig8rqpe4" path="res://Scenes/Trechos/menu_animated.tscn" id="2_am3qo"]
 [ext_resource type="Theme" uid="uid://ddv533kmqk6i4" path="res://UI/button_Theme.tres" id="2_bsjfe"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1tfvi"]
@@ -23,11 +24,14 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_bsjfe")
 
+[node name="Node2D" parent="." unique_id=489130394 instance=ExtResource("2_am3qo")]
+
 [node name="Background" type="TextureRect" parent="." unique_id=1447809890]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_s7j54")
+texture = ExtResource("2_1tfvi")
 
 [node name="TitleLabel" type="Label" parent="." unique_id=1281902719]
 layout_mode = 1
