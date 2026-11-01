@@ -11,7 +11,7 @@ extends Node
 #    AudioManager.play_sfx("jump")
 #    AudioManager.play_music("cave_level_2")
 #    AudioManager.play_ambient("cave_2_3")
-#    AudioManager.play_level(GameManager.current_level_index)
+#    AudioManager.play_music_delayed("cave_level_3", 1.5)
 #    AudioManager.stop_music(2.0)
 #
 #  Índice:
@@ -20,8 +20,9 @@ extends Node
 #    3. Ciclo do jogo
 #    4. SFX
 #    5. Música e ambiente
-#    6. Fases
+#    6. Cume final
 #    7. Internos (camadas, loop, carregamento)
+#    8. Sons de interface (menus)
 # =====================================================================
 
 
@@ -72,6 +73,7 @@ const AMBIENT: Dictionary = {
 	"final_cume": "ambiente_level_final_cume.ogg",
 }
 
+
 # =====================================================================
 #  2. CONSTANTES E VARIÁVEIS
 # =====================================================================
@@ -86,8 +88,7 @@ const AMBIENT_DB: float = -8.0				# Ambiente mais baixo que a música
 const SILENT_DB: float = -60.0
 const DEFAULT_MUSIC_FADE: float = 1.5
 const DEFAULT_AMBIENT_FADE: float = 2.0
-const UI_FOCUS_WINDOW_MSEC: int = 150
-var _last_nav_input_msec: int = -1000
+const UI_FOCUS_WINDOW_MSEC: int = 150		# Foco logo depois de uma tecla de navegação = som de navegação
 
 # ---------- Estado ----------
 var _sfx_players: Array[AudioStreamPlayer] = []
@@ -95,7 +96,7 @@ var _sfx_next: int = 0
 var _layers: Dictionary = {}			# "music" e "ambient": {players, active, path, tween}
 var _stream_cache: Dictionary = {}
 var _music_request: int = 0
-
+var _last_nav_input_msec: int = -1000
 
 # =====================================================================
 #  3. CICLO DO JOGO
@@ -113,11 +114,10 @@ func _ready() -> void:
 
 	_layers["music"] = _make_layer(_bus_or_master(MUSIC_BUS))
 	_layers["ambient"] = _make_layer(_bus_or_master(AMBIENT_BUS))
-	
+
 	# Sons de interface: liga em todos os botões e sliders, os que já existem e os que forem criados
 	get_tree().node_added.connect(_on_node_added)
 	call_deferred("_connect_ui_sounds_in", get_tree().root)
-
 
 # =====================================================================
 #  4. SFX
@@ -141,7 +141,6 @@ func play_sfx(sfx_name: String) -> void:
 	player.pitch_scale = base + randf_range(-variation, variation)
 	player.play()
 
-
 # =====================================================================
 #  5. MÚSICA E AMBIENTE
 # =====================================================================
@@ -153,11 +152,10 @@ func play_music(music_name: String, fade: float = DEFAULT_MUSIC_FADE) -> void:
 		return
 	_play_layer("music", MUSIC_DIR + str(MUSIC[music_name]), fade, MUSIC_DB)
 
-
 func stop_music(fade: float = DEFAULT_MUSIC_FADE) -> void:
 	_music_request += 1
 	_stop_layer("music", fade)
-	
+
 # Toca a música depois de um atraso. Se outra música for pedida nesse meio tempo (ex.: morreu), cancela.
 func play_music_delayed(music_name: String, delay: float, fade: float = DEFAULT_MUSIC_FADE) -> void:
 	_music_request += 1
@@ -166,7 +164,7 @@ func play_music_delayed(music_name: String, delay: float, fade: float = DEFAULT_
 	if my_request != _music_request:
 		return
 	play_music(music_name, fade)
-	
+
 # Recomeça a música atual do início (usado ao morrer). O ambiente continua contínuo.
 func restart_music(fade: float = 0.3) -> void:
 	var state: Dictionary = _layers["music"]
@@ -176,32 +174,27 @@ func restart_music(fade: float = 0.3) -> void:
 	state["path"] = ""	# Faz o _play_layer tratar como faixa nova e recomeçar
 	_play_layer("music", path, fade, MUSIC_DB)
 
-
 func play_ambient(ambient_name: String, fade: float = DEFAULT_AMBIENT_FADE) -> void:
 	if not AMBIENT.has(ambient_name):
 		push_warning("AudioManager: ambiente desconhecido: " + ambient_name)
 		return
 	_play_layer("ambient", AMBIENT_DIR + str(AMBIENT[ambient_name]), fade, AMBIENT_DB)
 
-
 func stop_ambient(fade: float = DEFAULT_AMBIENT_FADE) -> void:
 	_stop_layer("ambient", fade)
-
 
 func stop_all(fade: float = DEFAULT_MUSIC_FADE) -> void:
 	stop_music(fade)
 	stop_ambient(fade)
 
-
 # =====================================================================
-#  6. FASES
+#  6. CUME FINAL
 # =====================================================================
 
 # Cume final: música e vento do final (chamado na cena final)
 func play_summit() -> void:
 	play_music("final_cume", 0.5)
 	play_ambient("final_cume", 2.5)
-
 
 # =====================================================================
 #  7. INTERNOS
@@ -215,7 +208,6 @@ func _make_layer(bus: String) -> Dictionary:
 		player.bus = bus
 		add_child(player)
 	return {"players": [player_a, player_b], "active": player_a, "path": "", "tween": null}
-
 
 func _play_layer(layer: String, path: String, fade: float, target_db: float) -> void:
 	var state: Dictionary = _layers[layer]
@@ -255,7 +247,6 @@ func _play_layer(layer: String, path: String, fade: float, target_db: float) -> 
 			tween.tween_property(player, "volume_db", SILENT_DB, fade)
 	tween.chain().tween_callback(_stop_inactive.bind(state))
 
-
 func _stop_layer(layer: String, fade: float) -> void:
 	var state: Dictionary = _layers[layer]
 	state["path"] = ""
@@ -281,24 +272,20 @@ func _stop_layer(layer: String, fade: float) -> void:
 			tween.tween_property(player, "volume_db", SILENT_DB, fade)
 	tween.chain().tween_callback(_stop_all_players.bind(players))
 
-
 func _stop_inactive(state: Dictionary) -> void:
 	var players: Array = state["players"]
 	for player: AudioStreamPlayer in players:
 		if player != state["active"]:
 			player.stop()
 
-
 func _stop_all_players(players: Array) -> void:
 	for player: AudioStreamPlayer in players:
 		player.stop()
-
 
 func _kill_tween(state: Dictionary) -> void:
 	var tween = state["tween"]
 	if tween is Tween and tween.is_valid():
 		tween.kill()
-
 
 # ---------- SFX ----------
 func _next_sfx_player() -> AudioStreamPlayer:
@@ -309,7 +296,6 @@ func _next_sfx_player() -> AudioStreamPlayer:
 	var player: AudioStreamPlayer = _sfx_players[_sfx_next]
 	_sfx_next = (_sfx_next + 1) % _sfx_players.size()
 	return player
-
 
 # ---------- Carregamento e loop ----------
 func _get_stream(path: String) -> AudioStream:
@@ -322,7 +308,6 @@ func _get_stream(path: String) -> AudioStream:
 	_stream_cache[path] = stream
 	return stream
 
-
 # Liga o loop pelo código (assim não depende da aba Import de cada arquivo)
 func _set_loop(stream: AudioStream) -> void:
 	if stream is AudioStreamOggVorbis:
@@ -334,7 +319,6 @@ func _set_loop(stream: AudioStream) -> void:
 		stream.loop_begin = 0
 		stream.loop_end = _wav_sample_count(stream)
 
-
 func _wav_sample_count(stream: AudioStreamWAV) -> int:
 	var channels: int = 2 if stream.stereo else 1
 	var bytes_per_sample: float = 2.0
@@ -344,7 +328,6 @@ func _wav_sample_count(stream: AudioStreamWAV) -> int:
 		bytes_per_sample = 0.5
 	return int(stream.data.size() / (bytes_per_sample * channels))
 
-
 func _bus_or_master(bus_name: String) -> String:
 	if AudioServer.get_bus_index(bus_name) == -1:
 		push_warning("AudioManager: bus '" + bus_name + "' não existe, usando Master")
@@ -352,7 +335,7 @@ func _bus_or_master(bus_name: String) -> String:
 	return bus_name
 
 # =====================================================================
-#  INTERFACE (sons de menu)
+#  8. SONS DE INTERFACE (menus)
 # =====================================================================
 
 func _input(event: InputEvent) -> void:
@@ -366,12 +349,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and get_viewport().gui_get_focus_owner() != null:
 		play_sfx("ui_cancel")
 
-
 func _connect_ui_sounds_in(node: Node) -> void:
 	_on_node_added(node)
 	for child in node.get_children():
 		_connect_ui_sounds_in(child)
-
 
 func _on_node_added(node: Node) -> void:
 	if not (node is BaseButton or node is Slider):
@@ -383,12 +364,10 @@ func _on_node_added(node: Node) -> void:
 	if node is BaseButton:
 		node.pressed.connect(_on_ui_pressed)
 
-
 func _on_ui_focus_entered() -> void:
 	# Quando o menu abre e o foco vai sozinho para o primeiro botão, fica em silêncio
 	if Time.get_ticks_msec() - _last_nav_input_msec < UI_FOCUS_WINDOW_MSEC:
 		play_sfx("ui_navigation")
-
 
 func _on_ui_pressed() -> void:
 	play_sfx("ui_confirm")

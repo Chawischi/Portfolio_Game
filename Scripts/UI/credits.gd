@@ -1,9 +1,31 @@
 extends Control
 
-@export_file("*.tscn") var main_menu_scene: String = "res://Scenes/UIs/main_menu.tscn"
-@export var scroll_speed: float = 18.0
-@export var fast_multiplier: float = 4.0
+# =====================================================================
+#  CRÉDITOS
+#  Texto que rola de baixo para cima. Apertar o botão de confirmar
+#  (ui_accept) pula os créditos. Ao terminar o texto, espera 1,5 s e
+#  volta ao menu principal. Desliga a pausa enquanto está aberta.
+#
+#  Para editar os créditos, mude CREDITS_TEXT (cada linha em branco
+#  vira um espaço no texto).
+#
+#  Índice:
+#    1. Constantes e variáveis
+#    2. Ciclo do jogo
+#    3. Saída
+# =====================================================================
 
+
+# =====================================================================
+#  1. CONSTANTES E VARIÁVEIS
+# =====================================================================
+
+# ---------- Configurações (Inspector) ----------
+@export_file("*.tscn") var main_menu_scene: String = "res://Scenes/UIs/main_menu.tscn"
+@export var scroll_speed: float = 18.0		# Pixels por segundo
+@export var fast_multiplier: float = 4.0	# Velocidade ao segurar o botão
+
+# ---------- Constantes ----------
 const SCREEN_W: float = 320.0
 const SCREEN_H: float = 180.0
 const TEXT_W: float = 260.0
@@ -116,38 +138,55 @@ Código sob licença MIT
 
 
 Agradecimentos
-[galera que testou, talvez familia e professores, ainda em haver]
+Diogo Vinícius Winck
+Claudinei Dias
+Diego Sauter Possamai
+Paulo Rogerio Pieres Manseira
+Eric Gabriel Caetano
+Gabriel Felipe Alves Bandoch
+João Guilherme Tamanini Dalmarco
+Lucas Grimes Ceola
+Pedro Henrique Vitoreti
 
 
 Obrigado por jogar.
 """
 
+# ---------- Nós ----------
 @onready var credits_label: Label = $CreditsLabel
 @onready var hint_label: Label = $HintLabel
 
+# ---------- Estado ----------
 var _tween: Tween
 var _leaving: bool = false
+
+
+# =====================================================================
+#  2. CICLO DO JOGO
+# =====================================================================
 
 func _ready() -> void:
 	GameManager.can_pause = false
 	hint_label.text = InputLabels.resolve("Pular: {key:ui_accept} / {pad:ui_accept}")
 	hint_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 4)
-	
+
 	credits_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	credits_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	credits_label.custom_minimum_size.x = TEXT_W
 	credits_label.text = CREDITS_TEXT
 	credits_label.position = Vector2((SCREEN_W - TEXT_W) / 2.0, SCREEN_H)
-	
+
+	# Espera um frame para o Label calcular a altura real do texto
 	await get_tree().process_frame
 	credits_label.reset_size()
-	
+
+	# O texto começa abaixo da tela e sobe até sair por cima
 	var distance: float = SCREEN_H + credits_label.size.y
 	_tween = create_tween()
 	_tween.tween_property(credits_label, "position:y", -credits_label.size.y, distance / scroll_speed)
 	_tween.tween_interval(1.5)
 	_tween.tween_callback(_leave)
-	
+
 func _process(_delta: float) -> void:
 	if _tween and _tween.is_valid():
 		var fast: bool = Input.is_action_pressed("ui_accept")
@@ -157,7 +196,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		get_viewport().set_input_as_handled()
 		_leave()
-		
+
+
+# =====================================================================
+#  3. SAÍDA
+# =====================================================================
+
 func _leave() -> void:
 	if _leaving:
 		return
@@ -165,8 +209,8 @@ func _leave() -> void:
 	if _tween:
 		_tween.kill()
 	GameManager.can_pause = true
-	
+
 	if main_menu_scene.is_empty():
-		push_error("Credits: main_menu_scene não foi preenchido no Inpector")
+		push_error("Credits: main_menu_scene não foi preenchido no Inspector")
 		return
 	get_tree().change_scene_to_file(main_menu_scene)

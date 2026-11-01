@@ -1,5 +1,14 @@
 extends Area2D
 
+# =====================================================================
+#  MARKER DE RESPAWN
+#  Área que, quando o jogador entra, define qual Marker do trecho passa
+#  a ser o ponto de respawn (via orquestrador). A conexão de
+#  body_entered é feita no _ready, por código.
+#
+#  Exportada: respawn_marker_name (padrão "Marker_Respawn")
+# =====================================================================
+
 @export var respawn_marker_name: String = "Marker_Respawn"
 
 func _ready() -> void:
