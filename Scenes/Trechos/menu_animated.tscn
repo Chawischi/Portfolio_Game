@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://xmlaig8rqpe4"]
+
+[ext_resource type="Script" uid="uid://r2hre6ppofth" path="res://Scenes/Trechos/print_menu.gd" id="1_lptuu"]
+[ext_resource type="Texture2D" uid="uid://cnny8lfhdtbca" path="res://Sprites/Menu/menu_bg.png" id="2_xpt1x"]
+[ext_resource type="SpriteFrames" uid="uid://bohxiaol41k3o" path="res://Sprites/Menu/new_sprite_frames.tres" id="3_t1uy3"]
+
+[node name="Node2D" type="Node2D" unique_id=489130394]
+script = ExtResource("1_lptuu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1345582761]
+position = Vector2(160, 90)
+texture = ExtResource("2_xpt1x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=370839104]
+position = Vector2(259, 93)
+sprite_frames = ExtResource("3_t1uy3")
+autoplay = "default"
+flip_h = true
