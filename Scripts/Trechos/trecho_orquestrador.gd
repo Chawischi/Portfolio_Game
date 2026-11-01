@@ -3,8 +3,8 @@ extends Node2D
 # =====================================================================
 #  ORQUESTRADOR DE TRECHOS
 #  Carrega um trecho (sub-cena) por vez dentro do nível, troca de trecho
-#  com a transição de tela, faz o respawn do player e aplica os limites
-#  de câmera de cada trecho.
+#  com a transição de tela, faz o respawn do player, aplica os limites
+#  de câmera e toca a música e o ambiente de cada trecho.
 #
 #  Cada trecho precisa ter: camera_limit_left/right/top/bottom,
 #  camera_offset_x, Marker_Respawn, Marker_Entrada_Esquerda e
@@ -16,7 +16,7 @@ extends Node2D
 #    2. Ciclo do jogo
 #    3. Troca de trecho
 #    4. Respawn
-#    5. Câmera
+#    5. Câmera e áudio
 # =====================================================================
 
 
@@ -51,10 +51,23 @@ var current_respawn_marker: String = DEFAULT_RESPAWN_MARKER
 
 func _ready() -> void:
 	add_to_group("orchestrator")
+
+	# Se veio do "Continuar", abre direto no trecho do checkpoint (só vale uma vez)
+	var pending: Dictionary = GameManager.pending_continue
+	GameManager.pending_continue = {}
+	if not pending.is_empty():
+		current_index = clampi(int(pending["trecho_index"]), 0, trecho_scenes.size() - 1)
+		current_respawn_marker = str(pending["respawn_marker"])
+
 	current_trecho_instance = trecho_scenes[current_index].instantiate()
 	add_child(current_trecho_instance)
 	_apply_camera_limits()
 	_apply_trecho_audio()
+
+	if not pending.is_empty():
+		player.global_position = pending["player_position"]
+		player.reset_movement_state()
+		camera.reset_smoothing()
 
 # =====================================================================
 #  3. TROCA DE TRECHO
@@ -67,14 +80,12 @@ func move_forward(marker_override: String = "") -> void:
 		current_index += 1
 		_load_trecho_at(current_index, "esquerda", marker_override)
 
-
 func move_backward(marker_override: String = "") -> void:
 	if is_transitioning:
 		return
 	if current_index > 0:
 		current_index -= 1
 		_load_trecho_at(current_index, "direita", marker_override)
-
 
 # Troca o trecho durante a transição de tela e posiciona o player no marker de entrada
 func _load_trecho_at(index: int, entry_side: String, marker_override: String = "") -> void:
@@ -102,7 +113,6 @@ func _load_trecho_at(index: int, entry_side: String, marker_override: String = "
 	player.unlock_movement()
 	await get_tree().create_timer(0.2).timeout
 	is_transitioning = false
-
 
 # =====================================================================
 #  4. RESPAWN
@@ -142,17 +152,15 @@ func respawn_player() -> void:
 	player.unlock_movement()
 	is_transitioning = false
 
-
 # Chamado por checkpoints para mudar onde o player renasce neste trecho
 func set_respawn_marker(marker_name: String) -> void:
 	if current_trecho_instance.has_node(marker_name):
 		current_respawn_marker = marker_name
 	else:
-		push_warning("Respawn marker não escontrado: " + marker_name)
-
+		push_warning("Respawn marker não encontrado: " + marker_name)
 
 # =====================================================================
-#  5. CÂMERA e Áudio
+#  5. CÂMERA E ÁUDIO
 # =====================================================================
 
 # Copia os limites do trecho atual para a câmera e liga o modo "swarm" se o trecho tiver
