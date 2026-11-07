@@ -59,6 +59,7 @@ var jumps_done: int = 0
 @export var momentum_duration: float = 0.08
 @export var max_dashes: int = 1
 @export var dash_input_window: float = 0.05
+@export var dash_cardinal_margin: float = 18.0		# Graus. Até esse desvio de um eixo, o analógico vira dash reto (menor = diagonal mais fácil)
 
 var dash_is_pending: bool = false
 var dash_pending_timer: float = 0.0
@@ -71,6 +72,9 @@ var cooldown_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.RIGHT		# guarda a direção do dash mesmo se soltar a tecla no meio do trajeto
 var momentum_timer: float = 0.0
 var dashes_left: int = 1
+
+var dash_pending_analog: bool = false		# O dash em espera foi apertado no controle?
+var last_input_is_gamepad: bool = false		# Última coisa apertada foi do controle (true) ou do teclado (false)?
 
 # ----- Rastro do Dash -----
 @export var afterimage_interval: float = 0.03
@@ -284,6 +288,15 @@ func _handle_jump_input() -> void:
 #  5. DASH
 # =====================================================================
 
+# Anota se o jogador está usando teclado ou controle
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed:
+		last_input_is_gamepad = false
+	elif event is InputEventJoypadButton and event.pressed:
+		last_input_is_gamepad = true
+	elif event is InputEventJoypadMotion and absf(event.axis_value) > 0.5:
+		last_input_is_gamepad = true
+
 # Recarrega o dash no chão ou numa parede escalável (nunca durante o dash)
 func _handle_dash_refill() -> void:
 	if is_dashing:
@@ -293,30 +306,35 @@ func _handle_dash_refill() -> void:
 	if is_on_floor() or on_wall:
 		dashes_left = max_dashes
 
-
 func _handle_dash_input() -> void:
 	# 1) Apertou o dash: abre uma janela curta para completar a diagonal
 	if Input.is_action_just_pressed("dash") and cooldown_timer <= 0.0 and not is_dashing and not is_climbing and not dash_is_pending and dashes_left > 0:
 		dash_is_pending = true
 		dash_pending_timer = dash_input_window
 		dash_pending_vector = Vector2.ZERO
+		dash_pending_analog = last_input_is_gamepad
 
 	if not dash_is_pending:
 		return
 
-	# 2) Durante a janela, guarda a direção mais forte (a diagonal vence a reta)
+	# 2) Durante a janela, guarda a direção
 	var input_vector: Vector2 = Vector2(
 		Input.get_axis("move_left", "move_right"),
 		Input.get_axis("move_up", "move_down")
 	)
-	if input_vector != Vector2.ZERO and input_vector.length() >= dash_pending_vector.length():
-		dash_pending_vector = input_vector
+	if dash_pending_analog:
+		# Controle: vale a direção mais recente (o analógico leva alguns frames para chegar onde o jogador quer)
+		if input_vector.length() >= 0.5:
+			dash_pending_vector = input_vector
+	else:
+		# Teclado: a diagonal (duas teclas) vence a reta
+		if input_vector != Vector2.ZERO and input_vector.length() >= dash_pending_vector.length():
+			dash_pending_vector = input_vector
 
 	# 3) A janela acabou: o dash começa com a direção guardada
 	dash_pending_timer -= get_physics_process_delta_time()
 	if dash_pending_timer <= 0.0:
 		_start_dash()
-
 
 func _start_dash() -> void:
 	dash_is_pending = false
@@ -332,10 +350,31 @@ func _start_dash() -> void:
 
 
 # Trava a direção do dash nas 8 direções (cada 45 graus)
+#func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
+	#var angle: float = raw_direction.angle()
+	#var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
+	#var dir: Vector2 = Vector2.RIGHT.rotated(snapped_angle)
+	#if absf(dir.x) < 0.001:
+		#dir.x = 0.0
+	#if absf(dir.y) < 0.001:
+		#dir.y = 0.0
+	#return dir
+	
+# Trava a direção do dash em 8 direções. As retas aceitam um desvio de dash_cardinal_margin graus;
+# o resto vira diagonal. Com 22,5 as faixas ficam iguais; menos que isso facilita a diagonal.
 func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
-	var angle: float = raw_direction.angle()
-	var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
-	var dir: Vector2 = Vector2.RIGHT.rotated(snapped_angle)
+	var angle_deg: float = rad_to_deg(raw_direction.angle())
+
+	var nearest_axis: float = round(angle_deg / 90.0) * 90.0
+	var off_axis: float = absf(angle_deg - nearest_axis)
+
+	var snapped_deg: float
+	if off_axis <= dash_cardinal_margin:
+		snapped_deg = nearest_axis
+	else:
+		snapped_deg = floor(angle_deg / 90.0) * 90.0 + 45.0
+
+	var dir: Vector2 = Vector2.RIGHT.rotated(deg_to_rad(snapped_deg))
 	if absf(dir.x) < 0.001:
 		dir.x = 0.0
 	if absf(dir.y) < 0.001:
