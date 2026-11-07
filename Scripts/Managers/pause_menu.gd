@@ -79,7 +79,7 @@ func _toggle_pause() -> void:
 		_pause()
 
 func _pause() -> void:
-	if not GameManager.can_pause:
+	if not GameManager.can_pause or GameManager.is_changing_level:
 		return
 
 	get_tree().paused = true
@@ -112,6 +112,8 @@ func _on_options_button_pressed() -> void:
 	OptionsMenu.open()
 
 func _on_main_menu_pressed() -> void:
+	if GameManager.is_changing_level:
+		return
 	# Guarda flores seguras, mortes e tempo antes de sair. A posição continua sendo o último banco.
 	GameManager.save_game()
 	get_tree().paused = false
