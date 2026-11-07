@@ -17,21 +17,37 @@ extends Node
 # =====================================================================
 
 const SAVE_PATH: String = "user://save_game.json"
+const TEMP_PATH: String = "user://save_game.json.tmp"	# Escreve aqui primeiro; só vira o save depois de gravado por inteiro
 const SAVE_VERSION: int = 1		# Aumente se mudar o formato do save
 
 func has_save() -> bool:
 	return not load_progress().is_empty()
 
+# Grava num arquivo temporário e só depois troca pelo save de verdade. Assim, se o jogo
+# fechar no meio da gravação, o save anterior continua inteiro.
 func save_progress(data: Dictionary) -> bool:
 	data["version"] = SAVE_VERSION
 
-	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(TEMP_PATH, FileAccess.WRITE)
 	if file == null:
 		push_warning("SaveManager: não foi possível salvar (erro %d)" % FileAccess.get_open_error())
 		return false
 
 	file.store_string(JSON.stringify(data, "\t"))
+	var write_error: Error = file.get_error()
 	file.close()
+
+	if write_error != OK:
+		push_warning("SaveManager: erro ao gravar o save (erro %d)" % write_error)
+		DirAccess.remove_absolute(TEMP_PATH)
+		return false
+
+	var rename_error: Error = DirAccess.rename_absolute(TEMP_PATH, SAVE_PATH)
+	if rename_error != OK:
+		push_warning("SaveManager: não foi possível finalizar o save (erro %d)" % rename_error)
+		DirAccess.remove_absolute(TEMP_PATH)
+		return false
+
 	return true
 
 # Devolve um dicionário vazio se não houver save, se o arquivo estiver corrompido
@@ -56,3 +72,5 @@ func load_progress() -> Dictionary:
 func delete_progress() -> void:
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(SAVE_PATH)
+	if FileAccess.file_exists(TEMP_PATH):
+		DirAccess.remove_absolute(TEMP_PATH)
