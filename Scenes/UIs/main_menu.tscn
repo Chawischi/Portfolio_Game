@@ -25,6 +25,7 @@ size_flags_vertical = 4
 script = ExtResource("1_bsjfe")
 
 [node name="Node2D" parent="." unique_id=489130394 instance=ExtResource("2_am3qo")]
+script = null
 
 [node name="Background" type="TextureRect" parent="." unique_id=1447809890]
 visible = false
