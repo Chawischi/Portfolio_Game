@@ -167,6 +167,7 @@ var _leaving: bool = false
 
 func _ready() -> void:
 	GameManager.can_pause = false
+	AudioManager.play_music("final_cume")
 	hint_label.text = InputLabels.resolve("Pular: {key:ui_accept} / {pad:ui_accept}")
 	hint_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 4)
 
