@@ -206,6 +206,11 @@ func continue_game() -> bool:
 	HUD.update_death_counter()
 	return true
 
+# Fechar a janela direto também salva mortes e tempo (só com uma partida em andamento)
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and timer_running:
+		save_game()
+
 # =====================================================================
 #  4. FLORES
 # =====================================================================
@@ -335,3 +340,4 @@ func format_play_time() -> String:
 	if hours > 0:
 		return "%d:%02d:%02d" % [hours, minutes, seconds]
 	return "%02d:%02d" % [minutes, seconds]
+	
