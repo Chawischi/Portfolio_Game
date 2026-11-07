@@ -174,15 +174,18 @@ func _dict_to_event(entry: Dictionary) -> InputEvent:
 	match str(entry.get("t", "")):
 		"key":
 			var key_event := InputEventKey.new()
+			key_event.device = -1
 			key_event.physical_keycode = int(entry.get("phys", 0)) as Key
 			key_event.keycode = int(entry.get("key", 0)) as Key
 			return key_event
 		"btn":
 			var button_event := InputEventJoypadButton.new()
+			button_event.device = -1
 			button_event.button_index = int(entry.get("index", 0)) as JoyButton
 			return button_event
 		"axis":
 			var axis_event := InputEventJoypadMotion.new()
+			axis_event.device = -1
 			axis_event.axis = int(entry.get("axis", 0)) as JoyAxis
 			axis_event.axis_value = float(entry.get("value", 1.0))
 			return axis_event

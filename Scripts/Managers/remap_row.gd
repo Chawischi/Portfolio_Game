@@ -146,6 +146,8 @@ func _input(event: InputEvent) -> void:
 
 # Troca o evento da ação (só do dispositivo que está sendo remapeado)
 func _rebind(new_event: InputEvent) -> void:
+	new_event = new_event.duplicate()
+	new_event.device = -1
 	var action: String = listening_entry["action"]
 	var device: String = listening_entry["device"]
 	var button: Button = listening_entry["button"]
