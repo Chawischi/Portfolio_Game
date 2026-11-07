@@ -89,6 +89,7 @@ const SILENT_DB: float = -60.0
 const DEFAULT_MUSIC_FADE: float = 1.5
 const DEFAULT_AMBIENT_FADE: float = 2.0
 const UI_FOCUS_WINDOW_MSEC: int = 150		# Foco logo depois de uma tecla de navegação = som de navegação
+const UI_SLIDER_INTERVAL_MSEC: int = 60		# Segurar a tecla muda o slider rápido: o som toca no máximo a cada 60 ms
 
 # ---------- Estado ----------
 var _sfx_players: Array[AudioStreamPlayer] = []
@@ -97,6 +98,7 @@ var _layers: Dictionary = {}			# "music" e "ambient": {players, active, path, tw
 var _stream_cache: Dictionary = {}
 var _music_request: int = 0
 var _last_nav_input_msec: int = -1000
+var _last_slider_msec: int = -1000
 
 # =====================================================================
 #  3. CICLO DO JOGO
@@ -363,6 +365,8 @@ func _on_node_added(node: Node) -> void:
 	node.focus_entered.connect(_on_ui_focus_entered)
 	if node is BaseButton:
 		node.pressed.connect(_on_ui_pressed)
+	if node is Slider:
+		node.value_changed.connect(_on_slider_value_changed.bind(node))
 
 func _on_ui_focus_entered() -> void:
 	# Quando o menu abre e o foco vai sozinho para o primeiro botão, fica em silêncio
@@ -371,3 +375,13 @@ func _on_ui_focus_entered() -> void:
 
 func _on_ui_pressed() -> void:
 	play_sfx("ui_confirm")
+
+func _on_slider_value_changed(_value: float, slider: Slider) -> void:
+	# Só toca quando o jogador mexe (o menu também muda o valor sozinho ao abrir, e aí fica em silêncio)
+	if not slider.is_visible_in_tree() or not slider.has_focus():
+		return
+	var now: int = Time.get_ticks_msec()
+	if now - _last_slider_msec < UI_SLIDER_INTERVAL_MSEC:
+		return
+	_last_slider_msec = now
+	play_sfx("ui_navigation")
