@@ -718,7 +718,7 @@ spike_texture = ExtResource("6_0ipbf")
 position = Vector2(80, 480)
 patrol_point_a = NodePath("../Ponto_A")
 patrol_point_b = NodePath("../Ponto_B")
-patrol_speed = 50.0
+patrol_speed = 55.0
 chase_speed = 80.0
 chase_duration = 1.0
 chase_cooldown = 0.7
@@ -728,7 +728,7 @@ attack_zone = NodePath("../BatArea")
 position = Vector2(88, 360)
 patrol_point_a = NodePath("../Ponto_A2")
 patrol_point_b = NodePath("../Ponto_B2")
-patrol_speed = 50.0
+patrol_speed = 55.0
 chase_speed = 80.0
 chase_duration = 1.0
 chase_cooldown = 0.7
@@ -738,7 +738,7 @@ attack_zone = NodePath("../BatArea2")
 position = Vector2(240, 392)
 patrol_point_a = NodePath("../Ponto_A3")
 patrol_point_b = NodePath("../Ponto_B3")
-patrol_speed = 50.0
+patrol_speed = 55.0
 chase_speed = 80.0
 chase_duration = 1.0
 chase_cooldown = 0.7
@@ -772,7 +772,7 @@ position = Vector2(40, 360)
 position = Vector2(200, 392)
 
 [node name="Ponto_B" type="Marker2D" parent="." unique_id=2089453460]
-position = Vector2(128, 480)
+position = Vector2(152, 480)
 
 [node name="Ponto_B2" type="Marker2D" parent="." unique_id=1732896725]
 position = Vector2(128, 360)
@@ -812,12 +812,6 @@ fall_gravity = 1200.0
 
 [node name="Stalagmite6" parent="." unique_id=762871152 instance=ExtResource("9_0ipbf")]
 position = Vector2(120, 16)
-proximity_size = Vector2(40, 48)
-shake_duration = 0.2
-fall_gravity = 1200.0
-
-[node name="Stalagmite2" parent="." unique_id=1280974040 instance=ExtResource("9_0ipbf")]
-position = Vector2(64, 440)
 proximity_size = Vector2(40, 48)
 shake_duration = 0.2
 fall_gravity = 1200.0
