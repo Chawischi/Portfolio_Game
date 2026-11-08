@@ -5,17 +5,23 @@
 |---|---|
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
-| **Status** | Pesquisa / Prototipagem |
-| **Versão** | v0.9 |
-| **Última atualização** | 14/06/2026 |
+| **Status** | Versão final |
+| **Versão** | Jogo v1.0.0 · GDD v1.3 |
+| **Última atualização** | 08/11/2026 |
 
 ---
 
 > *"A última escalada prometida."*
 
-**One Last Climb** é um jogo de plataforma 2D desenvolvido como projeto de portfólio acadêmico. O jogador controla **Eugene**, um velhinho teimoso e determinado que decide escalar uma montanha inteira para cumprir a última promessa que fez à sua esposa: espalhar as cinzas dela no cume.
+**One Last Climb** é um jogo de plataforma 2D desenvolvido como projeto de portfólio acadêmico (TCC). O jogador controla **Eugene**, um velhinho teimoso e determinado que decide escalar uma montanha inteira para cumprir a última promessa que fez à sua esposa: espalhar as cinzas dela no cume.
 
 Como o caminho oficial está bloqueado, Eugene não tem escolha — terá que ir pelo de dentro. Por uma mina escura, claustrofóbica e cheia de obstáculos.
+
+---
+
+## ▶️ Jogue agora
+
+**Download (Windows e Linux):** [f3lic.itch.io/one-last-climb](https://f3lic.itch.io/one-last-climb)
 
 ---
 
@@ -25,13 +31,15 @@ O jogo é **divertido primeiro**. Pular, dar dash, fazer wall jump e escalar par
 
 O jogador começa achando que está jogando uma aventura leve de um velhinho cabeçudo. Só lá na frente percebe que estava sendo partido aos poucos.
 
+Existem **dois finais**, e o que o jogador vê depende das flores que coletou pelo caminho.
+
 | | |
 |---|---|
 | **Gênero** | Plataforma 2D / Aventura / Narrativo |
-| **Engine** | Godot 4.x |
-| **Plataformas** | PC (Windows) · Web (itch.io) |
-| **Controles** | Teclado |
-| **Status** | Prototipagem |
+| **Engine** | Godot 4.6.1 |
+| **Plataformas** | PC (Windows e Linux) · download via itch.io |
+| **Controles** | Teclado e Controle |
+| **Status** | Versão final (v1.0.0) |
 
 ---
 
@@ -56,9 +64,24 @@ Cada fase segue uma estrutura de três partes: **apresenta** a mecânica, **mist
 Todas as habilidades estão disponíveis desde o início — é o level design que ensina quando e como usá-las:
 
 - **Pulo e pulo duplo**
-- **Dash** — impulso horizontal rápido
+- **Dash** — impulso omnidirecional (8 direções)
 - **Wall jump** — saltar entre paredes
-- **Escalada** — subir superfícies verticais
+- **Escalada** — subir superfícies verticais, com resistência limitada
+
+---
+
+## ⌨️ Controles
+
+| Ação | Teclado | Controle |
+|---|---|---|
+| Mover | Setas | Analógico esquerdo / D-Pad |
+| Pular / Pulo duplo | C | Botão A (Xbox) / Cross (PlayStation) |
+| Dash | X + direcional | Gatilho direito, RT (R2 no PlayStation) + direcional |
+| Escalada | Z | Gatilho esquerdo, LT (L2 no PlayStation) |
+| Interagir | E | Botão A |
+| Pausar | Esc | Start / Options |
+
+Todas as ações podem ser remapeadas em Opções → Controles. No controle, o botão B é reservado para voltar e cancelar nos menus.
 
 ---
 
@@ -88,11 +111,11 @@ Pixel art com resolução base **320×180**, ampliada em múltiplos inteiros. A 
 
 | Categoria | Ferramenta |
 |---|---|
-| Engine | Godot 4.x |
+| Engine | Godot 4.6.1 |
 | Linguagem | GDScript |
 | Arte | Aseprite |
 | Versionamento | Git + GitHub |
-| Build Web | WebGL → itch.io |
+| Distribuição | Build para Windows e Linux → itch.io |
 
 ---
 
@@ -100,11 +123,13 @@ Pixel art com resolução base **320×180**, ampliada em múltiplos inteiros. A 
 
 ```
 📦 Portfolio_Game
-├── 📂 Build/        → builds exportados
-├── 📂 Docs/         → GDD e documentação
+├── 📂 Docs/         → GDD, mockups, wireframes e diagramas
 ├── 📂 Scenes/       → cenas do Godot
 ├── 📂 Scripts/      → scripts GDScript
-└── 📂 Sprites/      → assets visuais
+├── 📂 Sprites/      → assets visuais (pixel art)
+├── 📂 Audio/        → músicas e efeitos sonoros
+├── 📂 Fonts/        → fonte pixel art customizada
+└── 📄 project.godot → arquivo de projeto do Godot
 ```
 
 ---
@@ -113,7 +138,7 @@ Pixel art com resolução base **320×180**, ampliada em múltiplos inteiros. A 
 
 O Game Design Document completo está disponível em [`Docs/`](./Docs/).
 
-A documentação detalhada do projeto (design, mecânicas, arquitetura e setup) está na [Wiki](https://github.com/Chawischi/Portfolio_Game/wiki).
+A documentação detalhada do projeto (design, mecânicas, arquitetura, decisões, playtest e setup) está na [Wiki](https://github.com/Chawischi/Portfolio_Game/wiki).
 
 ---
 
@@ -127,5 +152,5 @@ felipe.chawischi@catolica.edu
 ## 📄 Licença
 
 Código sob licença **MIT**.
-Assets de áudio externos sob **CC-BY** — autores creditados na tela de créditos do jogo.
-Assets visuais externos sob **CC0**.
+Sprites e tileset criados pelo autor.
+Áudio de terceiros sob **CC0** ou **CC-BY** — autores creditados na tela de créditos do jogo e na página de [Créditos e Licenças](https://github.com/Chawischi/Portfolio_Game/wiki/Cr%C3%A9ditos-e-Licen%C3%A7as) da Wiki.
