@@ -1,23 +1,56 @@
 extends StaticBody2D
 
+# =====================================================================
+#  PLATAFORMA QUE QUEBRA
+#  Quando o Eugene pisa em cima (no chão dela), treme e depois quebra e
+#  cai. Fica sumida por gone_duration segundos e volta (só volta se o
+#  jogador não estiver dentro do espaço dela). Não dá para escalar nela
+#  (grupo "no_climb").
+#
+#  Estados: STABLE -> SHAKING -> BREAKING -> GONE -> RETURNING -> STABLE
+#
+#  Nós filhos: AnimatedSprite2D (stable/break/return), GhostSprite
+#  (silhueta "ghost" enquanto está quebrada), CollisionShape2D,
+#  TopDetector (Area2D em cima, detecta o pisão) e OverlapCheck
+#  (Area2D no corpo todo, impede de voltar com o jogador dentro).
+#
+#  Índice:
+#    1. Constantes e variáveis
+#    2. Ciclo do jogo
+#    3. Apoio e animações
+# =====================================================================
+
+
+# =====================================================================
+#  1. CONSTANTES E VARIÁVEIS
+# =====================================================================
+
 enum State { STABLE, SHAKING, BREAKING, GONE, RETURNING }
-var state: State = State.STABLE
 
-@export var shake_duration: float = 0.4
-@export var shake_intensity: float = 1.0
-@export var gone_duration: float = 2.5
-@export var fall_gravity: float = 600.0
+# ---------- Configurações (Inspector) ----------
+@export var shake_duration: float = 0.4		# Tempo tremendo antes de quebrar
+@export var shake_intensity: float = 1.0	# Quanto treme para os lados (px)
+@export var gone_duration: float = 2.5		# Tempo sumida antes de voltar
+@export var fall_gravity: float = 600.0		# Gravidade dos pedaços caindo
 
+# ---------- Nós ----------
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var ghost_sprite: AnimatedSprite2D = $GhostSprite
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var top_detector: Area2D = $TopDetector
 @onready var overlap_check: Area2D = $OverlapCheck
 
+# ---------- Estado ----------
+var state: State = State.STABLE
 var original_position: Vector2
 var sprite_origin: Vector2
 var timer: float = 0.0
 var fall_velocity: float = 0.0
+
+
+# =====================================================================
+#  2. CICLO DO JOGO
+# =====================================================================
 
 func _ready() -> void:
 	add_to_group("no_climb")
@@ -49,6 +82,7 @@ func _physics_process(delta: float) -> void:
 				ghost_sprite.play("ghost")
 				sprite.play("break")
 
+		# Só o sprite cai; o corpo (já sem colisão) fica no lugar
 		State.BREAKING:
 			fall_velocity += fall_gravity * delta
 			sprite.position.y += fall_velocity * delta
@@ -61,6 +95,10 @@ func _physics_process(delta: float) -> void:
 				ghost_sprite.visible = false
 				sprite.visible = true
 				sprite.play("return")
+
+# =====================================================================
+#  3. APOIO E ANIMAÇÕES
+# =====================================================================
 
 func _player_inside() -> bool:
 	for body in overlap_check.get_overlapping_bodies():

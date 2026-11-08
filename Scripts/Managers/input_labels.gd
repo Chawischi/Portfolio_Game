@@ -1,5 +1,18 @@
 extends Node
 
+# =====================================================================
+#  INPUT LABELS (Autoload)
+#  Transforma uma ação do InputMap no nome da tecla/botão atual, para
+#  mostrar nos textos e tutoriais (acompanha o remapeamento do jogador).
+#
+#  Como usar:
+#    InputLabels.get_keyboard_label("jump")      -> "Space"
+#    InputLabels.get_gamepad_label("jump")       -> "A"
+#    InputLabels.get_action_label("jump")        -> "Space / A"
+#    InputLabels.resolve("Aperte {key:jump}")    -> "Aperte Space"
+#  (no resolve, {key:ação} é o teclado e {pad:ação} é o controle)
+# =====================================================================
+
 const GAMEPAD_BUTTON_NAMES: Dictionary = {
 	JOY_BUTTON_A: "A",
 	JOY_BUTTON_B: "B",
@@ -17,14 +30,14 @@ var _regex := RegEx.new()
 
 func _ready() -> void:
 	_regex.compile("\\{(pad|key):(\\w+)\\}")
-	
+
 func get_keyboard_label(action_name: String) -> String:
 	for event in InputMap.action_get_events(action_name):
 		if event is InputEventKey:
 			var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
 			return OS.get_keycode_string(code)
 	return "?"
-		
+
 func get_gamepad_label(action_name: String) -> String:
 	for event in InputMap.action_get_events(action_name):
 		if event is InputEventJoypadButton:
@@ -35,11 +48,11 @@ func get_gamepad_label(action_name: String) -> String:
 			elif event.axis == JOY_AXIS_TRIGGER_RIGHT:
 				return "RT"
 	return "?"
-			
 
 func get_action_label(action_name: String) -> String:
 	return get_keyboard_label(action_name) + " / " + get_gamepad_label(action_name)
-	
+
+# Troca {key:ação} e {pad:ação} no texto pelos nomes atuais da tecla/botão
 func resolve(template: String) -> String:
 	var result: String = template
 	for m in _regex.search_all(template):

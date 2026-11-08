@@ -1,8 +1,16 @@
 extends Sprite2D
 
-@export var levels: Array[float] = [1.0, 0.6, 0.3]
-@export var min_time: float = 0.4
-@export var max_time: float = 1.6
+# =====================================================================
+#  Brilho da Estrela
+#  Muda a opacidade do sprite aleatoriamente entre os valores de
+#  `levels`, a cada tempo sorteado entre min_time e max_time. Serve para
+#  estrelas, luzes, brasas etc. Começa com um atraso aleatório para
+#  vários sprites na cena não piscarem todos juntos.
+# =====================================================================
+
+@export var levels: Array[float] = [1.0, 0.6, 0.3]		# Opacidades possíveis
+@export var min_time: float = 0.4						# Tempo mínimo em cada opacidade
+@export var max_time: float = 1.6						# Tempo máximo em cada opacidade
 
 func _ready() -> void:
 	_blink_loop()

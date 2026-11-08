@@ -59,6 +59,7 @@ var jumps_done: int = 0
 @export var momentum_duration: float = 0.08
 @export var max_dashes: int = 1
 @export var dash_input_window: float = 0.05
+@export var dash_cardinal_margin: float = 19.0		# Graus. Até esse desvio de um eixo, o analógico vira dash reto (menor = diagonal mais fácil)
 
 var dash_is_pending: bool = false
 var dash_pending_timer: float = 0.0
@@ -71,6 +72,9 @@ var cooldown_timer: float = 0.0
 var dash_direction: Vector2 = Vector2.RIGHT		# guarda a direção do dash mesmo se soltar a tecla no meio do trajeto
 var momentum_timer: float = 0.0
 var dashes_left: int = 1
+
+var dash_pending_analog: bool = false		# O dash em espera foi apertado no controle?
+var last_input_is_gamepad: bool = false		# Última coisa apertada foi do controle (true) ou do teclado (false)?
 
 # ----- Rastro do Dash -----
 @export var afterimage_interval: float = 0.03
@@ -100,9 +104,14 @@ var is_climb_jumping: bool = false
 @export var wall_jump_velocity: float = -170.0			# Impulso vertical do wall jump
 @export var wall_jump_push_velocity: float = 100.0		# Empurrão horizontal ao sair da parede
 @export var wall_jump_lockout: float = 0.15				# Tempo sem poder regrudar/perder controle horizontal
+@export var wall_coyote_time: float = 0.1				# Tempo depois de encostar na parede em que o wall jump ainda vale
+@export var wall_check_distance: float = 2.0			# Distância (px) para detectar a parede ao lado, mesmo sem empurrar contra ela
+@export var wall_sprite_offset_left: float = 0.0		# Ajuste do sprite (px) ao agarrar/deslizar na parede da ESQUERDA (+ = para a direita)
+@export var wall_sprite_offset_right: float = -2.0		# Ajuste do sprite (px) ao agarrar/deslizar na parede da DIREITA (- = para a esquerda)
 
 var is_wall_sliding: bool = false
 var wall_jump_lockout_timer: float = 0.0
+var wall_coyote_timer: float = 0.0
 
 # ---------- Knockback ----------
 var knockback_vector: Vector2 = Vector2.ZERO
@@ -210,6 +219,7 @@ func _handle_timers(delta: float) -> void:
 	# ele terá esse pequeno delay para realizar alguma ação ainda (provavelmente pulo)
 	if is_on_floor():
 		coyote_timer = coyote_time
+		wall_coyote_timer = 0.0
 		climb_stamina = min(climb_stamina + climb_stamina_regen_rate * delta, climb_stamina_max)
 		climb_lockout_timer = 0.0
 		jumps_done = 0
@@ -224,6 +234,7 @@ func _handle_timers(delta: float) -> void:
 	cooldown_timer -= delta
 	climb_lockout_timer -= delta
 	wall_jump_lockout_timer -= delta
+	wall_coyote_timer -= delta
 	momentum_timer -= delta
 
 
@@ -277,15 +288,23 @@ func _handle_jump_input() -> void:
 #  5. DASH
 # =====================================================================
 
+# Anota se o jogador está usando teclado ou controle
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed:
+		last_input_is_gamepad = false
+	elif event is InputEventJoypadButton and event.pressed:
+		last_input_is_gamepad = true
+	elif event is InputEventJoypadMotion and absf(event.axis_value) > 0.5:
+		last_input_is_gamepad = true
+
 # Recarrega o dash no chão ou numa parede escalável (nunca durante o dash)
 func _handle_dash_refill() -> void:
 	if is_dashing:
 		return
 
-	var on_wall: bool = is_on_wall() and _is_touching_climbable_wall()
+	var on_wall: bool = _get_climbable_wall_dir() != 0.0
 	if is_on_floor() or on_wall:
 		dashes_left = max_dashes
-
 
 func _handle_dash_input() -> void:
 	# 1) Apertou o dash: abre uma janela curta para completar a diagonal
@@ -293,23 +312,29 @@ func _handle_dash_input() -> void:
 		dash_is_pending = true
 		dash_pending_timer = dash_input_window
 		dash_pending_vector = Vector2.ZERO
+		dash_pending_analog = last_input_is_gamepad
 
 	if not dash_is_pending:
 		return
 
-	# 2) Durante a janela, guarda a direção mais forte (a diagonal vence a reta)
+	# 2) Durante a janela, guarda a direção
 	var input_vector: Vector2 = Vector2(
 		Input.get_axis("move_left", "move_right"),
 		Input.get_axis("move_up", "move_down")
 	)
-	if input_vector != Vector2.ZERO and input_vector.length() >= dash_pending_vector.length():
-		dash_pending_vector = input_vector
+	if dash_pending_analog:
+		# Controle: vale a direção mais recente (o analógico leva alguns frames para chegar onde o jogador quer)
+		if input_vector.length() >= 0.5:
+			dash_pending_vector = input_vector
+	else:
+		# Teclado: a diagonal (duas teclas) vence a reta
+		if input_vector != Vector2.ZERO and input_vector.length() >= dash_pending_vector.length():
+			dash_pending_vector = input_vector
 
 	# 3) A janela acabou: o dash começa com a direção guardada
 	dash_pending_timer -= get_physics_process_delta_time()
 	if dash_pending_timer <= 0.0:
 		_start_dash()
-
 
 func _start_dash() -> void:
 	dash_is_pending = false
@@ -325,10 +350,31 @@ func _start_dash() -> void:
 
 
 # Trava a direção do dash nas 8 direções (cada 45 graus)
+#func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
+	#var angle: float = raw_direction.angle()
+	#var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
+	#var dir: Vector2 = Vector2.RIGHT.rotated(snapped_angle)
+	#if absf(dir.x) < 0.001:
+		#dir.x = 0.0
+	#if absf(dir.y) < 0.001:
+		#dir.y = 0.0
+	#return dir
+	
+# Trava a direção do dash em 8 direções. As retas aceitam um desvio de dash_cardinal_margin graus;
+# o resto vira diagonal. Com 22,5 as faixas ficam iguais; menos que isso facilita a diagonal.
 func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
-	var angle: float = raw_direction.angle()
-	var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
-	var dir: Vector2 = Vector2.RIGHT.rotated(snapped_angle)
+	var angle_deg: float = rad_to_deg(raw_direction.angle())
+
+	var nearest_axis: float = round(angle_deg / 90.0) * 90.0
+	var off_axis: float = absf(angle_deg - nearest_axis)
+
+	var snapped_deg: float
+	if off_axis <= dash_cardinal_margin:
+		snapped_deg = nearest_axis
+	else:
+		snapped_deg = floor(angle_deg / 90.0) * 90.0 + 45.0
+
+	var dir: Vector2 = Vector2.RIGHT.rotated(deg_to_rad(snapped_deg))
 	if absf(dir.x) < 0.001:
 		dir.x = 0.0
 	if absf(dir.y) < 0.001:
@@ -385,10 +431,11 @@ func _spawn_afterimage() -> void:
 # =====================================================================
 
 func _handle_climb_input(delta: float) -> void:
-	var touching_wall: bool = _is_touching_climbable_wall() and not is_on_floor()
+	var wall_dir: float = _get_attached_wall_dir()
+	var touching_wall: bool = wall_dir != 0.0 and not is_on_floor()
 
 	if touching_wall:
-		wall_direction = -sign(get_wall_normal().x)
+		wall_direction = wall_dir
 
 	var wants_to_climb: bool = Input.is_action_pressed("climb")
 
@@ -423,6 +470,7 @@ func _climb_jump() -> void:
 
 
 func _handle_climb_movement() -> void:
+	_snap_to_wall(wall_direction)
 	climb_vertical_input = Input.get_axis("move_up", "move_down")
 	velocity.y = climb_vertical_input * climb_speed
 	velocity.x = 0.0
@@ -434,22 +482,33 @@ func _handle_climb_movement() -> void:
 # =====================================================================
 
 func _handle_wall_input(_delta: float) -> bool:
-	var touching_wall: bool = _is_touching_climbable_wall() and not is_on_floor()
+	var wall_dir: float = _get_attached_wall_dir()
+	var touching_wall: bool = wall_dir != 0.0 and not is_on_floor()
 
 	if touching_wall:
-		wall_direction = -sign(get_wall_normal().x)
+		wall_direction = wall_dir
+		wall_coyote_timer = wall_coyote_time   # lembra que encostou agora
 
 	is_wall_sliding = touching_wall and velocity.y > 0.0 and wall_jump_lockout_timer <= 0.0
 
 	if is_wall_sliding:
+		_snap_to_wall(wall_direction)
 		velocity.y = min(velocity.y, wall_slide_max_fall_speed)
 		sprite.flip_h = wall_direction < 0.0
 
-	if touching_wall and wall_jump_lockout_timer <= 0.0 and Input.is_action_just_pressed("jump"):
+	# Guarda o clique do pulo, igual ao pulo no chão
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = jump_buffer_time
+
+	# Wall jump vale se encostou há pouco (coyote) e o clique foi há pouco (buffer)
+	var can_wall_jump: bool = wall_coyote_timer > 0.0 and not is_on_floor() and wall_jump_lockout_timer <= 0.0
+	if can_wall_jump and jump_buffer_timer > 0.0:
 		velocity.y = wall_jump_velocity
 		velocity.x = -wall_direction * wall_jump_push_velocity
 		jumps_done = 0
 		wall_jump_lockout_timer = wall_jump_lockout
+		wall_coyote_timer = 0.0
+		jump_buffer_timer = 0.0
 		is_wall_sliding = false
 		AudioManager.play_sfx("jump")
 		return true
@@ -457,14 +516,38 @@ func _handle_wall_input(_delta: float) -> bool:
 	return false
 
 
+# Parede "de verdade" para grudar: ignora a que o Eugene está deixando para trás
+# (andar para fora da borda de um bloco não é grudar no lado dele)
+func _get_attached_wall_dir() -> float:
+	var wall_dir: float = _get_climbable_wall_dir()
+	if wall_dir != 0.0 and velocity.x * wall_dir < -1.0:
+		return 0.0
+	return wall_dir
+
+
+# Cola o Eugene na parede: o detector pega a parede a até wall_check_distance,
+# então sobra uma folguinha visível se ele não estiver empurrando contra ela
+func _snap_to_wall(dir: float) -> void:
+	if dir == 0.0:
+		return
+	move_and_collide(Vector2(dir * wall_check_distance, 0.0))
+
+
+# Detecta parede escalável ao lado do player, SEM depender de ele estar empurrando contra ela.
+# Retorna a direção da parede (-1 esquerda, 1 direita) ou 0.0 se não houver.
 # Usada por escalada, parede e recarga do dash (paredes do grupo "no_climb" não contam)
-func _is_touching_climbable_wall() -> bool:
-	for i in get_slide_collision_count():
-		var collision := get_slide_collision(i)
-		var collider = collision.get_collider()
-		if collider and collider is Node and not collider.is_in_group("no_climb"):
-			return true
-	return false
+func _get_climbable_wall_dir() -> float:
+	var input_dir: float = signf(Input.get_axis("move_left", "move_right"))
+	var first: float = input_dir if input_dir != 0.0 else (-1.0 if sprite.flip_h else 1.0)
+
+	for dir: float in [first, -first]:
+		var collision := KinematicCollision2D.new()
+		if test_move(global_transform, Vector2(dir * wall_check_distance, 0.0), collision):
+			var collider = collision.get_collider()
+			var is_wall: bool = absf(collision.get_normal().x) > 0.7
+			if is_wall and collider is Node and not collider.is_in_group("no_climb"):
+				return dir
+	return 0.0
 
 
 # =====================================================================
@@ -535,10 +618,15 @@ func _update_climb_visual_feedback() -> void:
 	else:
 		sprite.modulate = Color.WHITE
 
+	# Ajuste visual: o desenho encosta na parede de um jeito diferente em cada lado
+	var wall_offset: Vector2 = Vector2.ZERO
+	if is_climbing or is_wall_sliding:
+		wall_offset.x = wall_sprite_offset_right if wall_direction > 0.0 else wall_sprite_offset_left
+
 	if is_climbing and ratio < 0.3:
-		sprite.offset = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0))	# Tremor, avisando que vai cair
+		sprite.offset = wall_offset + Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0))	# Tremor, avisando que vai cair
 	else:
-		sprite.offset = Vector2.ZERO
+		sprite.offset = wall_offset
 
 
 # ---------- Animação com buquê ----------
@@ -647,6 +735,7 @@ func reset_movement_state(face_right: bool = true) -> void:
 	climb_stamina = climb_stamina_max
 	is_wall_sliding = false
 	wall_jump_lockout_timer = 0.0
+	wall_coyote_timer = 0.0
 	jumps_done = 0
 	coyote_timer = 0.0
 	jump_buffer_timer = 0.0

@@ -1,5 +1,33 @@
 extends Area2D
 
+
+# =====================================================================
+#  CENA FINAL (topo da montanha)
+#  Gatilho no cume. Quando o Eugene entra, a cena toca sozinha:
+#    1. Anda até o ponto do buquê (kneel_marker)
+#    2. Último monólogo (monologue_lines)
+#    3. Ajoelha e deixa o buquê no chão
+#    4. Espalha as cinzas
+#    5. A urna cai e quebra
+#    6. Anda até o banco (sit_marker), pula e senta
+#    7. Pausa, tela de sonho com a fala final e vai para a tela de final
+#
+#  Configurar no Inspector: kneel_marker, sit_marker, bouquet_on_ground,
+#  ashes, dialog_box_scene e os nomes das animações do Eugene.
+#  Desliga a pausa e esconde o HUD durante a cena.
+#
+#  Índice:
+#    1. Configurações (Inspector)
+#    2. Ciclo do jogo
+#    3. Sequência da cena
+#    4. Apoio (andar, sons, pulo)
+# =====================================================================
+
+
+# =====================================================================
+#  1. CONFIGURAÇÕES (Inspector)
+# =====================================================================
+
 @export_group("Marcadores")
 @export var kneel_marker: Marker2D
 @export var sit_marker: Marker2D
@@ -34,7 +62,14 @@ extends Area2D
 @export var balloon_side: String = "Centro"
 @export var final_dream_lines: Array[String] = ["Ad astra, meu amor.", "Dessa vez, subimos juntos."]
 
+
+# ---------- Estado ----------
 var _started: bool = false
+
+
+# =====================================================================
+#  2. CICLO DO JOGO
+# =====================================================================
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -49,6 +84,10 @@ func _on_body_entered(body: Node2D) -> void:
 	_started = true
 	set_deferred("monitoring", false)
 	_run(body as CharacterBody2D)
+
+# =====================================================================
+#  3. SEQUÊNCIA DA CENA
+# =====================================================================
 
 func _run(player: CharacterBody2D) -> void:
 	GameManager.can_pause = false
@@ -113,6 +152,10 @@ func _run(player: CharacterBody2D) -> void:
 	AudioManager.stop_ambient(2.0)
 	await get_tree().create_timer(end_pause).timeout
 	GameManager.go_to_ending_screen(0.0)
+
+# =====================================================================
+#  4. APOIO (andar, sons, pulo)
+# =====================================================================
 
 func _walk_to(player: CharacterBody2D, target_x: float) -> void:
 	var dir: float = sign(target_x - player.global_position.x)

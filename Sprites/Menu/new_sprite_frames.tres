@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bohxiaol41k3o"]
+
+[ext_resource type="Texture2D" uid="uid://skt31pff7gc7" path="res://Sprites/player/Eugene_Sprite_checkpoint_idle.png" id="1_3ovxg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tudg"]
+atlas = ExtResource("1_3ovxg")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xg5qr"]
+atlas = ExtResource("1_3ovxg")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8jxt"]
+atlas = ExtResource("1_3ovxg")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tudg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xg5qr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8jxt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
