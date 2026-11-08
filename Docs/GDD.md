@@ -1,12 +1,12 @@
 # ONE LAST CLIMB
-## Game Design Document — v1.2 | Novembro/2026
+## Game Design Document — v1.3 | Novembro/2026
 
 | Campo | Info |
 |---|---|
 | **Aluno** | Felipe da Silva Chawischi |
 | **E-mail** | felipe.chawischi@catolica.edu |
-| **Status** | Versão final (v1.0.0-beta) |
-| **Versão** | v1.2 |
+| **Status** | Versão final (v1.0.0) |
+| **Versão** | v1.3 |
 | **Última atualização** | Novembro/2026 |
 
 ---
@@ -37,9 +37,8 @@ Jogadores casuais e intermediários, principalmente entre adolescentes e adultos
 
 | Item | Link |
 |---|---|
-| Build jogável | itch.io — a preencher (Windows e Linux) \| GitHub Releases: v1.0.0-beta |
+| Build jogável | [itch.io](https://f3lic.itch.io/one-last-climb) (Windows e Linux) \| GitHub Releases: v1.0.0 |
 | Repositório | https://github.com/Chawischi/Portfolio_Game |
-| Vídeo gameplay (opcional) | YouTube — a preencher |
 | Instruções de execução | Godot 4.6.1 \| Windows 10+ ou Linux \| Teclado e Controle |
 
 ---
@@ -134,7 +133,7 @@ Todas as habilidades estão disponíveis desde o início. O level design apresen
 |---|---|
 | Pulo simples | Responsivo e preciso — base de toda a movimentação. |
 | Pulo duplo | Segundo pulo no ar para alcançar plataformas mais altas. |
-| Dash | Impulso **omnidirecional** (8 direções), com curva de aceleração e desaceleração calculada matematicamente a partir de distância e duração desejadas, preservação parcial de momentum ao final e efeito visual de rastro. **Não possui i-frames** — qualquer contato com inimigo durante o dash causa dano normalmente. |
+| Dash | Impulso **omnidirecional** (8 direções), com curva de aceleração e desaceleração calculada matematicamente a partir de distância e duração desejadas, preservação parcial de momentum ao final e efeito visual de rastro. No controle, o analógico é travado nas 8 direções, com uma faixa de ângulo maior para a diagonal, o que facilita acertá-la. **Não possui i-frames** — qualquer contato com inimigo durante o dash causa dano normalmente. |
 | Wall jump | Saltar entre paredes em sequência rápida. O impulso é sempre numa diagonal fixa, para longe da parede — não lê direção do jogador, mantendo o desafio focado no timing. Exige timing e recompensa o domínio. |
 | Escalada | Agarrar e subir superfícies verticais através de um **botão dedicado** (não é automática por proximidade). Possui limite de resistência: quando esgotado, Eugene começa a tremer e escorrega até cair. O feedback é visual no sprite (tremor e leve mudança de cor), sem barra explícita no HUD. |
 
@@ -375,16 +374,16 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 | Ação | Teclado | Controle |
 |---|---|---|
-| Mover | A / D ou setas | Analógico esquerdo / D-Pad |
-| Pular / Pulo duplo | Espaço / W / seta cima | Botão A / Cross |
-| Dash | E ou Shift + direcional | Gatilho (LT ou RT, configurável) |
-| Mover para cima/baixo | W / S ou setas | Analógico esquerdo (também define a direção do dash e a subida na escalada) |
-| Escalada | Aproximar da superfície + direcional (botão dedicado) | Gatilho (LT ou RT, configurável) |
-| Wall jump | Pulo, pressionado ao encostar na parede | Botão A / Cross, pressionado ao encostar na parede |
-| Interagir (checkpoint, placas) | E | Botão Triângulo / Y |
+| Mover | Setas | Analógico esquerdo / D-Pad |
+| Pular / Pulo duplo | C | Botão A (Xbox) / Cross (PlayStation) |
+| Dash | X + direcional | Gatilho direito, RT (R2 no PlayStation) + direcional |
+| Mover para cima/baixo | Setas cima/baixo | Analógico esquerdo (também define a direção do dash e a subida na escalada) |
+| Escalada | Z, segurado junto à superfície + direcional | Gatilho esquerdo, LT (L2 no PlayStation) |
+| Wall jump | Pulo (C), pressionado ao encostar na parede | Botão A, pressionado ao encostar na parede |
+| Interagir (checkpoint, placas) | E | Botão A |
 | Pausar | Esc | Botão Start / Options |
 
-> **Nota:** todas as ações podem ser remapeadas em Opções → Controles, tanto no teclado quanto no controle.
+> **Nota:** todas as ações podem ser remapeadas em Opções → Controles, tanto no teclado quanto no controle. No controle, o botão B é reservado para voltar e cancelar nos menus e não pode ser atribuído a uma ação.
 
 ---
 
@@ -442,8 +441,10 @@ Pixel art com resolução base 320×180, ampliada em múltiplos inteiros. Person
 | Filtro de textura | Nearest | Project Settings → Rendering → Textures |
 | Stretch Mode | viewport | Project Settings → Display → Window → Stretch |
 | Stretch Aspect | keep | Project Settings → Display → Window → Stretch |
-| Snap 2D Transforms | Ativo | Project Settings → Rendering → 2D |
+| Snap 2D Transforms | Desativado | Project Settings → Rendering → 2D |
 | Snap 2D Vertices | Ativo | Project Settings → Rendering → 2D |
+
+> **Nota:** o Snap 2D Transforms foi desativado deliberadamente para corrigir um tremor visual no sprite do player durante movimentos contínuos (Run, Wall Slide), causado por conflito com a física fracionária. O Snap 2D Vertices permanece ativo, preservando a nitidez de tiles e formas geométricas.
 
 ---
 
@@ -555,7 +556,7 @@ O projeto é estruturado em Godot 4 com GDScript, seguindo separação de respon
 
 | Data | Participantes | Principais problemas |
 |---|---|---|
-| 26/10/2026 (noite oficial de playtest) | 10 testers (6 colegas de turma, 3 pessoas de fora da faculdade, 1 sem resposta), versão v1.0.0-beta | Mortes repetidas no mesmo ponto (6 de 10); Fase 2 como pico de dificuldade (3 de 10); dash confuso em alguns pontos, agarrar na parede, sensação de leve atraso nos controles e pouca originalidade percebida (1 a 3 de 10 cada, gravidade "detalhe") |
+| 26/10/2026 (noite oficial de playtest) | 10 testers (6 colegas de turma, 3 pessoas de fora da faculdade, 1 sem resposta), versão v1.0.0-beta | Mortes repetidas no mesmo ponto (6 de 10); Fase 2 apontada como difícil por 3 de 10 (o autor a considera uma fase fácil); dash confuso em alguns pontos, agarrar na parede, sensação de leve atraso nos controles e pouca originalidade percebida (1 a 3 de 10 cada, gravidade "detalhe") |
 
 **Como foi feito.** Os testers jogaram a versão v1.0.0-beta, disponível pelo repositório do GitHub, e responderam a um formulário em papel. Antes de jogar, o autor apresentou a história e deu dicas de jogabilidade. O autor observou as partidas e, na primeira flor, ajudou explicando o que fazer. Como havia muitos testers esperando, impôs um limite próprio de tentativas por pessoa (o jogo em si não tem limite de mortes). Oito testers jogaram de 10 a 20 minutos, e nenhum terminou o jogo.
 
@@ -581,8 +582,7 @@ O projeto é estruturado em Godot 4 com GDScript, seguindo separação de respon
 | Problema | Melhoria | Status |
 |---|---|---|
 | Agarrar na parede pedia revisão | Nova detecção de parede com tempo de tolerância para o pulo, encaixe do Eugene na parede ao deslizar e escalar, e ajuste do sprite por lado | ✅ Implementada |
-| Fluxo do Trecho 2 do Level 2 (e pico de dificuldade da Fase 2) | Design do trecho refeito para melhorar o fluxo de jogo | ✅ Implementada |
-| Frustração por mortes repetidas nas fases mais difíceis | Revisão da posição dos checkpoints na Fase 2 e na última fase | 🔶 Planejada até a entrega final (30/11/2026) |
+| Fluxo do Trecho 2 do Level 2 | Design do trecho refeito para melhorar o fluxo de jogo | ✅ Implementada |
 
 Não serão feitos um modo fácil ou assistido (quatro testers elogiaram justamente o desafio) nem uma mecânica nova para aumentar a originalidade (não há tempo até a entrega para criar e testar uma).
 
@@ -599,7 +599,7 @@ Não serão feitos um modo fácil ou assistido (quatro testers elogiaram justame
 | Levels 2 e 3 | 1ª – 2ª quinzena de Outubro/2026 | Level 2 completo (morcego, flores, checkpoints, hazards); Level 3 com a sequência de fuga do enxame testada |
 | Finalização das fases restantes e polimento | Outubro/2026 | Levels 4 e 5 (estalagmite, plataformas que desmoronam, sistema de dois finais), arte e decoração final, save/load e Continuar, revisão da mecânica de parede |
 | Playtest | 26/10/2026 | Noite oficial com 10 testers na versão v1.0.0-beta |
-| Ajustes pós-playtest e documentação | Novembro/2026 | Redesenho de trecho, revisão de checkpoints, limpeza do código, atualização do GDD e da wiki, build final e entrega em 30/11/2026 |
+| Ajustes pós-playtest e documentação | Novembro/2026 | Redesenho de trecho, ajustes de dash e controles, limpeza do código, atualização do GDD e da wiki, build final v1.0.0 (publicada no itch.io em 08/11/2026) e entrega em 30/11/2026 |
 
 ---
 
@@ -614,7 +614,7 @@ Não serão feitos um modo fácil ou assistido (quatro testers elogiaram justame
 | Falta de tempo para polimento | Entrega com bugs | Buffer de 2 semanas antes da entrega |
 | Assets de áudio com licenças incompatíveis | Problemas de distribuição | Usar só CC0 e CC-BY; documentar tudo nos créditos |
 | Sistema de dois finais adiciona complexidade | Bugs no controle de estado | Lógica do final isolada da cena do cume e testada antes da Fase 5 |
-| Dificuldade alta frustrar jogadores (risco confirmado no playtest) | Abandono antes do final | Revisar checkpoints e o fluxo das fases mais difíceis; manter o desafio como parte da proposta |
+| Dificuldade alta frustrar jogadores (risco confirmado no playtest) | Abandono antes do final | Redesenhar trechos com fluxo ruim; manter o desafio como parte da proposta |
 
 ---
 
@@ -667,6 +667,8 @@ Não serão feitos um modo fácil ou assistido (quatro testers elogiaram justame
 | Outubro/2026 | Mecânica de parede revisada após o playtest (tolerância de pulo, encaixe na parede, sprite por lado) | O autor já havia notado o problema e um tester o confirmou |
 | Novembro/2026 | Sem modo fácil ou assistido; sem mecânica nova para originalidade | Quatro testers elogiaram o desafio; não há tempo até a entrega para criar e testar mecânica nova |
 | Novembro/2026 | Distribuição para Windows e Linux (sem build Web) | Foco em duas builds nativas testadas, publicadas no itch.io |
+| Novembro/2026 | Botão B do controle reservado para voltar e cancelar, sem poder ser remapeado | Mantém o B como botão de voltar dos menus; remapeá-lo exigiria tratar o cancelar de outro jeito durante o remapeamento |
+| Novembro/2026 | Dash no analógico com faixa de ângulo maior para a diagonal | Nos testes com controle, a diagonal saía reta com frequência |
 
 ---
 
@@ -818,4 +820,4 @@ Registro das contribuições recebidas dos colegas no projeto One Last Climb, in
 
 ---
 
-*ONE LAST CLIMB — GDD v1.2 | Felipe da Silva Chawischi | felipe.chawischi@catolica.edu*
+*ONE LAST CLIMB — GDD v1.3 | Felipe da Silva Chawischi | felipe.chawischi@catolica.edu*
