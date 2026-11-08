@@ -29,7 +29,7 @@ extends CharacterBody2D
 @export var gravity: float = 550.0
 @export var max_jumps: int = 2						# pulo simples + o pulo duplo || para a mecânica de pulo duplo
 
-@export var step_frames: Array[int] = [0, 2]		# os frames que toca o pé no chão
+@export var step_frames: Array[int] = [0, 2]		# 0s frames que toca o pé no chão
 
 # ---------- Pulo ----------
 @export var jump_height: float = 32.0
