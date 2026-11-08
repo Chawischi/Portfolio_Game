@@ -59,7 +59,7 @@ var jumps_done: int = 0
 @export var momentum_duration: float = 0.08
 @export var max_dashes: int = 1
 @export var dash_input_window: float = 0.05
-@export var dash_cardinal_margin: float = 18.0		# Graus. Até esse desvio de um eixo, o analógico vira dash reto (menor = diagonal mais fácil)
+@export var dash_cardinal_margin: float = 19.0		# Graus. Até esse desvio de um eixo, o analógico vira dash reto (menor = diagonal mais fácil)
 
 var dash_is_pending: bool = false
 var dash_pending_timer: float = 0.0

@@ -325,7 +325,6 @@ shake_duration = 0.2
 fall_gravity = 1200.0
 
 [node name="Stalagmite2" parent="." unique_id=1701706881 instance=ExtResource("9_hq1m2")]
-visible = false
 position = Vector2(200, 16)
 proximity_size = Vector2(40, 60)
 shake_duration = 0.2
