@@ -349,17 +349,6 @@ func _start_dash() -> void:
 	AudioManager.play_sfx("dash")
 
 
-# Trava a direção do dash nas 8 direções (cada 45 graus)
-#func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
-	#var angle: float = raw_direction.angle()
-	#var snapped_angle: float = round(angle / (PI / 4.0)) * (PI / 4.0)
-	#var dir: Vector2 = Vector2.RIGHT.rotated(snapped_angle)
-	#if absf(dir.x) < 0.001:
-		#dir.x = 0.0
-	#if absf(dir.y) < 0.001:
-		#dir.y = 0.0
-	#return dir
-	
 # Trava a direção do dash em 8 direções. As retas aceitam um desvio de dash_cardinal_margin graus;
 # o resto vira diagonal. Com 22,5 as faixas ficam iguais; menos que isso facilita a diagonal.
 func _get_snapped_dash_direction(raw_direction: Vector2) -> Vector2:
