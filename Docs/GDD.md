@@ -210,7 +210,7 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 ## 8. Estrutura das Fases
 
-5 fases representando trechos progressivos da escalada. Plataformas flutuantes (sem cordas ou suportes visíveis) estão presentes nas fases 2, 3, 4 e 5.
+5 fases representando trechos progressivos da escalada. Plataformas flutuantes (sem cordas ou suportes visíveis), que desmoronam pouco depois de o jogador pisar, estão presentes nas fases 4 e 5.
 
 ### Wireframe de Level Design
 
@@ -257,9 +257,9 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 | Parte | Descrição |
 |---|---|
-| Parte 1 | Plataformas penduradas em corda sem chão firme — continua o sistema da Fase 3. |
-| Parte 2 | Plataformas penduradas com estalagmites — exige timing preciso em terreno instável. |
-| Parte 3 | Tudo junto na dificuldade máxima: plataformas penduradas, estalagmites e morcegos. |
+| Parte 1 | Plataformas flutuantes sem chão firme — continua o sistema da Fase 3. |
+| Parte 2 | Plataformas flutuantes com estalagmites — exige timing preciso em terreno instável. |
+| Parte 3 | Tudo junto na dificuldade máxima: plataformas flutuantes, estalagmites e morcegos. |
 
 ### Fase 5 — Caverna clareando → cume
 *Tom: alívio. A luz volta. O desfecho depende dos lírios coletados.*
@@ -267,9 +267,8 @@ Esta é a mecânica que conecta gameplay e narrativa.
 | Parte | Descrição |
 |---|---|
 | Parte 1 | Plataformas e estalagmites. O ambiente já clarea — o fim está próximo. |
-| Parte 2 | Igual à Parte 1, dificuldade aumentada. A luz continua crescendo. |
-| Parte 3 | Na saída da caverna, um enxame de morcegos aparece de surpresa — susto final, mas o céu já é visível ao fundo. |
-| Parte 4 (Cena Final) | Eugene chega ao topo. O desfecho é determinado pelos lírios coletados: Final Verdadeiro (ritual completo) ou Final Trágico (ataque do coração antes do ritual). |
+| Parte 2 | Igual à Parte 1, com dificuldade aumentada. |
+| Parte 3 (Cena Final) | Eugene chega ao topo. O desfecho é determinado pelos lírios coletados: Final Verdadeiro (ritual completo) ou Final Trágico (ataque do coração antes do ritual). |
 
 ---
 
@@ -280,7 +279,7 @@ Esta é a mecânica que conecta gameplay e narrativa.
 | Inimigo | Fase(s) | Comportamento | Regras de colisão |
 |---|---|---|---|
 | Morcego (sozinho) | 2, 4 | Patrulha lateral no ar dentro de uma área delimitada; ao detectar o jogador, exibe um breve indicativo visual de alerta antes de avançar em linha reta na direção detectada | Pular em cima **elimina** o morcego sem causar dano (stomp). Contato lateral causa dano. |
-| Enxame de morcegos | 3, 5 | Sequência de fuga: uma "parede" representando o enxame avança continuamente, forçando o jogador a se manter à frente dela | Nenhuma forma de stomp válida — **qualquer contato causa dano/reinício da sequência.** |
+| Enxame de morcegos | 3 | Sequência de fuga: uma "parede" representando o enxame avança continuamente, forçando o jogador a se manter à frente dela | Nenhuma forma de stomp válida — **qualquer contato causa dano/reinício da sequência.** |
 | Estalagmite instável | 3, 4, 5 | Estática no teto; vibra ao se aproximar, cai após alguns segundos | Causa dano em **qualquer contato**, tanto presa no teto quanto durante a queda. |
 
 ### Regras Gerais de Colisão
@@ -294,8 +293,7 @@ Esta é a mecânica que conecta gameplay e narrativa.
 
 - Abismos entre plataformas
 - **Espinhos** (todas as fases): contato causa dano e reposiciona o jogador no ponto de respawn do trecho, com um leve empurrão para cima.
-- **Plataformas que desmoronam** (fases 4 e 5): se desfazem pouco depois de o jogador pisar e voltam a aparecer depois de um tempo, exigindo que o jogador não pare sobre elas.
-- Plataformas flutuantes (sem cordas ou suportes visíveis), presentes nas fases 2, 3, 4 e 5
+- **Plataformas flutuantes** (fases 4 e 5): sem cordas ou suportes visíveis; se desfazem pouco depois de o jogador pisar e voltam a aparecer depois de um tempo, exigindo que o jogador não pare sobre elas.
 - Trechos de parede para wall jump obrigatório
 
 ---
@@ -309,8 +307,8 @@ Esta é a mecânica que conecta gameplay e narrativa.
 - 5 sonhos narrativos nos checkpoints (tela preta + fala de Liliana + resmungo de Eugene)
 - Sistema de lírios colecionáveis que determina o final obtido
 - **Dois finais:** Final Verdadeiro (coleta completa) e Final Trágico (coleta incompleta)
-- 2 tipos de inimigo (morcego e estalagmite instável) + sequência de fuga do enxame de morcegos (fases 3 e 5)
-- Obstáculos ambientais: espinhos (todas as fases) e plataformas que desmoronam (fases 4 e 5)
+- 2 tipos de inimigo (morcego e estalagmite instável) + sequência de fuga do enxame de morcegos (fase 3)
+- Obstáculos ambientais: espinhos (todas as fases) e plataformas flutuantes que desmoronam (fases 4 e 5)
 - Menu principal, pausa e opções (incluindo remapeamento de controles)
 - Efeito de transição visual em momentos de morte/respawn, ao invés de uma tela tradicional de game over
 - Cena final, tela de final com estatísticas e créditos
@@ -508,7 +506,7 @@ O projeto é estruturado em Godot 4 com GDScript, seguindo separação de respon
 | PlayerController | Script (FSM) | Input, física e animações de Eugene, como **Máquina de Estados Finitos**: Idle, Run, Jump Up, Jump Fall, Dash, Climb, Wall Slide |
 | TrechoOrquestrador | Script | Divide cada fase em trechos, instanciados e destruídos dinamicamente; define respawn e limites de cada trecho |
 | CameraController | Script | Câmera 2D desacoplada do player, com limites e offset por trecho, e perseguição durante a fuga do enxame |
-| SwarmThreat | Script | Controla a sequência de fuga (Fases 3 e 5): o enxame avança continuamente e causa dano ao contato |
+| SwarmThreat | Script | Controla a sequência de fuga (Fase 3): o enxame avança continuamente e causa dano ao contato |
 | Checkpoint | Script (por instância) | Detecção de proximidade, interação, sonho na primeira ativação, bloqueio de controle e gravação do progresso |
 | Flower e zona segura | Scripts | Coleta de lírios e zona onde a flor fica protegida; contagem centralizada no GameManager |
 | Final do jogo | Scripts | Cena do cume (Final Verdadeiro ou Trágico conforme os lírios), tela de final com estatísticas e créditos |
@@ -669,6 +667,7 @@ Não serão feitos um modo fácil ou assistido (quatro testers elogiaram justame
 | Novembro/2026 | Distribuição para Windows e Linux (sem build Web) | Foco em duas builds nativas testadas, publicadas no itch.io |
 | Novembro/2026 | Botão B do controle reservado para voltar e cancelar, sem poder ser remapeado | Mantém o B como botão de voltar dos menus; remapeá-lo exigiria tratar o cancelar de outro jeito durante o remapeamento |
 | Novembro/2026 | Dash no analógico com faixa de ângulo maior para a diagonal | Nos testes com controle, a diagonal saía reta com frequência |
+| Novembro/2026 | Enxame de morcegos removido da Fase 5 (o enxame existe apenas na Fase 3) | A Fase 5 termina direto na cena final, sem o susto do enxame |
 
 ---
 
